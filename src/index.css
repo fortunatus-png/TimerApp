@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #F8F7F2;
+    background-color: #D9E8D6;
     margin: 0;
     padding: 5px 5px 10px 25px;
     font-family: Arial, Helvetica, sans-serif;
@@ -17,6 +17,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    position: relative;
 }
 
 .counter {
@@ -27,9 +28,28 @@ header {
     font-size: 2em;
     border: 1px solid #DF7046;
     padding: 2px 15px;
+    background-color: #F8EBCE;
 }
 
 .menu {
     font-size: 3em;
     color: #2D2A29;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #2D2A29;
+    background-color: #EEE8ED;
+    position: absolute;
+    right: 1rem;
+    top: 5rem;
+}
+
+.links {
+    color: #2D2A29;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 7px;
+    border-bottom: 1px solid #2D2A29;
 }
