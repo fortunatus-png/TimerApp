@@ -1,5 +1,56 @@
+import { useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import Header from '../components/Header'
+
 function SessionPage() {
-    return <div>SessionPage</div>
+    const location = useLocation();
+    const minutes = location.state.minutes;
+    const [seconds, setSeconds] = useState(minutes * 60);
+    const [isRunning, setIsRunning] = useState(true);
+
+    useEffect(() => {
+        if (seconds <= 0 || !isRunning) return;
+        const interval = setInterval(() => {
+            setSeconds(prev => prev - 1)
+        }, 1000)
+        return () => clearInterval(interval)
+    }, [seconds, isRunning])
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return `${m}:${s.toString().padStart(2, '0')}`
+    }
+
+    return (
+        <>
+            <Header />
+            <div className="sessionContainer">
+                <h1 id="timer">{formatTime(seconds)}</h1>
+                <button id="sessionBtn" onClick={() => setIsRunning(!isRunning)}>{isRunning ? '⏸' : '▶'}</button>
+            </div>
+            <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '190px auto' }}>
+                {/* Kopf */}
+                <circle cx="75" cy="50" r="25" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
+                {/* Körper */}
+                <ellipse cx="75" cy="130" rx="35" ry="45" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
+                {/* Linker Arm */}
+                <circle cx="35" cy="130" r="13" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
+                {/* Rechter Arm */}
+                <circle cx="115" cy="130" r="13" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
+                {/* Linker Fuß */}
+                <ellipse cx="58" cy="200" rx="15" ry="9" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
+                {/* Rechter Fuß */}
+                <ellipse cx="92" cy="200" rx="15" ry="9" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
+                {/* Schatten */}
+                <ellipse cx="75" cy="230" rx="40" ry="8" fill="#2D2A29" opacity="0.2" />
+                {/* Buch */}
+                <rect x="48" y="115" width="55" height="30" fill="#EEE8ED" stroke="#3C1D49" strokeWidth="2" rx="2" />
+                {/* Buchmitte */}
+                <line x1="75" y1="115" x2="75" y2="145" stroke="#3C1D49" strokeWidth="1" />
+            </svg>
+        </>
+    )
 }
 
 export default SessionPage

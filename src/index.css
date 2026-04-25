@@ -29,6 +29,7 @@ header {
     border: 1px solid #DF7046;
     padding: 2px 15px;
     background-color: #F8EBCE;
+    border-radius: 3px;
 }
 
 .menu {
@@ -43,7 +44,8 @@ header {
     background-color: #EEE8ED;
     position: absolute;
     right: 1rem;
-    top: 5rem;
+    top: 5.5rem;
+    border-radius: 3px;
 }
 
 .links {
@@ -52,4 +54,62 @@ header {
     font-weight: bold;
     padding: 7px;
     border-bottom: 1px solid #2D2A29;
+}
+
+.links:hover {
+    background-color: #cfcace;
+}
+
+.timerMain,
+.sessionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider {
+    text-align: center;
+    margin: 15px 0 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#timing {
+    width: 200px;
+    color: #2D2A29;
+}
+
+.timerBtn,
+#sessionBtn {
+    color: #2D2A29;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 1px solid #2D2A29;
+    border-radius: 3px;
+    padding: 5px 12px;
+    background-color: #EEE8ED;
+}
+
+#sessionBtn {
+    color: #2D2A29;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: 1px solid #2D2A29;
+    border-radius: 3px;
+    padding: 5px 12px;
+    background-color: #EEE8ED;
+}
+
+#options {
+    color: #2D2A29;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 1px solid #2D2A29;
+    border-radius: 3px;
+    padding: 5px 7px;
+    background-color: #EEE8ED;
+}
+
+#timer {
+    font-size: 3.5em;
 }
