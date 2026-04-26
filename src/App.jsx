@@ -6,8 +6,14 @@ import HistoryPage from './pages/HistoryPage'
 import CustomizationPage from './pages/CustomizationPage'
 import AccountPage from './pages/AccountPage'
 import './index.css'
+import { useEffect } from 'react'
 
 function App() {
+  useEffect(() => {
+    const savedColor = localStorage.getItem('bgColor');
+    if (savedColor) document.body.style.backgroundColor = savedColor;
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
@@ -19,7 +25,7 @@ function App() {
         <Route path="/account" element={<AccountPage />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

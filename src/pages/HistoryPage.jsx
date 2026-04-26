@@ -85,4 +85,4 @@ function HistoryPage() {
   );
 }
 
-export default HistoryPage
+export default HistoryPage;
