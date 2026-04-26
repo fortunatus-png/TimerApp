@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import './SessionPage.css'
 
 function SessionPage() {
     const location = useLocation();
@@ -12,14 +13,27 @@ function SessionPage() {
         if (seconds <= 0 || !isRunning) return;
         const interval = setInterval(() => {
             setSeconds(prev => prev - 1)
-        }, 1000)
-        return () => clearInterval(interval)
-    }, [seconds, isRunning])
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [seconds, isRunning]);
+
+    useEffect(() => {
+        if (seconds === 0) {
+            const session = {
+                date: new Date().toISOString(),
+                minutes: minutes,
+                hour: new Date().getHours()
+            };
+            const history = JSON.parse(localStorage.getItem('sessions') || '[]');
+            history.push(session);
+            localStorage.setItem('sessions', JSON.stringify(history));
+        }
+    }, [seconds, minutes]);
 
     function formatTime(sec) {
         const m = Math.floor(sec / 60);
         const s = sec % 60;
-        return `${m}:${s.toString().padStart(2, '0')}`
+        return `${m}:${s.toString().padStart(2, '0')}`;
     }
 
     return (
@@ -50,7 +64,7 @@ function SessionPage() {
                 <line x1="75" y1="115" x2="75" y2="145" stroke="#3C1D49" strokeWidth="1" />
             </svg>
         </>
-    )
+    );
 }
 
-export default SessionPage
+export default SessionPage;

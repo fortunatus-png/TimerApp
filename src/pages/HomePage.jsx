@@ -21,7 +21,7 @@ function HomePage() {
                 <ellipse cx="75" cy="230" rx="40" ry="8" fill="#2D2A29" opacity="0.2" />
             </svg>
         </>
-    )
+    );
 }
 
-export default HomePage
+export default HomePage;
