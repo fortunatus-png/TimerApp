@@ -3,6 +3,14 @@ import Header from '../components/Header'
 import './HistoryPage.css'
 import { useNavigate } from 'react-router-dom'
 
+function getCellColor(mins) {
+  if (mins === 0) return '#F8EBCE';
+  if (mins < 20) return '#c8e6c9';
+  if (mins < 40) return '#a8d5a2';
+  if (mins < 60) return '#4caf50';
+  return '#1b5e20';
+}
+
 function HistoryPage() {
   const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
   const [modalOpen, setModalOpen] = useState(false);
@@ -52,10 +60,7 @@ function HistoryPage() {
                     <span>{day}</span>
                     {Array.from({ length: 16 }, (_, h) => {
                       const mins = getMinutesForHour(day, h)
-                      const cellColor = mins === 0 ? '#F8EBCE' :
-                        mins < 20 ? '#c8e6c9' :
-                          mins < 40 ? '#a8d5a2' :
-                            mins < 60 ? '#4caf50' : '#1b5e20'
+                      const cellColor = getCellColor(mins);
                       return <div key={h} className="heatCell" style={{ backgroundColor: cellColor }} />
                     })}
                   </div>
