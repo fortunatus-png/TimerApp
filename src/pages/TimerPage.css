@@ -1,0 +1,49 @@
+:root {
+    --black-like: #2D2A29;
+    --grey-like: #EEE8ED;
+}
+
+#setTimerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#timer-type {
+    color: var(--black-like);
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    padding: 5px 7px;
+    background-color: var(--grey-like);
+    cursor: pointer;
+}
+
+.slider {
+    text-align: center;
+    margin: 15px 0 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#time-setting {
+    width: 200px;
+    color: var(--black-like);
+}
+
+.startTimerBtn {
+    color: var(--black-like);
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    padding: 5px 12px;
+    background-color: var(--grey-like);
+}
+
+#backBtnContainer {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}

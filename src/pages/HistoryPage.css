@@ -1,0 +1,97 @@
+:root {
+    --black-like: #2D2A29;
+    --yellow-like: #F8EBCE;
+    --grey-like: #EEE8ED;
+}
+
+#addSubjectBtn {
+    color: var(--black-like);
+    font-size: 1.5em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    padding: 5px 12px;
+    background-color: var(--grey-like);
+    cursor: pointer;
+    height: 10%;
+}
+
+.heatRow {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-bottom: 3px;
+}
+
+.heatRow span {
+    width: 20px;
+    font-size: 0.8em;
+}
+
+.heatCell {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.heatHour {
+    width: 20px;
+    font-size: 0.7em;
+    text-align: center;
+}
+
+#heatMapModalContainer {
+    display: flex;
+    gap: 2rem;
+    align-items: 'flex-start';
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px solid var(--black-like);
+    height: 19vh;
+    padding: 5px 15px 0;
+    background-color: var(--yellow-like);
+}
+
+#cancelBtn,
+#confirmBtn,
+input {
+    color: var(--black-like);
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    padding: 5px 7px;
+    background-color: var(--grey-like);
+    cursor: pointer;
+}
+
+#backBtn {
+    align-self: flex-end;
+}
+
+.inputContainer {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.header {
+    color: var(--black-like);
+    font-size: 1.3rem;
+}
+
+.daysLabel {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.8em;
+    margin-right: 4px;
+}
+
+.hoursLabel {
+    font-size: 0.8em;
+    margin-left: 24px;
+    margin-bottom: 2px;
+}

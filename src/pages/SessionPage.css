@@ -1,0 +1,24 @@
+:root {
+    --black-like: #2D2A29;
+    --grey-like: #EEE8ED;
+}
+
+.sessionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#timer {
+    font-size: 3.5em;
+}
+
+#sessionBtn {
+    color: var(--black-like);
+    font-size: 1.3em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    padding: 5px 12px;
+    background-color: var(--grey-like);
+}
