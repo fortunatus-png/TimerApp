@@ -2,12 +2,16 @@ import { useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import './SessionPage.css'
+import { useNavigate } from 'react-router-dom'
+
+
 
 function SessionPage() {
     const location = useLocation();
     const minutes = location.state.minutes;
     const [seconds, setSeconds] = useState(minutes * 60);
     const [isRunning, setIsRunning] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (seconds <= 0 || !isRunning) return;
@@ -43,7 +47,7 @@ function SessionPage() {
                 <h1 id="timer">{formatTime(seconds)}</h1>
                 <button id="sessionBtn" onClick={() => setIsRunning(!isRunning)}>{isRunning ? '⏸' : '▶'}</button>
             </div>
-            <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '190px auto' }}>
+            <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '150px auto 50px' }}>
                 {/* Kopf */}
                 <circle cx="75" cy="50" r="25" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
                 {/* Körper */}
@@ -63,6 +67,9 @@ function SessionPage() {
                 {/* Buchmitte */}
                 <line x1="75" y1="115" x2="75" y2="145" stroke="#3C1D49" strokeWidth="1" />
             </svg>
+            <div id="backBtnContainer">
+                <button id="backBtn" onClick={() => navigate('/timer')}>Back</button>
+            </div>
         </>
     );
 }

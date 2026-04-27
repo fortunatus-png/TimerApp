@@ -63,6 +63,10 @@ input {
     cursor: pointer;
 }
 
+#backBtn {
+    align-self: flex-end;
+}
+
 .inputContainer {
     display: flex;
     gap: 0.2rem;

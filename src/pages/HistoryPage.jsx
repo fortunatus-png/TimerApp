@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import Header from '../components/Header'
 import './HistoryPage.css'
+import { useNavigate } from 'react-router-dom'
 
 function HistoryPage() {
   const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
   const [modalOpen, setModalOpen] = useState(false);
   const [subject, setSubject] = useState('');
   const [color, setColor] = useState('#4caf50');
+  const navigate = useNavigate();
 
   function getMinutesForHour(day, hour) {
     return sessions
@@ -27,7 +29,6 @@ function HistoryPage() {
 
   return (
     <>
-      <Header />
       <h3><span>ᐊ</span> April 2026 <span>ᐅ</span></h3>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {/* Days Label */}
@@ -80,6 +81,7 @@ function HistoryPage() {
             )}
           </div>
         </div>
+        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
       </div>
     </>
   );

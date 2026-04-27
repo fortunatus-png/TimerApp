@@ -28,7 +28,7 @@ function TimerPage() {
         </div>
       </main>
 
-      <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '200px auto' }}>
+      <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '150px auto' }}>
         {/* Kopf */}
         <circle cx="75" cy="50" r="25" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
         {/* Körper */}
@@ -44,6 +44,9 @@ function TimerPage() {
         {/* Schatten */}
         <ellipse cx="75" cy="230" rx="40" ry="8" fill="#2D2A29" opacity="0.2" />
       </svg>
+      <div id="backBtnContainer">
+        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
+      </div>
     </>
   )
 }

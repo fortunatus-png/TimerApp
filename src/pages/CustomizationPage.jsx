@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import './CustomizationPage.css'
 import Header from '../components/Header'
+import { useNavigate } from 'react-router-dom'
 
 function CustomizationPage() {
   const [color, setColor] = useState('#4caf50');
+  const navigate = useNavigate();
 
   return (
     <>
@@ -16,6 +18,9 @@ function CustomizationPage() {
             document.body.style.backgroundColor = e.target.value;
             localStorage.setItem('bgColor', e.target.value);
           }} />
+      </div>
+      <div id="backBtnContainer">
+        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
       </div>
     </>
   );
