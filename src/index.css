@@ -12,3 +12,17 @@ body {
     border: 1px solid #2D2A29;
     height: 100vh;
 }
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

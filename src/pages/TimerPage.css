@@ -1,3 +1,8 @@
+:root {
+    --black-like: #2D2A29;
+    --grey-like: #EEE8ED;
+}
+
 #setTimerContainer {
     display: flex;
     flex-direction: column;
@@ -5,13 +10,13 @@
 }
 
 #timer-type {
-    color: #2D2A29;
+    color: var(--black-like);
     font-size: 1.1em;
     font-weight: bold;
-    border: 1px solid #2D2A29;
+    border: 1px solid var(--black-like);
     border-radius: 3px;
     padding: 5px 7px;
-    background-color: #EEE8ED;
+    background-color: var(--grey-like);
     cursor: pointer;
 }
 
@@ -24,15 +29,21 @@
 
 #time-setting {
     width: 200px;
-    color: #2D2A29;
+    color: var(--black-like);
 }
 
 .startTimerBtn {
-    color: #2D2A29;
+    color: var(--black-like);
     font-size: 1.1em;
     font-weight: bold;
-    border: 1px solid #2D2A29;
+    border: 1px solid var(--black-like);
     border-radius: 3px;
     padding: 5px 12px;
-    background-color: #EEE8ED;
+    background-color: var(--grey-like);
+}
+
+#backBtnContainer {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }

@@ -1,3 +1,11 @@
+:root {
+    --orange-like: #DF7046;
+    --black-like: #2D2A29;
+    --yellow-like: #F8EBCE;
+    --grey-like: #EEE8ED;
+    --hover-grey-like: #cfcace;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -10,25 +18,25 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #DF7046;
+    color: var(--orange-like);
     font-size: 1.9em;
-    border: 1px solid #DF7046;
+    border: 1px solid var(--orange-like);
     padding: 2px 15px;
-    background-color: #F8EBCE;
+    background-color: var(--yellow-like);
     border-radius: 3px;
 }
 
 #hamburger-menu {
     font-size: 3em;
-    color: #2D2A29;
+    color: var(--black-like);
     cursor: pointer;
 }
 
 #menuItems {
     display: flex;
     flex-direction: column;
-    border: 1px solid #2D2A29;
-    background-color: #EEE8ED;
+    border: 1px solid var(--black-like);
+    background-color: var(--grey-like);
     position: absolute;
     right: 1rem;
     top: 5.5rem;
@@ -36,13 +44,13 @@ header {
 }
 
 .links {
-    color: #2D2A29;
+    color: var(--black-like);
     text-decoration: none;
     font-weight: bold;
     padding: 7px;
-    border-bottom: 1px solid #2D2A29;
+    border-bottom: 1px solid var(--black-like);
 }
 
 .links:hover {
-    background-color: #cfcace;
+    background-color: var(--hover-grey-like);
 }

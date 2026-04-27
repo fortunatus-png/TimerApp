@@ -20,6 +20,10 @@ function CustomizationPage() {
           }} />
       </div>
       <div id="backBtnContainer">
+        <button id="resetBtn" onClick={() => {
+          localStorage.clear()
+          alert('Data cleared!')
+        }}>Reset Data</button>
         <button id="backBtn" onClick={() => navigate('/')}>Back</button>
       </div>
     </>

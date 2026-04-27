@@ -13,7 +13,6 @@ function Header() {
             <div id="hamburger-menu">
                 <span onClick={() => setMenuOpen(!menuOpen)}>☰</span>
             </div>
-
             {menuOpen && (
                 <nav id="menuItems">
                     <Link className="links" to="/">Home</Link>

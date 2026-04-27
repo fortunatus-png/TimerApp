@@ -7,6 +7,7 @@ import CustomizationPage from './pages/CustomizationPage'
 import AccountPage from './pages/AccountPage'
 import './index.css'
 import { useEffect } from 'react'
+import Sparkle from './components/Sparkle'
 
 function App() {
   useEffect(() => {
@@ -15,16 +16,19 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/timer" element={<TimerPage />} />
-        <Route path="/session" element={<SessionPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/customization" element={<CustomizationPage />} />
-        <Route path="/account" element={<AccountPage />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <Sparkle />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/timer" element={<TimerPage />} />
+          <Route path="/session" element={<SessionPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/customization" element={<CustomizationPage />} />
+          <Route path="/account" element={<AccountPage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
