@@ -17,6 +17,9 @@ Built in 5 days as a hands-on project to refresh and expand React knowledge.
 ### Customize
 <img src="./screenshots/customize.png" width="300" alt="Customize">
 
+### Account
+<img src="./screenshots/account.png" width="300" alt="Account">
+
 ## Tech Stack
 - Vite + React
 - React Router DOM
