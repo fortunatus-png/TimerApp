@@ -4,6 +4,10 @@
     --grey-like: #EEE8ED;
 }
 
+.arrows {
+    cursor: pointer;
+}
+
 #addSubjectBtn {
     color: var(--black-like);
     font-size: 1.5em;

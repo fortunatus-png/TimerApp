@@ -1,6 +1,6 @@
 function FigurWithBook() {
     return (
-        <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '150px auto 50px' }}>
+        <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '100px auto 50px' }}>
             {/* Kopf */}
             <circle cx="75" cy="50" r="25" fill="#F8F7F2" stroke="#003D2B" strokeWidth="2" />
             {/* Körper */}

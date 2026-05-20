@@ -22,3 +22,33 @@
     padding: 5px 12px;
     background-color: var(--grey-like);
 }
+
+.congratsMessage,
+.warningModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    margin-top: 1rem;
+    padding: 0 15px 15px;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    background-color: #F8EBCE;
+}
+
+.congratsMessage button,
+.warningModal button {
+    color: var(--black-like);
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    border-radius: 3px;
+    padding: 5px 12px;
+    background-color: var(--grey-like);
+    cursor: pointer;
+}
+
+.warningModal .btnContainer {
+    display: flex;
+    gap: 8px;
+}
