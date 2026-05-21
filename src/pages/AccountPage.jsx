@@ -1,25 +1,30 @@
 import './AccountPage.css'
 import { useNavigate } from 'react-router-dom'
+import LoginPage from './LoginPage'
 
 function AccountPage() {
   const navigate = useNavigate();
+  const email = localStorage.getItem('loggedInUser');
+
+  function logout() {
+    localStorage.removeItem('loggedInUser');
+    window.location.reload();
+  }
+
+  if (!email) {
+    return <LoginPage />;
+  }
 
   return (
     <>
       <div id="accountWrapper">
         <div id="accountContainer">
           <div className="inputTags">
-            <label htmlFor="email">Email:</label>
-            <input type="email" name="email" placeholder="Enter your email.." />
-            <label htmlFor="password">Password:</label>
-            <input type="password" name="password" placeholder="Enter your password.." />
+            <label>Email:</label>
+            <span>{email}</span>
           </div>
           <div>
-            <button id="signUpBtn" type="button">Sign Up</button>
-            <button id="logInBtn" type="button">Log In</button>
-          </div>
-          <div>
-            <a href="#">Forgot Password Link?</a>
+            <button onClick={logout} id="logInBtn" type="button">Log Out</button>
           </div>
         </div>
       </div>
@@ -29,5 +34,6 @@ function AccountPage() {
     </>
   );
 }
+
 
 export default AccountPage;

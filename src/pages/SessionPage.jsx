@@ -1,29 +1,30 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Header from '../components/Header'
 import './SessionPage.css'
 import FigureWithBook from '../components/FigureWithBook'
 
 function SessionPage() {
     const location = useLocation();
-    const mode = location.state.mode;
-    const minutes = location.state.minutes;
-    const [seconds, setSeconds] = useState(mode === 'countdown' ? minutes * 60 : 0);
+    const { minutes } = location.state;
+    const [seconds, setSeconds] = useState(minutes * 60);
     const [isRunning, setIsRunning] = useState(true);
     const [showLeaveWarning, setShowLeaveWarning] = useState(false);
+    const hasSaved = useRef(false);
     const navigate = useNavigate();
 
+    // Time-Logik
     useEffect(() => {
-        if (seconds <= 0 && mode === 'countdown') return;
-        if (!isRunning) return;
+        if (seconds <= 0 || !isRunning) return;
         const interval = setInterval(() => {
-            setSeconds(prev => mode === 'countdown' ? prev - 1 : prev + 1)
+            setSeconds(prev => prev - 1)
         }, 1000);
         return () => clearInterval(interval);
-    }, [seconds, isRunning, mode]);
+    }, [seconds, isRunning]);
 
     useEffect(() => {
-        if (seconds === 0) {
+        if (seconds === 0 && !hasSaved.current) {
+            hasSaved.current = true;
             const session = {
                 date: new Date().toISOString(),
                 minutes: minutes,
@@ -50,7 +51,7 @@ function SessionPage() {
                 date: new Date().toISOString(),
                 minutes: elapsedMinutes,
                 hour: new Date().getHours()
-            })
+            });
             localStorage.setItem('sessions', JSON.stringify(history));
         }
         navigate('/timer');
@@ -65,7 +66,7 @@ function SessionPage() {
                     {seconds === 0 ? '▶' : isRunning ? '⏸' : '▶'}
                 </button>
                 {/*Congratulations message when countdown ends */}
-                {seconds === 0 && mode === 'countdown' && (
+                {seconds === 0 && (
                     <div className='congratsMessage'>
                         <h2>🎉 Great job!</h2>
                         <p>You studied for {minutes} minutes!</p>
@@ -78,7 +79,7 @@ function SessionPage() {
                         <p>Your progress so far will be saved, but you won't be able to continue this session later.</p>
                         <div className="btnContainer">
                             <button onClick={() => {
-                                setShowLeaveWarning(false); setIsRunning(true)
+                                setShowLeaveWarning(false); setIsRunning(true);
                             }}>Continue</button>
                             <button onClick={leaveSession}>Leave</button>
                         </div>
@@ -88,9 +89,9 @@ function SessionPage() {
 
             <FigureWithBook />
             <div id="backBtnContainer">
-                {!showLeaveWarning && (
+                {!showLeaveWarning && seconds > 0 && (
                     <button id="backBtn" onClick={() => {
-                        setIsRunning(false); setShowLeaveWarning(true)
+                        setIsRunning(false); setShowLeaveWarning(true);
                     }}>Back</button>
                 )}
             </div>
