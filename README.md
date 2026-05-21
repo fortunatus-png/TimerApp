@@ -1,4 +1,4 @@
-# Tuma Timer
+# Study Timer App
 
 A study timer app built with React, inspired by the Studdy Bunny app.
 Built in 5 days as a hands-on project to refresh and expand React knowledge.

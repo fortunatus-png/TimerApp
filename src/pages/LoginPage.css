@@ -1,8 +1,6 @@
 :root {
     --black-like: #2D2A29;
-    --yellow-like: #F8EBCE;
     --grey-like: #EEE8ED;
-    --purple-like: #3C1D49;
 }
 
 #accountWrapper {
@@ -25,4 +23,11 @@
 
 .inputTags input {
     width: 100%;
+    color: var(--black-like);
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid var(--black-like);
+    padding: 5px 7px;
+    border-radius: 3px;
+    background-color: var(--grey-like);
 }

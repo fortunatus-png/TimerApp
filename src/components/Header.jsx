@@ -6,10 +6,6 @@ function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     return (
         <header>
-            <div id="counter">
-                <span>★</span>
-                <span>0</span>
-            </div>
             <div id="hamburger-menu">
                 <span onClick={() => setMenuOpen(!menuOpen)}>☰</span>
             </div>
