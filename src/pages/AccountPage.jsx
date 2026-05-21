@@ -20,7 +20,7 @@ function AccountPage() {
       <div id="accountWrapper">
         <div id="accountContainer">
           <div className="inputTags">
-            <label>Email:</label>
+            <label>Email: </label>
             <span>{email}</span>
           </div>
           <div>
@@ -34,6 +34,5 @@ function AccountPage() {
     </>
   );
 }
-
 
 export default AccountPage;

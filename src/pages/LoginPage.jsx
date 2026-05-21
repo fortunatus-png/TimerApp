@@ -45,22 +45,20 @@ function LoginPage() {
   }
 
   return (
-    <>
-      <div id="accountWrapper">
-        <div id="accountContainer">
-          <div className="inputTags">
-            <label htmlFor="email">Email:</label>
-            <input type="email" value={email} placeholder="Enter your email.." onChange={(e) => setEmail(e.target.value)} />
-            <label htmlFor="password">Password:</label>
-            <input type="password" value={password} placeholder="Enter your password.." onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div>
-            <button onClick={signUp} id="signUpBtn" type="button">Sign Up</button>
-            <button onClick={logIn} id="logInBtn" type="button">Log In</button>
-          </div>
+    <div id="accountWrapper">
+      <div id="accountContainer">
+        <div className="inputTags">
+          <label htmlFor="email">Email:</label>
+          <input type="email" value={email} placeholder="Enter your email.." onChange={(e) => setEmail(e.target.value)} />
+          <label htmlFor="password">Password:</label>
+          <input type="password" value={password} placeholder="Enter your password.." onChange={(e) => setPassword(e.target.value)} />
+        </div>
+        <div>
+          <button onClick={signUp} id="signUpBtn" type="button">Sign Up</button>
+          <button onClick={logIn} id="logInBtn" type="button">Log In</button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
