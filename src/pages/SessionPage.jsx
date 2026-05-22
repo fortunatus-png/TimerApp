@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import Header from '../components/Header'
 import './SessionPage.css'
 import FigureWithBook from '../components/FigureWithBook'
+import { Button, Box, Typography } from '@mui/material'
 
 function SessionPage() {
     const location = useLocation();
@@ -22,6 +23,7 @@ function SessionPage() {
         return () => clearInterval(interval);
     }, [seconds, isRunning]);
 
+    // Save session when timer reaches 0
     useEffect(() => {
         if (seconds === 0 && !hasSaved.current) {
             hasSaved.current = true;
@@ -61,27 +63,29 @@ function SessionPage() {
         <>
             <Header />
             <div className="sessionContainer">
-                <h1 id="timer">{formatTime(seconds)}</h1>
-                <button id="sessionBtn" onClick={() => setIsRunning(!isRunning)}>
+                <Typography variant="h1" component="h1" >{formatTime(seconds)}</Typography>
+                <Button variant="contained" onClick={() => setIsRunning(!isRunning)}>
                     {seconds === 0 ? '▶' : isRunning ? '⏸' : '▶'}
-                </button>
+                </Button>
+
                 {/*Congratulations message when countdown ends */}
                 {seconds === 0 && (
                     <div className='congratsMessage'>
                         <h2>🎉 Great job!</h2>
                         <p>You studied for {minutes} minutes!</p>
-                        <button onClick={() => navigate('/timer')}>Start new session</button>
+                        <Button variant="contained" onClick={() => navigate('/timer')}>Start new session</Button>
                     </div>
                 )}
+
                 {/*Warning modal when user tries to leave */}
                 {showLeaveWarning && (
                     <div className="warningModal">
                         <p>Your progress so far will be saved, but you won't be able to continue this session later.</p>
                         <div className="btnContainer">
-                            <button onClick={() => {
+                            <Button variant="contained" onClick={() => {
                                 setShowLeaveWarning(false); setIsRunning(true);
-                            }}>Continue</button>
-                            <button onClick={leaveSession}>Leave</button>
+                            }}>Continue</Button>
+                            <Button variant="contained" onClick={leaveSession}>Leave</Button>
                         </div>
                     </div>
                 )}
@@ -90,9 +94,9 @@ function SessionPage() {
             <FigureWithBook />
             <div id="backBtnContainer">
                 {!showLeaveWarning && seconds > 0 && (
-                    <button id="backBtn" onClick={() => {
+                    <Button variant="contained" onClick={() => {
                         setIsRunning(false); setShowLeaveWarning(true);
-                    }}>Back</button>
+                    }}>Back</Button>
                 )}
             </div>
         </>

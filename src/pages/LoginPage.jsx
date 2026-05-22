@@ -1,5 +1,6 @@
 import './LoginPage.css'
 import { useState } from 'react'
+import { TextField, Button } from '@mui/material'
 
 function getAllUsers() {
   return JSON.parse(localStorage.getItem('users') || '[]');
@@ -47,15 +48,13 @@ function LoginPage() {
   return (
     <div id="accountWrapper">
       <div id="accountContainer">
-        <div className="inputTags">
-          <label htmlFor="email">Email:</label>
-          <input type="email" value={email} placeholder="Enter your email.." onChange={(e) => setEmail(e.target.value)} />
-          <label htmlFor="password">Password:</label>
-          <input type="password" value={password} placeholder="Enter your password.." onChange={(e) => setPassword(e.target.value)} />
+        <div className="input-container">
+          <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth />
+          <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth />
         </div>
         <div>
-          <button onClick={signUp} id="signUpBtn" type="button">Sign Up</button>
-          <button onClick={logIn} id="logInBtn" type="button">Log In</button>
+          <Button onClick={signUp} variant="contained">Sign Up</Button>
+          <Button onClick={logIn} variant="contained">Log In</Button>
         </div>
       </div>
     </div>

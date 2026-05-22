@@ -12,43 +12,33 @@ header {
     position: relative;
 }
 
-#counter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.menu-icon-button {
     color: var(--black-like);
-    font-size: 1.9em;
-    border: 1px solid var(--black-like);
-    padding: 2px 15px;
+}
+
+.menu-icon-button .MuiSvgIcon-root {
+    font-size: 3rem;
+}
+
+.custom-menu .MuiPaper-root {
     background-color: var(--grey-like);
-    border-radius: 3px;
-}
-
-#hamburger-menu {
-    font-size: 3em;
-    color: var(--black-like);
-    cursor: pointer;
-}
-
-#menuItems {
-    display: flex;
-    flex-direction: column;
     border: 1px solid var(--black-like);
-    background-color: var(--grey-like);
-    position: absolute;
-    right: 1rem;
-    top: 5.5rem;
     border-radius: 3px;
+    margin-top: 8px;
 }
 
-.links {
+.custom-menu-item {
     color: var(--black-like);
     text-decoration: none;
     font-weight: bold;
-    padding: 7px;
+    padding: 8px 16px;
     border-bottom: 1px solid var(--black-like);
 }
 
-.links:hover {
+.custom-menu-item:last-child {
+    border-bottom: none;
+}
+
+.custom-menu-item:hover {
     background-color: var(--hover-grey-like);
 }

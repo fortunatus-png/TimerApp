@@ -19,8 +19,3 @@ h3 {
     margin: auto;
     color: var(--black-like);
 }
-
-#resetBtn,
-#backBtn {
-    height: 37px;
-}

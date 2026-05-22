@@ -3,14 +3,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './TimerPage.css'
 import Figure from '../components/Figure'
+import { Slider, Select, MenuItem, Button, Typography, Box } from '@mui/material'
 
 function TimerPage() {
   const [minutes, setMinutes] = useState(5);
   const navigate = useNavigate();
-
-  function handleMinutesChange(e) {
-    setMinutes(Number(e.target.value));
-  }
 
   function startSession() {
     navigate('/session', { state: { minutes: minutes } });
@@ -21,24 +18,37 @@ function TimerPage() {
       <Header />
 
       <main id="setTimerContainer">
+        <Box>
+          <Select value="countdown" id="timer-type" fullWidth>
+            <MenuItem value="countdown">Countdown</MenuItem>
+          </Select>
+        </Box>
+
+        <Box textAlign="center" mb={1}>
+          <Typography variant="h5" component="span" sx={{ fontWeight: 'bold' }}>
+            {minutes}
+          </Typography>
+          <Typography variant="h5" component="span" sx={{ fontWeight: 'bold' }}>
+            {" "}Minutes
+          </Typography>
+        </Box>
+
+        <Slider id="slider"
+          value={minutes}
+          min={5} max={180} step={5}
+          onChange={(e, val) => setMinutes(val)}
+          sx={{ width: '300px', display: 'block', mx: 'auto', mb: 3 }}
+          valueLabelDisplay="auto"
+        />
+
         <div>
-          <select name="timer-type" id="timer-type" >
-            <option value="countdown">Countdown</option>
-          </select>
-        </div>
-        <div className="slider">
-          <label htmlFor="time-setting">{minutes} Minutes</label> <br />
-          <input type="range" id="time-setting" name="time-setting" min="5" max="180" value={minutes} step="5"
-            onChange={handleMinutesChange} />
-        </div>
-        <div>
-          <button className="startTimerBtn" onClick={startSession}>Start</button>
+          <Button variant="contained" onClick={startSession}>Start</Button>
         </div>
       </main>
 
       <Figure />
       <div id="backBtnContainer">
-        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
+        <Button variant="contained" onClick={() => navigate('/')}>Back</Button>
       </div>
     </>
   )

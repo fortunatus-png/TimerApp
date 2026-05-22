@@ -1,6 +1,7 @@
 import './AccountPage.css'
 import { useNavigate } from 'react-router-dom'
 import LoginPage from './LoginPage'
+import { Box, Button, Typography } from '@mui/material'
 
 function AccountPage() {
   const navigate = useNavigate();
@@ -19,17 +20,16 @@ function AccountPage() {
     <>
       <div id="accountWrapper">
         <div id="accountContainer">
-          <div className="inputTags">
-            <label>Email: </label>
-            <span>{email}</span>
-          </div>
+          <Box className="inputTags">
+            <Typography sx={{ color: '#2D2A29', fontWeight: 'bold' }}>Email: {email}</Typography>
+          </Box>
           <div>
-            <button onClick={logout} id="logInBtn" type="button">Log Out</button>
+            <Button variant="contained" onClick={logout}>Log Out</Button>
           </div>
         </div>
       </div>
       <div id="backBtnContainer">
-        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
+        <Button variant="contained" onClick={() => navigate('/')}>Back</Button>
       </div>
     </>
   );

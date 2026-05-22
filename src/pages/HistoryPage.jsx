@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import './HistoryPage.css'
 import { useNavigate } from 'react-router-dom'
+import { Button, Typography } from '@mui/material'
 
 const now = new Date();
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -83,13 +84,13 @@ function HistoryPage() {
   }
 
   return (
-    <>
-      <h3>
+    <div id="calendar-container">
+      <Typography variant="h5" component="h3" textAlign="center">
         <span className="arrows" onClick={getPreviousMonth}>ᐊ</span>
         <span> </span>{MONTH_NAMES[month]} {year}<span> </span>
         <span className="arrows" onClick={getNextMonth}>ᐅ</span>
-      </h3>
-      <div id="calendarContainer">
+      </Typography>
+      <div id="calendar-cells">
         <div className="daysLabel">Days</div>
         <div>
           <div className="hoursLabel">Hours</div>
@@ -101,9 +102,9 @@ function HistoryPage() {
             </div>
           </div>
         </div>
-        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
+        <Button variant="contained" id="backBtn" onClick={() => navigate('/')}>Back</Button>
       </div>
-    </>
+    </div>
   );
 }
 

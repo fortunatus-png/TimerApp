@@ -14,21 +14,3 @@
     border-radius: 3px;
     background-color: var(--grey-like);
 }
-
-button {
-    color: var(--black-like);
-    font-size: 1em;
-    font-weight: bold;
-    border: 1px solid var(--black-like);
-    padding: 5px 7px;
-    border-radius: 3px;
-    background-color: var(--grey-like);
-    cursor: pointer;
-    margin: 10px;
-}
-
-label {
-    color: var(--black-like);
-    font-size: 1.1em;
-    font-weight: bold;
-}
