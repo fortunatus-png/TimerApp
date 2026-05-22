@@ -1,0 +1,146 @@
+/* Body animation (breathing) */
+svg {
+    display: block;
+    margin: 190px auto;
+}
+
+.body-breathe {
+    animation: breathe 3s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+.read-body {
+    animation: breathe 3s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+.blink-l {
+    animation: blink 5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.blink-r {
+    animation: blink 5s ease-in-out infinite 0.15s;
+    transform-origin: center;
+}
+
+.read-blink-l {
+    animation: blink 6s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.read-blink-r {
+    animation: blink 6s ease-in-out infinite 0.2s;
+    transform-origin: center;
+}
+
+.move-l {
+    animation: eyeMove 6s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.move-r {
+    animation: eyeMove 6s ease-in-out infinite 0.3s;
+    transform-origin: center;
+}
+
+.read-eye-l {
+    animation: readEyeMove 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.read-eye-r {
+    animation: readEyeMove 3s ease-in-out infinite 0.2s;
+    transform-origin: center;
+}
+
+.read-head {
+    animation: readBob 2.5s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+.book-bob {
+    animation: bookBob 2.5s ease-in-out infinite;
+    transform-origin: center top;
+}
+
+@keyframes eyeMove {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(5px, 2px);
+    }
+
+    50% {
+        transform: translate(-4px, 3px);
+    }
+
+    75% {
+        transform: translate(3px, -2px);
+    }
+}
+
+@keyframes readEyeMove {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(3px);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    88%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    92% {
+        transform: scaleY(0.08);
+    }
+}
+
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes readBob {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+@keyframes bookBob {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(3px);
+    }
+}
