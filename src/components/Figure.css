@@ -1,4 +1,3 @@
-/* Body animation (breathing) */
 svg {
     display: block;
     margin: 190px auto;
@@ -12,26 +11,6 @@ svg {
 .read-body {
     animation: breathe 3s ease-in-out infinite;
     transform-origin: center bottom;
-}
-
-.blink-l {
-    animation: blink 5s ease-in-out infinite;
-    transform-origin: center;
-}
-
-.blink-r {
-    animation: blink 5s ease-in-out infinite 0.15s;
-    transform-origin: center;
-}
-
-.read-blink-l {
-    animation: blink 6s ease-in-out infinite;
-    transform-origin: center;
-}
-
-.read-blink-r {
-    animation: blink 6s ease-in-out infinite 0.2s;
-    transform-origin: center;
 }
 
 .move-l {
@@ -93,19 +72,6 @@ svg {
 
     50% {
         transform: translateY(3px);
-    }
-}
-
-@keyframes blink {
-
-    0%,
-    88%,
-    100% {
-        transform: scaleY(1);
-    }
-
-    92% {
-        transform: scaleY(0.08);
     }
 }
 
