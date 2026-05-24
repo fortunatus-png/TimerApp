@@ -14,7 +14,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* ← größerer Abstand zwischen Email und Button */
     align-items: center;
     border: 1px solid var(--black-like);
     width: 50%;

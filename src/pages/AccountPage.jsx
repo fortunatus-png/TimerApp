@@ -20,7 +20,7 @@ function AccountPage() {
     <>
       <div id="accountWrapper">
         <div id="accountContainer">
-          <Box className="inputTags" sx={{ mb: 3 }}>  {/* ← margin-bottom hinzugefügt */}
+          <Box className="inputTags" sx={{ mb: 3 }}>
             <Typography sx={{ color: '#2D2A29', fontWeight: 'bold' }}>
               Email: {email}
             </Typography>
@@ -30,7 +30,7 @@ function AccountPage() {
               variant="contained"
               onClick={logout}
               sx={{
-                bgcolor: '#2D2A29',  // Dunkel wie bei anderen Pages
+                bgcolor: '#2D2A29',
                 '&:hover': { bgcolor: '#1a1a1a' }
               }}
             >
@@ -43,10 +43,7 @@ function AccountPage() {
         <Button
           variant="contained"
           onClick={() => navigate('/')}
-          sx={{
-            bgcolor: '#2D2A29',
-            '&:hover': { bgcolor: '#1a1a1a' }
-          }}
+          sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
         >
           Back
         </Button>

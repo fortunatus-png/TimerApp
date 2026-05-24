@@ -18,37 +18,53 @@ function TimerPage() {
       <Header />
 
       <main id="setTimerContainer">
-        <Box>
-          <Select value="countdown" id="timer-type" fullWidth>
+        <Box sx={{ width: '100%', maxWidth: 300, mx: 'auto', mb: 2 }}>
+          <Select
+            value="countdown"
+            fullWidth
+            IconComponent={() => null}  // ← Pfeil entfernen
+            sx={{
+              '& .MuiSelect-select': {
+                textAlign: 'center',
+              },
+            }}
+          >
             <MenuItem value="countdown">Countdown</MenuItem>
           </Select>
         </Box>
 
         <Box textAlign="center" mb={1}>
-          <Typography variant="h5" component="span" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h5" component="span" sx={{ fontWeight: 'bold', color: '#2D2A29' }}>
             {minutes}
           </Typography>
-          <Typography variant="h5" component="span" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h5" component="span" sx={{ fontWeight: 'bold', color: '#2D2A29' }}>
             {" "}Minutes
           </Typography>
         </Box>
 
-        <Slider id="slider"
+        <Slider
           value={minutes}
           min={5} max={180} step={5}
           onChange={(e, val) => setMinutes(val)}
           sx={{ width: '300px', display: 'block', mx: 'auto', mb: 3 }}
-          valueLabelDisplay="auto"
+          valueLabelDisplay="off"
         />
 
-        <div>
+        <Box textAlign="center">
           <Button variant="contained" onClick={startSession}>Start</Button>
-        </div>
+        </Box>
       </main>
 
       <Figure />
+
       <div id="backBtnContainer">
-        <Button variant="contained" onClick={() => navigate('/')}>Back</Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate('/')}
+          sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
+        >
+          Back
+        </Button>
       </div>
     </>
   )
