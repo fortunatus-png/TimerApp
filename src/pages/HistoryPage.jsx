@@ -2,7 +2,9 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import './HistoryPage.css'
 import { useNavigate } from 'react-router-dom'
-import { Button, Typography } from '@mui/material'
+import { Button, Typography, IconButton } from '@mui/material'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 const now = new Date();
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -50,7 +52,7 @@ function HistoryPage() {
       <div className="heatRow">
         <span></span>
         {Array.from({ length: 24 }, (_, h) => (
-          <div key={h} className="heatHour">{h}</div>
+          <div key={h} className="heatHour">{h + 1}</div>  // ← +1 für 1-24
         ))}
       </div>
     );
@@ -84,25 +86,43 @@ function HistoryPage() {
   }
 
   return (
-    <div id="calendar-container">
-      <Typography variant="h5" component="h3" textAlign="center">
-        <span className="arrows" onClick={getPreviousMonth}>ᐊ</span>
-        <span> </span>{MONTH_NAMES[month]} {year}<span> </span>
-        <span className="arrows" onClick={getNextMonth}>ᐅ</span>
-      </Typography>
-      <div id="calendar-cells">
-        <div className="daysLabel">Days</div>
-        <div>
-          <div className="hoursLabel">Hours</div>
-          {renderHourLabels()}
-          <div id="heatMapModalContainer">
-            <div className="heatMapContainer">
-              {Array.from({ length: daysInMonth }, (_, i) => renderDayRow(i + 1)
-              )}
+    <div id="history-page">
+      <Header />
+
+      <div id="calendar-wrapper">
+        {/* Month navigation with MUI Icons */}
+        <div id="month-navigation">
+          <IconButton onClick={getPreviousMonth} sx={{ color: '#2D2A29' }}>
+            <ChevronLeftIcon />
+          </IconButton>
+          <Typography variant="h5" component="h3" sx={{ fontWeight: 'bold', color: '#2D2A29' }}>
+            {MONTH_NAMES[month]} {year}
+          </Typography>
+          <IconButton onClick={getNextMonth} sx={{ color: '#2D2A29' }}>
+            <ChevronRightIcon />
+          </IconButton>
+        </div>
+
+        {/* Heatmap */}
+        <div id="heatmap-wrapper">
+          <div className="daysLabel">Days</div>
+          <div>
+            <div className="hoursLabel">Hours</div>
+            {renderHourLabels()}
+            <div id="heatMapModalContainer">
+              <div className="heatMapContainer">
+                {Array.from({ length: daysInMonth }, (_, i) => renderDayRow(i + 1))}
+              </div>
             </div>
           </div>
         </div>
-        <Button variant="contained" id="backBtn" onClick={() => navigate('/')}>Back</Button>
+      </div>
+
+      {/* Back button fixed bottom right - dark color */}
+      <div id="backBtnContainer">
+        <Button variant="contained" onClick={() => navigate('/')} sx={{ bgcolor: '#2D2A29' }}>
+          Back
+        </Button>
       </div>
     </div>
   );
