@@ -1,60 +1,82 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
-import './Header.css'
+import { Toolbar, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
+import './Header.css';
 
 function Header({ onNavigate }) {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const navigate = useNavigate();
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleNavigation = (to) => {
-        handleClose();
+    function handleNavigation(to) {
         if (onNavigate) {
             onNavigate(to);
         } else {
-            // Fallback: normal navigation
-            window.location.href = to;
+            navigate(to);
         }
-    };
+    }
 
     return (
-        <header>
-            <IconButton
-                onClick={handleClick}
-                size="large"
-                sx={{ color: '#2D2A29' }}
-            >
-                <MenuIcon sx={{ fontSize: '3rem' }} />
-            </IconButton>
+        <header className="header">
 
-            <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
-                <MenuItem onClick={() => handleNavigation('/timer')}>Timer</MenuItem>
-                <MenuItem onClick={() => handleNavigation('/history')}>History</MenuItem>
-                <MenuItem onClick={() => handleNavigation('/account')}>Account</MenuItem>
-                <MenuItem onClick={() => handleNavigation('/customization')}>Customize</MenuItem>
-            </Menu>
+            <Toolbar className="toolbar">
+
+                <Typography
+                    variant="h5"
+                    className="logo"
+                >
+                    StudyFlow
+                </Typography>
+
+                <nav className="navLinks">
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/')
+                        }
+                    >
+                        Home
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/timer')
+                        }
+                    >
+                        Timer
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/history')
+                        }
+                    >
+                        History
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/account')
+                        }
+                    >
+                        Account
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/customization')
+                        }
+                    >
+                        Customize
+                    </Button>
+
+                </nav>
+
+            </Toolbar>
+
         </header>
     );
 }
