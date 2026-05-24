@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import Header from '../components/Header'
 import './SessionPage.css'
 import FigureWithBook from '../components/FigureWithBook'
-import { Button, Box, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 
 function SessionPage() {
     const location = useLocation();
@@ -14,7 +14,7 @@ function SessionPage() {
     const hasSaved = useRef(false);
     const navigate = useNavigate();
 
-    // Time-Logik
+    // Timer Logic
     useEffect(() => {
         if (seconds <= 0 || !isRunning) return;
         const interval = setInterval(() => {
@@ -44,7 +44,7 @@ function SessionPage() {
         return `${m}:${s.toString().padStart(2, '0')}`;
     }
 
-    function leaveSession() {
+    function savePartialSession() {
         const elapsed = minutes * 60 - seconds;
         const elapsedMinutes = Math.floor(elapsed / 60);
         if (elapsedMinutes > 0) {
@@ -56,47 +56,105 @@ function SessionPage() {
             });
             localStorage.setItem('sessions', JSON.stringify(history));
         }
-        navigate('/timer');
+    }
+
+    // Navigation function for Header links (with warning)
+    function handleHeaderNavigation(to) {
+        if (seconds > 0 && !showLeaveWarning) {
+            setIsRunning(false);
+            setShowLeaveWarning(true);
+            window.pendingNavigation = to;
+        } else {
+            navigate(to);
+        }
+    }
+
+    // Leave function that handles pending navigation
+    function leaveSessionAndNavigate() {
+        savePartialSession();
+
+        if (window.pendingNavigation) {
+            const destination = window.pendingNavigation;
+            window.pendingNavigation = null;
+            navigate(destination);
+        } else {
+            navigate('/timer');
+        }
+    }
+
+    function handleContinue() {
+        setShowLeaveWarning(false);
+        setIsRunning(true);
+        window.pendingNavigation = null;
     }
 
     return (
         <>
-            <Header />
+            <Header onNavigate={handleHeaderNavigation} />
+
             <div className="sessionContainer">
-                <Typography variant="h1" component="h1" >{formatTime(seconds)}</Typography>
-                <Button variant="contained" onClick={() => setIsRunning(!isRunning)}>
+                <Typography variant="h1" component="h1" sx={{ fontSize: '5rem', fontWeight: 'bold', color: '#2D2A29' }}>
+                    {formatTime(seconds)}
+                </Typography>
+                <Button
+                    variant="contained"
+                    onClick={() => setIsRunning(!isRunning)}
+                    sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
+                >
                     {seconds === 0 ? '▶' : isRunning ? '⏸' : '▶'}
                 </Button>
 
-                {/*Congratulations message when countdown ends */}
                 {seconds === 0 && (
                     <div className='congratsMessage'>
                         <h2>🎉 Great job!</h2>
                         <p>You studied for {minutes} minutes!</p>
-                        <Button variant="contained" onClick={() => navigate('/timer')}>Start new session</Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => navigate('/timer')}
+                            sx={{ bgcolor: '#2D2A29' }}
+                        >
+                            Start new session
+                        </Button>
                     </div>
                 )}
 
-                {/*Warning modal when user tries to leave */}
                 {showLeaveWarning && (
                     <div className="warningModal">
                         <p>Your progress so far will be saved, but you won't be able to continue this session later.</p>
                         <div className="btnContainer">
-                            <Button variant="contained" onClick={() => {
-                                setShowLeaveWarning(false); setIsRunning(true);
-                            }}>Continue</Button>
-                            <Button variant="contained" onClick={leaveSession}>Leave</Button>
+                            <Button
+                                variant="outlined"
+                                onClick={handleContinue}
+                                sx={{ borderColor: '#2D2A29', color: '#2D2A29' }}
+                            >
+                                Continue
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={leaveSessionAndNavigate}
+                                sx={{ bgcolor: '#2D2A29' }}
+                            >
+                                Leave
+                            </Button>
                         </div>
                     </div>
                 )}
             </div>
 
             <FigureWithBook />
+
             <div id="backBtnContainer">
                 {!showLeaveWarning && seconds > 0 && (
-                    <Button variant="contained" onClick={() => {
-                        setIsRunning(false); setShowLeaveWarning(true);
-                    }}>Back</Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            setIsRunning(false);
+                            setShowLeaveWarning(true);
+                        }}
+                        sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
+                    >
+                        Back
+                    </Button>
                 )}
             </div>
         </>

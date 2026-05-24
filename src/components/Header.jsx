@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IconButton, Menu, MenuItem, Box } from '@mui/material'
+import { IconButton, Menu, MenuItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import './Header.css'
 
-function Header() {
+function Header({ onNavigate }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -16,21 +16,30 @@ function Header() {
         setAnchorEl(null);
     };
 
+    const handleNavigation = (to) => {
+        handleClose();
+        if (onNavigate) {
+            onNavigate(to);
+        } else {
+            // Fallback: normal navigation
+            window.location.href = to;
+        }
+    };
+
     return (
         <header>
             <IconButton
                 onClick={handleClick}
                 size="large"
-                className="menu-icon-button"
+                sx={{ color: '#2D2A29' }}
             >
-                <MenuIcon />
+                <MenuIcon sx={{ fontSize: '3rem' }} />
             </IconButton>
 
             <Menu
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                className="custom-menu"
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
@@ -40,21 +49,11 @@ function Header() {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={handleClose} component={Link} to="/" className="custom-menu-item">
-                    Home
-                </MenuItem>
-                <MenuItem onClick={handleClose} component={Link} to="/timer" className="custom-menu-item">
-                    Timer
-                </MenuItem>
-                <MenuItem onClick={handleClose} component={Link} to="/history" className="custom-menu-item">
-                    History
-                </MenuItem>
-                <MenuItem onClick={handleClose} component={Link} to="/account" className="custom-menu-item">
-                    Account
-                </MenuItem>
-                <MenuItem onClick={handleClose} component={Link} to="/customization" className="custom-menu-item">
-                    Customize
-                </MenuItem>
+                <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
+                <MenuItem onClick={() => handleNavigation('/timer')}>Timer</MenuItem>
+                <MenuItem onClick={() => handleNavigation('/history')}>History</MenuItem>
+                <MenuItem onClick={() => handleNavigation('/account')}>Account</MenuItem>
+                <MenuItem onClick={() => handleNavigation('/customization')}>Customize</MenuItem>
             </Menu>
         </header>
     );
