@@ -1,11 +1,21 @@
-#accountWrapper {
-    display: flex;
-    justify-content: center;
-    padding-top: 3rem;
-    box-sizing: border-box;
-    width: 100%;
+:root {
+    --black-like: #2D2A29;
+    --grey-like: #EEE8ED;
 }
 
-.input-container {
-    padding: 0 10px;
+#login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#login-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--grey-like);
+    padding: 40px 30px;
+    border-radius: 8px;
+    border: 1px solid var(--black-like);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

@@ -3,14 +3,33 @@
     --grey-like: #EEE8ED;
 }
 
+#accountWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
 #accountContainer {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 20px;
+    /* ← größerer Abstand zwischen Email und Button */
     align-items: center;
     border: 1px solid var(--black-like);
     width: 50%;
-    padding: 20px 0;
-    border-radius: 3px;
+    max-width: 400px;
+    padding: 30px 20px;
+    border-radius: 8px;
     background-color: var(--grey-like);
+}
+
+.inputTags {
+    text-align: center;
+}
+
+#backBtnContainer {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }

@@ -1,6 +1,6 @@
 import './LoginPage.css'
 import { useState } from 'react'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, Box } from '@mui/material'
 
 function getAllUsers() {
   return JSON.parse(localStorage.getItem('users') || '[]');
@@ -46,18 +46,34 @@ function LoginPage() {
   }
 
   return (
-    <div id="accountWrapper">
-      <div id="accountContainer">
-        <div className="input-container">
-          <TextField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth />
-          <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth />
-        </div>
-        <div>
-          <Button onClick={signUp} variant="contained">Sign Up</Button>
-          <Button onClick={logIn} variant="contained">Log In</Button>
-        </div>
-      </div>
-    </div>
+    <Box id="login-wrapper">
+      <Box id="login-container">
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+          <Button variant="contained" onClick={signUp} fullWidth>
+            Sign Up
+          </Button>
+          <Button variant="outlined" onClick={logIn} fullWidth>
+            Log In
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
