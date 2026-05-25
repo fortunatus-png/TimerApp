@@ -1,55 +1,97 @@
-#calendarContainer {
+#history-page {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+#calendar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 5px;
+    padding: 0 10px;
+}
+
+/* Month navigation */
+#month-navigation {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
-.arrows {
-    cursor: pointer;
-}
-
-.heatRow {
+/* Heatmap container */
+#heatmap-wrapper {
     display: flex;
-    align-items: center;
-    gap: 3px;
-    margin-bottom: 3px;
-}
-
-.heatRow span {
-    width: 20px;
-    font-size: 0.8em;
-}
-
-.heatCell {
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-}
-
-.heatHour {
-    width: 20px;
-    font-size: 0.7em;
-    text-align: center;
-}
-
-#heatMapModalContainer {
-    display: flex;
-    gap: 2rem;
     align-items: flex-start;
+    gap: 5px;
+    max-width: 100%;
+    overflow-x: visible;
 }
 
-#backBtn {
-    align-self: flex-end;
+/* Hours label */
+.hoursLabel {
+    font-size: 0.75em;
+    margin-left: 22px;
+    margin-bottom: 2px;
+    color: #2D2A29;
 }
 
+/* Days label (vertical text) */
 .daysLabel {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    font-size: 0.8em;
-    margin-right: 4px;
+    font-size: 0.75em;
+    margin-top: 20px;
+    color: #2D2A29;
 }
 
-.hoursLabel {
-    font-size: 0.8em;
-    margin-left: 24px;
+/* Heat row - each row is a day */
+.heatRow {
+    display: flex;
+    align-items: center;
+    gap: 2px;
     margin-bottom: 2px;
+}
+
+.heatRow span {
+    width: 22px;
+    font-size: 0.7em;
+    color: #2D2A29;
+    text-align: right;
+    padding-right: 2px;
+}
+
+/* Heat cells */
+.heatCell {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    transition: transform 0.2s;
+}
+
+.heatCell:hover {
+    transform: scale(1.1);
+}
+
+/* Hour labels 1-24 */
+.heatHour {
+    width: 18px;
+    font-size: 0.7em;
+    text-align: center;
+    color: #2D2A29;
+}
+
+/* Heatmap container */
+#heatMapModalContainer {
+    display: flex;
+    gap: 0.25rem;
+    align-items: flex-start;
+}
+
+.heatMapContainer {
+    display: flex;
+    flex-direction: column;
 }

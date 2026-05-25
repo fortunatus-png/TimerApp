@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import './index.css'
+import { useEffect } from 'react'
+import Sparkle from './components/Sparkle'
 import HomePage from './pages/HomePage'
 import TimerPage from './pages/TimerPage'
 import SessionPage from './pages/SessionPage'
@@ -6,9 +9,6 @@ import HistoryPage from './pages/HistoryPage'
 import CustomizationPage from './pages/CustomizationPage'
 import AccountPage from './pages/AccountPage'
 import LoginPage from './pages/LoginPage'
-import './index.css'
-import { useEffect } from 'react'
-import Sparkle from './components/Sparkle'
 
 function App() {
   const loggedInUser = localStorage.getItem('loggedInUser');

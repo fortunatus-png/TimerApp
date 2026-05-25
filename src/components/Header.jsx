@@ -1,23 +1,82 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import './Header.css'
+import { Toolbar, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-function Header() {
-    const [menuOpen, setMenuOpen] = useState(false);
+import './Header.css';
+
+function Header({ onNavigate }) {
+    const navigate = useNavigate();
+
+    function handleNavigation(to) {
+        if (onNavigate) {
+            onNavigate(to);
+        } else {
+            navigate(to);
+        }
+    }
+
     return (
-        <header>
-            <div id="hamburger-menu">
-                <span onClick={() => setMenuOpen(!menuOpen)}>☰</span>
-            </div>
-            {menuOpen && (
-                <nav id="menuItems">
-                    <Link className="links" to="/">Home</Link>
-                    <Link className="links" to="/timer">Timer</Link>
-                    <Link className="links" to="/history">History</Link>
-                    <Link className="links" to="/account">Account</Link>
-                    <Link className="links" to="/customization">Customize</Link>
+        <header className="header">
+
+            <Toolbar className="toolbar">
+
+                <Typography
+                    variant="h5"
+                    className="logo"
+                >
+                    StudyFlow
+                </Typography>
+
+                <nav className="navLinks">
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/')
+                        }
+                    >
+                        Home
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/timer')
+                        }
+                    >
+                        Timer
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/history')
+                        }
+                    >
+                        History
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/account')
+                        }
+                    >
+                        Account
+                    </Button>
+
+                    <Button
+                        disableRipple
+                        onClick={() =>
+                            handleNavigation('/customization')
+                        }
+                    >
+                        Customize
+                    </Button>
+
                 </nav>
-            )}
+
+            </Toolbar>
+
         </header>
     );
 }

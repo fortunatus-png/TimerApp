@@ -3,32 +3,25 @@
     --grey-like: #EEE8ED;
 }
 
+#accountWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #accountContainer {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 20px;
     align-items: center;
     border: 1px solid var(--black-like);
     width: 50%;
-    padding: 20px 0;
-    border-radius: 3px;
+    max-width: 400px;
+    padding: 30px 20px;
+    border-radius: 8px;
     background-color: var(--grey-like);
 }
 
-button {
-    color: var(--black-like);
-    font-size: 1em;
-    font-weight: bold;
-    border: 1px solid var(--black-like);
-    padding: 5px 7px;
-    border-radius: 3px;
-    background-color: var(--grey-like);
-    cursor: pointer;
-    margin: 10px;
-}
-
-label {
-    color: var(--black-like);
-    font-size: 1.1em;
-    font-weight: bold;
+.inputTags {
+    text-align: center;
 }

@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Header from '../components/Header'
 import './HistoryPage.css'
-import { useNavigate } from 'react-router-dom'
+import { Button, Typography, IconButton } from '@mui/material'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 const now = new Date();
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -31,7 +33,6 @@ function HistoryPage() {
   const [year, setYear] = useState(now.getFullYear());
   const daysInMonth = getDaysInMonth(month, year);
   const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
-  const navigate = useNavigate();
 
   function getMinutesForHour(day, hour) {
     return sessions
@@ -49,7 +50,7 @@ function HistoryPage() {
       <div className="heatRow">
         <span></span>
         {Array.from({ length: 24 }, (_, h) => (
-          <div key={h} className="heatHour">{h}</div>
+          <div key={h} className="heatHour">{h + 1}</div>  // ← +1 for 1-24
         ))}
       </div>
     );
@@ -83,27 +84,36 @@ function HistoryPage() {
   }
 
   return (
-    <>
-      <h3>
-        <span className="arrows" onClick={getPreviousMonth}>ᐊ</span>
-        <span> </span>{MONTH_NAMES[month]} {year}<span> </span>
-        <span className="arrows" onClick={getNextMonth}>ᐅ</span>
-      </h3>
-      <div id="calendarContainer">
-        <div className="daysLabel">Days</div>
-        <div>
-          <div className="hoursLabel">Hours</div>
-          {renderHourLabels()}
-          <div id="heatMapModalContainer">
-            <div className="heatMapContainer">
-              {Array.from({ length: daysInMonth }, (_, i) => renderDayRow(i + 1)
-              )}
+    <div id="history-page">
+      <Header />
+
+      <div id="calendar-wrapper">
+        <div id="month-navigation">
+          <IconButton onClick={getPreviousMonth} sx={{ color: '#2D2A29' }}>
+            <ChevronLeftIcon />
+          </IconButton>
+          <Typography variant="h5" component="h3" sx={{ fontWeight: 'bold', color: '#2D2A29' }}>
+            {MONTH_NAMES[month]} {year}
+          </Typography>
+          <IconButton onClick={getNextMonth} sx={{ color: '#2D2A29' }}>
+            <ChevronRightIcon />
+          </IconButton>
+        </div>
+
+        <div id="heatmap-wrapper">
+          <div className="daysLabel">Days</div>
+          <div>
+            <div className="hoursLabel">Hours</div>
+            {renderHourLabels()}
+            <div id="heatMapModalContainer">
+              <div className="heatMapContainer">
+                {Array.from({ length: daysInMonth }, (_, i) => renderDayRow(i + 1))}
+              </div>
             </div>
           </div>
         </div>
-        <button id="backBtn" onClick={() => navigate('/')}>Back</button>
       </div>
-    </>
+    </div>
   );
 }
 

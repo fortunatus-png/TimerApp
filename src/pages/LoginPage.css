@@ -3,31 +3,19 @@
     --grey-like: #EEE8ED;
 }
 
-#accountWrapper {
+#login-wrapper {
     display: flex;
     justify-content: center;
-    padding-top: 3rem;
-    box-sizing: border-box;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#login-container {
     width: 100%;
-}
-
-#accountContainer {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
-
-.inputTags {
-    padding: 0 10px;
-}
-
-.inputTags input {
-    width: 100%;
-    color: var(--black-like);
-    font-size: 1em;
-    font-weight: bold;
-    border: 1px solid var(--black-like);
-    padding: 5px 7px;
-    border-radius: 3px;
+    max-width: 400px;
     background-color: var(--grey-like);
+    padding: 40px 30px;
+    border-radius: 8px;
+    border: 1px solid var(--black-like);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
