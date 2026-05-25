@@ -3,6 +3,23 @@
 A study timer app built with React, inspired by the Studdy Bunny app.
 Built in 5 days as a hands-on project to refresh and expand React knowledge.
 
+## Screenshots
+
+### Home
+<img src="./screenshots/home.png" width="300" alt="Home">
+
+### Timer
+<img src="./screenshots/timer.png" width="300" alt="Timer">
+
+### History
+<img src="./screenshots/history.png" width="300" alt="History">
+
+### Customize
+<img src="./screenshots/customize.png" width="300" alt="Customize">
+
+### Account
+<img src="./screenshots/account.png" width="300" alt="Account">
+
 ## Tech Stack
 - Vite + React
 - React Router DOM
@@ -33,3 +50,9 @@ Built in 5 days as a hands-on project to refresh and expand React knowledge.
 - Avatar builder (glasses, clothes, accessories)
 - Repeat session button
 - Real authentication
+
+## Getting Started
+1. Clone the repository
+2. Run `npm install`
+3. Run `npm run dev`
+4. Open [http://localhost:5173](http://localhost:5173)
