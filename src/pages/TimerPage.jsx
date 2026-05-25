@@ -8,6 +8,14 @@ function TimerPage() {
   const [minutes, setMinutes] = useState(5);
   const navigate = useNavigate();
 
+  function handleMinutesChange(e) {
+    setMinutes(Number(e.target.value));
+  }
+
+  function startSession() {
+    navigate('/session', { state: { minutes: minutes } });
+  }
+
   return (
     <>
       <Header />
@@ -21,10 +29,10 @@ function TimerPage() {
         <div className="slider">
           <label htmlFor="time-setting">{minutes} Minutes</label> <br />
           <input type="range" id="time-setting" name="time-setting" min="5" max="180" value={minutes} step="5"
-            onChange={(e) => setMinutes(Number(e.target.value))} />
+            onChange={handleMinutesChange} />
         </div>
         <div>
-          <button className="startTimerBtn" onClick={() => navigate('/session', { state: { minutes: minutes } })}>Start</button>
+          <button className="startTimerBtn" onClick={startSession}>Start</button>
         </div>
       </main>
 

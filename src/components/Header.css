@@ -1,14 +1,12 @@
 :root {
-    --orange-like: #DF7046;
     --black-like: #2D2A29;
-    --yellow-like: #F8EBCE;
     --grey-like: #EEE8ED;
     --hover-grey-like: #cfcace;
 }
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 1rem;
     position: relative;
@@ -18,11 +16,11 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: var(--orange-like);
+    color: var(--black-like);
     font-size: 1.9em;
-    border: 1px solid var(--orange-like);
+    border: 1px solid var(--black-like);
     padding: 2px 15px;
-    background-color: var(--yellow-like);
+    background-color: var(--grey-like);
     border-radius: 3px;
 }
 
