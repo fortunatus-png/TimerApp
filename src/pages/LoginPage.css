@@ -1,0 +1,28 @@
+:root {
+    --black-like: #2D2A29;
+    --yellow-like: #F8EBCE;
+    --grey-like: #EEE8ED;
+    --purple-like: #3C1D49;
+}
+
+#accountWrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#accountContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.inputTags {
+    padding: 0 10px;
+}
+
+.inputTags input {
+    width: 100%;
+}
