@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Header from '../components/Header'
 import './HistoryPage.css'
-import { useNavigate } from 'react-router-dom'
 import { Button, Typography, IconButton } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -34,7 +33,6 @@ function HistoryPage() {
   const [year, setYear] = useState(now.getFullYear());
   const daysInMonth = getDaysInMonth(month, year);
   const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
-  const navigate = useNavigate();
 
   function getMinutesForHour(day, hour) {
     return sessions
@@ -114,12 +112,6 @@ function HistoryPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div id="backBtnContainer">
-        <Button variant="contained" onClick={() => navigate('/')} sx={{ bgcolor: '#2D2A29' }}>
-          Back
-        </Button>
       </div>
     </div>
   );

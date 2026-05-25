@@ -1,6 +1,6 @@
 import './LoginPage.css'
 import { useState } from 'react'
-import { TextField, Button, Box, Alert } from '@mui/material'
+import { TextField, Button, Box, Typography } from '@mui/material'
 
 function getAllUsers() {
   return JSON.parse(localStorage.getItem('users') || '[]');
@@ -29,6 +29,7 @@ function LoginPage() {
   const [passwordError, setPasswordError] = useState('');
   const [generalError, setGeneralError] = useState('');
 
+  // Email validation
   function validateEmail(email) {
     const emailRegex = /^[^\s@]+@([^\s@]+\.){1,}[^\s@]{2,5}$/;
     if (!email) {
@@ -46,6 +47,7 @@ function LoginPage() {
     }
   }
 
+  // Password validation
   function validatePassword(password) {
     if (!password) {
       setPasswordError('Password is required');
@@ -112,6 +114,31 @@ function LoginPage() {
   return (
     <Box id="login-wrapper">
       <Box id="login-container">
+        {/* 🐼 STUDY PANDA BRANDING */}
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: 'bold',
+            color: '#2D2A29',
+            textAlign: 'center',
+            mb: 1
+          }}
+        >
+          🐼 Study Panda
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          sx={{
+            textAlign: 'center',
+            color: '#2D2A29',
+            mb: 3,
+            opacity: 0.7
+          }}
+        >
+          Track your study time, one minute at a time
+        </Typography>
+
         <TextField
           label="Email"
           type="email"
@@ -135,15 +162,25 @@ function LoginPage() {
           required
         />
         {generalError && (
-          <Alert severity="error" sx={{ mt: 2, mb: 1 }}>
+          <Typography color="error" sx={{ mt: 1, textAlign: 'center' }}>
             {generalError}
-          </Alert>
+          </Typography>
         )}
         <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
-          <Button variant="contained" onClick={signUp} fullWidth>
+          <Button
+            variant="contained"
+            onClick={signUp}
+            fullWidth
+            sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
+          >
             Sign Up
           </Button>
-          <Button variant="outlined" onClick={logIn} fullWidth>
+          <Button
+            variant="outlined"
+            onClick={logIn}
+            fullWidth
+            sx={{ borderColor: '#2D2A29', color: '#2D2A29' }}
+          >
             Log In
           </Button>
         </Box>

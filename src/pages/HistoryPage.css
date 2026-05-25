@@ -95,9 +95,3 @@
     display: flex;
     flex-direction: column;
 }
-
-#backBtnContainer {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-}

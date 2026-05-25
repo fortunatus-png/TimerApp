@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './TimerPage.css'
 import Figure from '../components/Figure'
-import { Slider, Select, MenuItem, Button, Typography, Box } from '@mui/material'
+import { Slider, Button, Typography, Box, Paper } from '@mui/material'
 
 function TimerPage() {
   const [minutes, setMinutes] = useState(5);
@@ -18,16 +18,32 @@ function TimerPage() {
       <Header />
 
       <main id="setTimerContainer">
-        <Box sx={{ width: '100%', maxWidth: 300, mx: 'auto', mb: 2 }}>
-          <Select
-            value="countdown"
-            fullWidth
-            IconComponent={() => null}
-            sx={{ '& .MuiSelect-select': { textAlign: 'center', }, }}
-          >
-            <MenuItem value="countdown">Countdown</MenuItem>
-          </Select>
-        </Box>
+        <Paper
+          variant="outlined"
+          sx={{
+            width: '100%',
+            maxWidth: 300,
+            mx: 'auto',
+            mb: 2,
+            textAlign: 'center',
+            py: '8.5px',
+            px: '14px',
+            borderColor: '#2D2A29',
+            borderWidth: '1px',
+            borderRadius: '4px',
+            backgroundColor: 'transparent',  // ← Wichtig: komplett durchsichtig
+            boxShadow: 'none',               // ← Kein Schatten
+            cursor: 'default',
+            transition: 'border-color 0.2s',
+            '&:hover': {
+              borderColor: '#1a1a1a',
+            },
+          }}
+        >
+          <Typography variant="body1" sx={{ fontWeight: 'normal', color: '#2D2A29' }}>
+            Countdown
+          </Typography>
+        </Paper>
 
         <Box textAlign="center" mb={1}>
           <Typography variant="h5" component="span" sx={{ fontWeight: 'bold', color: '#2D2A29' }}>
@@ -52,13 +68,6 @@ function TimerPage() {
       </main>
 
       <Figure />
-
-      <div id="backBtnContainer">
-        <Button variant="contained" onClick={() => navigate('/')}
-        >
-          Back
-        </Button>
-      </div>
     </>
   )
 }

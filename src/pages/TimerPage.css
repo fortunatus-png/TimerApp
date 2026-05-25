@@ -8,9 +8,3 @@
     width: 300px;
     margin: 15px 0 5px;
 }
-
-#backBtnContainer {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-}

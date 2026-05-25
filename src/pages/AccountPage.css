@@ -7,7 +7,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
 }
 
 #accountContainer {
@@ -25,10 +24,4 @@
 
 .inputTags {
     text-align: center;
-}
-
-#backBtnContainer {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
 }

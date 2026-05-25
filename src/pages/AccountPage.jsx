@@ -1,10 +1,9 @@
 import './AccountPage.css'
-import { useNavigate } from 'react-router-dom'
 import LoginPage from './LoginPage'
+import Header from '../components/Header'
 import { Box, Button, Typography } from '@mui/material'
 
 function AccountPage() {
-  const navigate = useNavigate();
   const email = localStorage.getItem('loggedInUser');
 
   function logout() {
@@ -18,6 +17,7 @@ function AccountPage() {
 
   return (
     <>
+      <Header />
       <div id="accountWrapper">
         <div id="accountContainer">
           <Box className="inputTags" sx={{ mb: 3 }}>
@@ -38,15 +38,6 @@ function AccountPage() {
             </Button>
           </div>
         </div>
-      </div>
-      <div id="backBtnContainer">
-        <Button
-          variant="contained"
-          onClick={() => navigate('/')}
-          sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
-        >
-          Back
-        </Button>
       </div>
     </>
   );

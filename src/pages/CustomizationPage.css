@@ -10,19 +10,20 @@ h3 {
 #background-color-wish {
     display: flex;
     flex-direction: column;
+    gap: 15px;
     align-items: center;
     border: 1px solid var(--black-like);
-    border-radius: 3px;
-    background-color: var(--grey-like);
-    width: 40%;
-    padding-bottom: 1rem;
+    width: 50%;
+    max-width: 400px;
     margin: auto;
     color: var(--black-like);
+    padding: 20px 20px 30px;
+    border-radius: 8px;
+    background-color: var(--grey-like);
 }
 
 #backBtnContainer {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 24px;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }

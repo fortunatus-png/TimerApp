@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import './CustomizationPage.css'
 import Header from '../components/Header'
-import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 
 function CustomizationPage() {
   const [color, setColor] = useState('#4caf50');
-  const navigate = useNavigate();
 
   function changeBackgroundColor(e) {
     setColor(e.target.value);
@@ -24,12 +22,11 @@ function CustomizationPage() {
     <>
       <Header />
       <div id="background-color-wish">
-        <h3 className="customHeader">Choose your background</h3>
+        <h4 className="customHeader">Choose your background</h4>
         <input type="color" value={color} onChange={changeBackgroundColor} />
       </div>
       <div id="backBtnContainer">
         <Button variant="contained" id="resetBtn" onClick={resetBackgroundColor}>Reset Data</Button>
-        <Button variant="contained" id="backBtn" onClick={() => navigate('/')}>Back</Button>
       </div>
     </>
   );
