@@ -1,4 +1,6 @@
-function Figur() {
+import './Figure.css'
+
+function Figure() {
     return (
         <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '160px auto' }}>
             {/* Head */}
@@ -16,7 +18,7 @@ function Figur() {
             {/* Shadow */}
             <ellipse cx="75" cy="230" rx="40" ry="8" fill="#2D2A29" opacity="0.2" />
         </svg>
-    );
+    )
 }
 
-export default Figur;
+export default Figure;

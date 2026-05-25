@@ -1,4 +1,6 @@
-function FigurWithBook() {
+import './Figure.css'
+
+function FigureWithBook() {
     return (
         <svg width="150" height="250" viewBox="0 0 150 250" style={{ display: 'block', margin: '100px auto 50px' }}>
             {/* Head */}
@@ -20,7 +22,7 @@ function FigurWithBook() {
             {/* Book Spine */}
             <line x1="75" y1="115" x2="75" y2="145" stroke="#3C1D49" strokeWidth="1" />
         </svg>
-    );
+    )
 }
 
-export default FigurWithBook;
+export default FigureWithBook;

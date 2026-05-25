@@ -4,6 +4,23 @@ A study timer app built with React. Track your learning sessions, visualize prog
 
 Built as a hands-on project to refresh and expand React & frontend skills.
 
+## Screenshots
+
+### Home
+<img src="./screenshots/home.png" width="300" alt="Home">
+
+### Timer
+<img src="./screenshots/timer.png" width="300" alt="Timer">
+
+### History
+<img src="./screenshots/history.png" width="300" alt="History">
+
+### Customize
+<img src="./screenshots/customize.png" width="300" alt="Customize">
+
+### Account
+<img src="./screenshots/account.png" width="300" alt="Account">
+
 ## Tech Stack
 - Vite + React
 - React Router DOM
