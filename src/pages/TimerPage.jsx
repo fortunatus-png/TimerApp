@@ -22,12 +22,8 @@ function TimerPage() {
           <Select
             value="countdown"
             fullWidth
-            IconComponent={() => null}  // ← Pfeil entfernen
-            sx={{
-              '& .MuiSelect-select': {
-                textAlign: 'center',
-              },
-            }}
+            IconComponent={() => null}
+            sx={{ '& .MuiSelect-select': { textAlign: 'center', }, }}
           >
             <MenuItem value="countdown">Countdown</MenuItem>
           </Select>
@@ -58,10 +54,7 @@ function TimerPage() {
       <Figure />
 
       <div id="backBtnContainer">
-        <Button
-          variant="contained"
-          onClick={() => navigate('/')}
-          sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
+        <Button variant="contained" onClick={() => navigate('/')}
         >
           Back
         </Button>

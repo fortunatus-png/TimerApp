@@ -29,7 +29,6 @@ function LoginPage() {
   const [passwordError, setPasswordError] = useState('');
   const [generalError, setGeneralError] = useState('');
 
-  // Email validation
   function validateEmail(email) {
     const emailRegex = /^[^\s@]+@([^\s@]+\.){1,}[^\s@]{2,5}$/;
     if (!email) {
@@ -47,7 +46,6 @@ function LoginPage() {
     }
   }
 
-  // Password validation
   function validatePassword(password) {
     if (!password) {
       setPasswordError('Password is required');

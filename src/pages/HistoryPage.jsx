@@ -52,7 +52,7 @@ function HistoryPage() {
       <div className="heatRow">
         <span></span>
         {Array.from({ length: 24 }, (_, h) => (
-          <div key={h} className="heatHour">{h + 1}</div>  // ← +1 für 1-24
+          <div key={h} className="heatHour">{h + 1}</div>  // ← +1 for 1-24
         ))}
       </div>
     );
@@ -90,7 +90,6 @@ function HistoryPage() {
       <Header />
 
       <div id="calendar-wrapper">
-        {/* Month navigation with MUI Icons */}
         <div id="month-navigation">
           <IconButton onClick={getPreviousMonth} sx={{ color: '#2D2A29' }}>
             <ChevronLeftIcon />
@@ -103,7 +102,6 @@ function HistoryPage() {
           </IconButton>
         </div>
 
-        {/* Heatmap */}
         <div id="heatmap-wrapper">
           <div className="daysLabel">Days</div>
           <div>
@@ -118,7 +116,6 @@ function HistoryPage() {
         </div>
       </div>
 
-      {/* Back button fixed bottom right - dark color */}
       <div id="backBtnContainer">
         <Button variant="contained" onClick={() => navigate('/')} sx={{ bgcolor: '#2D2A29' }}>
           Back

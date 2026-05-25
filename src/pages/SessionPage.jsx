@@ -147,11 +147,7 @@ function SessionPage() {
                 {!showLeaveWarning && seconds > 0 && (
                     <Button
                         variant="contained"
-                        onClick={() => {
-                            setIsRunning(false);
-                            setShowLeaveWarning(true);
-                        }}
-                        sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
+                        onClick={() => { setIsRunning(false); setShowLeaveWarning(true); }}
                     >
                         Back
                     </Button>
