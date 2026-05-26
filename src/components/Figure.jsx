@@ -2,7 +2,7 @@ import './Figure.css'
 
 function Figure() {
     return (
-        <svg width="220" height="300" viewBox="0 0 220 300">
+        <svg className="figure-svg" width="220" height="300" viewBox="0 0 220 300">
             {/* Soft shadow under the panda */}
             <ellipse cx="110" cy="285" rx="65" ry="8" fill="#2D2A29" opacity="0.15" />
 

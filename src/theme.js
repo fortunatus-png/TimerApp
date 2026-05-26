@@ -3,14 +3,14 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
     palette: {
         primary: {
-            main: '#2D2A29',  // Dein Dunkel
+            main: '#2D2A29',
         },
         secondary: {
-            main: '#DF7046',  // Deine Orange
+            main: '#DF7046',
         },
         background: {
-            default: '#D9E8D6', // Dein Hintergrund
-        },
+            default: '#D9E8D6',
+        }
     },
 });
 

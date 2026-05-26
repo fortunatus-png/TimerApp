@@ -19,14 +19,28 @@
     flex-direction: column;
     align-items: center;
     gap: 3px;
-    margin-top: 1rem;
-    padding: 0 15px 15px;
+    margin-top: 2rem;
+    margin-bottom: -4rem;
     border: 1px solid var(--black-like);
-    border-radius: 3px;
+    border-radius: 8px;
     background-color: var(--grey-like);
+}
+
+.congratsMessage {
+    padding: 0 50px 20px;
+}
+
+.warningModal {
+    padding: 0 15px 15px;
 }
 
 .warningModal .btnContainer {
     display: flex;
     gap: 8px;
+}
+
+#backBtnContainer {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }

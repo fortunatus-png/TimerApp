@@ -18,28 +18,7 @@ function TimerPage() {
       <Header />
 
       <main id="setTimerContainer">
-        <Paper
-          variant="outlined"
-          sx={{
-            width: '100%',
-            maxWidth: 300,
-            mx: 'auto',
-            mb: 2,
-            textAlign: 'center',
-            py: '8.5px',
-            px: '14px',
-            borderColor: '#2D2A29',
-            borderWidth: '1px',
-            borderRadius: '4px',
-            backgroundColor: 'transparent',  // ← Wichtig: komplett durchsichtig
-            boxShadow: 'none',               // ← Kein Schatten
-            cursor: 'default',
-            transition: 'border-color 0.2s',
-            '&:hover': {
-              borderColor: '#1a1a1a',
-            },
-          }}
-        >
+        <Paper className="countdown-box" variant="outlined">
           <Typography variant="body1" sx={{ fontWeight: 'normal', color: '#2D2A29' }}>
             Countdown
           </Typography>

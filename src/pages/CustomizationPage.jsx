@@ -25,7 +25,7 @@ function CustomizationPage() {
         <h4 className="customHeader">Choose your background</h4>
         <input type="color" value={color} onChange={changeBackgroundColor} />
       </div>
-      <div id="backBtnContainer">
+      <div id="btnContainer">
         <Button variant="contained" id="resetBtn" onClick={resetBackgroundColor}>Reset Data</Button>
       </div>
     </>

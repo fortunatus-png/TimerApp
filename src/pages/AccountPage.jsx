@@ -29,10 +29,7 @@ function AccountPage() {
             <Button
               variant="contained"
               onClick={logout}
-              sx={{
-                bgcolor: '#2D2A29',
-                '&:hover': { bgcolor: '#1a1a1a' }
-              }}
+              sx={{ bgcolor: '#2D2A29', '&:hover': { bgcolor: '#1a1a1a' } }}
             >
               Log Out
             </Button>

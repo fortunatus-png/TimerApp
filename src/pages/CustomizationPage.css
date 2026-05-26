@@ -15,14 +15,14 @@ h3 {
     border: 1px solid var(--black-like);
     width: 50%;
     max-width: 400px;
-    margin: auto;
+    margin: 0 auto;
     color: var(--black-like);
     padding: 20px 20px 30px;
     border-radius: 8px;
     background-color: var(--grey-like);
 }
 
-#backBtnContainer {
+#btnContainer {
     position: fixed;
     bottom: 1rem;
     right: 1rem;

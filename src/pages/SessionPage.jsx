@@ -58,7 +58,6 @@ function SessionPage() {
         }
     }
 
-    // Navigation function for Header links (with warning)
     function handleHeaderNavigation(to) {
         if (seconds > 0 && !showLeaveWarning) {
             setIsRunning(false);
@@ -69,7 +68,6 @@ function SessionPage() {
         }
     }
 
-    // Leave function that handles pending navigation
     function leaveSessionAndNavigate() {
         savePartialSession();
 

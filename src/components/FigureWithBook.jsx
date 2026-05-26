@@ -2,7 +2,7 @@ import './Figure.css'
 
 function FigureWithBook() {
     return (
-        <svg width="240" height="320" viewBox="0 0 240 320">
+        <svg className="figure-svg" width="240" height="320" viewBox="0 0 240 320">
             <ellipse cx="120" cy="305" rx="70" ry="9" fill="#2D2A29" opacity="0.15" />
 
             <g className="read-body">

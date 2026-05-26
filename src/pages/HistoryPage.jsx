@@ -50,7 +50,7 @@ function HistoryPage() {
       <div className="heatRow">
         <span></span>
         {Array.from({ length: 24 }, (_, h) => (
-          <div key={h} className="heatHour">{h + 1}</div>  // ← +1 for 1-24
+          <div key={h} className="heatHour">{h + 1}</div>
         ))}
       </div>
     );

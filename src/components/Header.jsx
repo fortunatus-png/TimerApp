@@ -16,67 +16,16 @@ function Header({ onNavigate }) {
 
     return (
         <header className="header">
-
             <Toolbar className="toolbar">
-
-                <Typography
-                    variant="h5"
-                    className="logo"
-                >
-                    StudyFlow
-                </Typography>
-
+                <Typography variant="h5" className="logo">StudyFlow</Typography>
                 <nav className="navLinks">
-
-                    <Button
-                        disableRipple
-                        onClick={() =>
-                            handleNavigation('/')
-                        }
-                    >
-                        Home
-                    </Button>
-
-                    <Button
-                        disableRipple
-                        onClick={() =>
-                            handleNavigation('/timer')
-                        }
-                    >
-                        Timer
-                    </Button>
-
-                    <Button
-                        disableRipple
-                        onClick={() =>
-                            handleNavigation('/history')
-                        }
-                    >
-                        History
-                    </Button>
-
-                    <Button
-                        disableRipple
-                        onClick={() =>
-                            handleNavigation('/account')
-                        }
-                    >
-                        Account
-                    </Button>
-
-                    <Button
-                        disableRipple
-                        onClick={() =>
-                            handleNavigation('/customization')
-                        }
-                    >
-                        Customize
-                    </Button>
-
+                    <Button disableRipple onClick={() => handleNavigation('/')}>Home</Button>
+                    <Button disableRipple onClick={() => handleNavigation('/timer')}>Timer</Button>
+                    <Button disableRipple onClick={() => handleNavigation('/history')}>History</Button>
+                    <Button disableRipple onClick={() => handleNavigation('/account')}>Account</Button>
+                    <Button disableRipple onClick={() => handleNavigation('/customization')}>Customize</Button>
                 </nav>
-
             </Toolbar>
-
         </header>
     );
 }

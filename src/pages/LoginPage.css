@@ -1,6 +1,7 @@
 :root {
     --black-like: #2D2A29;
     --grey-like: #EEE8ED;
+    --shadow: rgba(0, 0, 0, 0.1);
 }
 
 #login-wrapper {
@@ -17,5 +18,5 @@
     padding: 40px 30px;
     border-radius: 8px;
     border: 1px solid var(--black-like);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--shadow);
 }
