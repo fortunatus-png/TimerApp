@@ -66,8 +66,11 @@ Built as a hands-on project to refresh and expand React & frontend skills.
 
 ## Getting Started
 
+First, clone the repository: [TimerApp](https://github.com/fortunatus-png/TimerApp.git)
+
+Then run:
+
 ```bash
-git clone <repo-url>
-cd study-panda
+cd TimerApp
 npm install
 npm run dev
