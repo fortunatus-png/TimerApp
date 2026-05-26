@@ -7,26 +7,26 @@ Built as a hands-on project to refresh and expand React & frontend skills.
 ## Screenshots
 
 ### Login
-<img src="./images/login.png" width="300" alt="Home">
+<img src="./images/login.png" width="800" alt="Home">
 
 ### Home
-<img src="./images/home.png" width="300" alt="Home">
+<img src="./images/home.png" width="800" alt="Home">
 
 ### Timer
-<img src="./images/timer.png" width="300" alt="Timer">
+<img src="./images/timer.png" width="800" alt="Timer">
 
 ### Session
-<img src="./images/session.png" width="300" alt="Home">
-<img src="./images/session1.png" width="300" alt="Home">
+<img src="./images/session.png" width="800" alt="Home">
+<img src="./images/session1.png" width="800" alt="Home">
 
 ### History
-<img src="./images/history.png" width="300" alt="History">
+<img src="./images/history.png" width="800" alt="History">
 
 ### Customize
-<img src="./images/custom.png" width="300" alt="Customize">
+<img src="./images/custom.png" width="800" alt="Customize">
 
 ### Account
-<img src="./images/account.png" width="300" alt="Account">
+<img src="./images/account.png" width="800" alt="Account">
 
 ## Tech Stack
 - Vite + React
