@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import './HistoryPage.css'
 import { Button, Typography, IconButton } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { fetchSessions } from '../services/api'
 
 const now = new Date();
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -32,7 +33,19 @@ function HistoryPage() {
   const [month, setMonth] = useState(now.getMonth());
   const [year, setYear] = useState(now.getFullYear());
   const daysInMonth = getDaysInMonth(month, year);
-  const sessions = JSON.parse(localStorage.getItem('sessions') || '[]');
+  const [sessions, setSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSessions()
+      .then(data => { setSessions(data); setLoading(false); })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading sessions...</p>
 
   function getMinutesForHour(day, hour) {
     return sessions
