@@ -91,6 +91,14 @@
     flex-direction: column;
 }
 
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Abzüglich Header-Höhe */
+    width: 100%;
+}
+
 /* Responsive - falls nötig */
 @media (max-width: 768px) {
     .heatCell {

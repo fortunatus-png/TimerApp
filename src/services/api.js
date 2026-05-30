@@ -1,19 +1,46 @@
+function handleApiError(error, defaultMessage) {
+    console.error(defaultMessage, error);
+
+    if (error.message === 'Failed to fetch') {
+        alert('⚠️ Backend is not running. Please start the backend server (uvicorn main:app --reload)');
+    } else if (error.response?.status === 401) {
+        alert('⚠️ Session expired. Please log in again.');
+        window.location.href = '/login';
+    } else if (error.response?.status === 404) {
+        alert('⚠️ Resource not found. Please check your request.');
+    } else {
+        alert(`⚠️ ${defaultMessage}: ${error.message}`);
+    }
+}
+
 export async function fetchSessions() {
-    const response = await fetch('http://localhost:8000/sessions');
-    const data = await response.json();
-    return data;
+    try {
+        const response = await fetch('http://localhost:8000/sessions');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        handleApiError(error, 'Failed to load sessions');
+        return [];
+    }
 }
 
 export async function createSession(sessionData) {
-    const response = await fetch('http://localhost:8000/sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sessionData)
-    });
+    try {
+        const response = await fetch('http://localhost:8000/sessions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sessionData)
+        });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        handleApiError(error, 'Failed to save session');
+        throw error;
     }
-
-    return response.json();
 }

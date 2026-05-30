@@ -49,7 +49,9 @@ function HistoryPage() {
     return (
       <>
         <Header />
-        <p>Loading sessions...</p> //in der Mite
+        <div className="loading-container">
+          <p>Loading sessions...</p>
+        </div>
       </>
     );
   }
