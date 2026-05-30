@@ -45,7 +45,14 @@ function HistoryPage() {
       });
   }, []);
 
-  if (loading) return <p>Loading sessions...</p>
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <p>Loading sessions...</p> //in der Mite
+      </>
+    );
+  }
 
   function getMinutesForHour(day, hour) {
     return sessions

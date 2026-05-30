@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import './SessionPage.css'
 import FigureWithBook from '../components/FigureWithBook'
 import { Button, Typography } from '@mui/material'
+import { createSession } from '../services/api'
 
 function SessionPage() {
     const location = useLocation();
@@ -27,14 +28,14 @@ function SessionPage() {
     useEffect(() => {
         if (seconds === 0 && !hasSaved.current) {
             hasSaved.current = true;
-            const session = {
-                date: new Date().toISOString(),
+            const sessionData = {
+                date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
                 minutes: minutes,
                 hour: new Date().getHours()
             };
-            const history = JSON.parse(localStorage.getItem('sessions') || '[]');
-            history.push(session);
-            localStorage.setItem('sessions', JSON.stringify(history));
+            createSession(sessionData)
+                .then(() => console.log('Session saved to backend'))
+                .catch(error => console.error('Failed to save session:', error));
         }
     }, [seconds, minutes]);
 
@@ -44,17 +45,21 @@ function SessionPage() {
         return `${m}:${s.toString().padStart(2, '0')}`;
     }
 
-    function savePartialSession() {
+    async function savePartialSession() {
         const elapsed = minutes * 60 - seconds;
         const elapsedMinutes = Math.floor(elapsed / 60);
         if (elapsedMinutes > 0) {
-            const history = JSON.parse(localStorage.getItem('sessions') || '[]');
-            history.push({
-                date: new Date().toISOString(),
-                minutes: elapsedMinutes,
+            const sessionData = {
+                date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
+                minutes: minutes,
                 hour: new Date().getHours()
-            });
-            localStorage.setItem('sessions', JSON.stringify(history));
+            };
+            try {
+                await createSession(sessionData);
+                console.log('Session saved to backend');
+            } catch (error) {
+                console.error('Failed to save session:', error);
+            }
         }
     }
 
