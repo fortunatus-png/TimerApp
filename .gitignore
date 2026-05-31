@@ -1,3 +1,4 @@
+# ========== Frontend ==========
 # Logs
 logs
 *.log
@@ -22,3 +23,24 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Frontend specific
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# ========== Backend ==========
+backend/__pycache__/
+backend/venv/
+backend/*.db
+backend/.env
+
+# ========== OS ==========
+.DS_Store
+Thumbs.db
+
+# ========== IDE ==========
+.vscode/
+.idea/
+*.swp
+*.swo
