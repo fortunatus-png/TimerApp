@@ -14,7 +14,7 @@ Full-stack study timer app with React frontend and FastAPI backend.
 cd backend
 pip install -r requirements.txt
 fastapi dev
-
+```
 ### Frontend
 ```bash
 cd frontend
