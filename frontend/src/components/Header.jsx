@@ -17,7 +17,7 @@ function Header({ onNavigate }) {
     return (
         <header className="header">
             <Toolbar className="toolbar">
-                <Typography variant="h5" className="logo">StudyFlow</Typography>
+                <Typography variant="h5" className="logo">Study Panda</Typography>
                 <nav className="navLinks">
                     <Button disableRipple onClick={() => handleNavigation('/')}>Home</Button>
                     <Button disableRipple onClick={() => handleNavigation('/timer')}>Timer</Button>

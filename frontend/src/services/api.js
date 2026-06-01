@@ -2,7 +2,7 @@ function handleApiError(error, defaultMessage) {
     console.error(defaultMessage, error);
 
     if (error.message === 'Failed to fetch') {
-        alert('⚠️ Backend is not running. Please start the backend server (uvicorn main:app --reload)');
+        alert('⚠️ Backend is not running. Please run: cd backend && fastapi dev');
     } else if (error.response?.status === 401) {
         alert('⚠️ Session expired. Please log in again.');
         window.location.href = '/login';
