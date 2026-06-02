@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List
+import sqlite3
 
 app = FastAPI(
     title="Timer Session API",
@@ -56,3 +57,22 @@ def delete_session(session_id: int):
             sessions.pop(index)
             return {"message": "Session deleted"}
     raise HTTPException(status_code=404, detail="Session not found")
+
+def get_db():
+    conn = sqlite3.connect('sessions.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    conn = get_db()
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS sessions(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            hour INTEGER NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+    
+init_db()
