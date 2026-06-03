@@ -1,0 +1,13 @@
+import sqlite3
+
+conn = sqlite3.connect('sessions.db')
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM sessions")
+rows = cursor.fetchall()
+
+print("Sessions in database:")
+for row in rows:
+    print(row)
+
+conn.close()
