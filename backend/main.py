@@ -79,8 +79,14 @@ def create_session(session: SessionCreate):
 
 @app.delete("/sessions/{session_id}", summary="Delete session")
 def delete_session(session_id: int):
-    for index, existing in enumerate(sessions):
-        if existing.id == session_id:
-            sessions.pop(index)
-            return {"message": "Session deleted"}
-    raise HTTPException(status_code=404, detail="Session not found")
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM sessions WHERE id = ?", (session_id,))
+    
+    if cursor.rowcount == 0:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    conn.commit()
+    conn.close()
+    return {"message": "Session deleted"}

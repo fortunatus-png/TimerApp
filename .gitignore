@@ -1,5 +1,4 @@
 # ========== Frontend ==========
-# Logs
 logs
 *.log
 npm-debug.log*
@@ -28,12 +27,17 @@ dist-ssr
 frontend/node_modules/
 frontend/dist/
 frontend/dist-ssr/
+*.local
 
 # ========== Backend ==========
-backend/__pycache__/
 backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
 backend/*.db
 backend/.env
+backend/.env.*
 
 # ========== OS ==========
 .DS_Store
