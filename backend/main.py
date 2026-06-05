@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import List
 import sqlite3
 
@@ -19,10 +19,38 @@ def init_db():
             hour INTEGER NOT NULL
         )
     ''')
+    
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
     conn.commit()
     conn.close()
     
 init_db()
+
+def get_user_by_email(email: str):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
+    user = cursor.fetchone()
+    conn.close()
+    return dict(user) if user else None
+
+def create_user(email: str, password: str):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO users (email, password) VALUES (?, ?)",
+        (email, password)
+    )
+    conn.commit()
+    user_id = cursor.lastrowid
+    conn.close()
+    return user_id
 
 app = FastAPI(
     title="Timer Session API",
@@ -50,6 +78,28 @@ class SessionCreate(BaseModel):
 
 class Session(SessionCreate):
     id: int = Field(..., example=1)
+    
+class UserCreate(BaseModel):
+    email: EmailStr = Field(..., description="Valid email address")
+    password: str = Field(..., min_length=8, max_length=50, description="Password (8-50 characters)")
+    
+class UserLogin(BaseModel):
+    email: EmailStr = Field(..., description="Valid email address")
+    password: str = Field(..., description="Your password")
+    
+@app.post("/auth/register", status_code=201)
+def register(user: UserCreate):
+    if get_user_by_email(user.email):
+        raise HTTPException(status_code=400, detail="Email already exists")
+    user_id = create_user(user.email, user.password)
+    return {"id": user_id, "email": user.email}
+
+@app.post("/auth/login")
+def login(user: UserLogin):
+    db_user = get_user_by_email(user.email)
+    if not db_user or db_user['password'] != user.password:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    return {"message": "Login successful", "email": user.email}
 
 @app.get("/", summary="Welcome message")
 def root():
