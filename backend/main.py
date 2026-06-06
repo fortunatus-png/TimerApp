@@ -1,9 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, EmailStr
+from fastapi import Depends, Header
 from typing import List
 import sqlite3
+import secrets
+import hashlib
 
+# ========== 2. DATABASE HELPERS ==========
 def get_db():
     conn = sqlite3.connect('sessions.db')
     conn.row_factory = sqlite3.Row
@@ -27,10 +31,38 @@ def init_db():
             password TEXT NOT NULL
         )
     ''')
+    
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS tokens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            token TEXT UNIQUE NOT NULL,
+            email TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
     conn.commit()
     conn.close()
     
 init_db()
+
+def save_token(email: str, token: str):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO tokens (token, email) VALUES (?, ?)",
+        (token, email)
+    )
+    conn.commit()
+    conn.close()
+    
+def get_email_from_token(token: str):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT email FROM tokens WHERE token = ?", (token,))
+    row = cursor.fetchone()
+    conn.close()
+    return row['email'] if row else None
 
 def get_user_by_email(email: str):
     conn = get_db()
@@ -52,6 +84,7 @@ def create_user(email: str, password: str):
     conn.close()
     return user_id
 
+# ========== 3. FASTAPI APP SETUP ==========
 app = FastAPI(
     title="Timer Session API",
     description="Simple FastAPI for timer sessions",
@@ -71,6 +104,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ========== 4. PYDANTIC MODELS ==========
 class SessionCreate(BaseModel):
     date: str = Field(..., example="2026-05-28")
     minutes: int = Field(..., ge=0, example=25)
@@ -87,6 +121,24 @@ class UserLogin(BaseModel):
     email: EmailStr = Field(..., description="Valid email address")
     password: str = Field(..., description="Your password")
     
+# ========== 5. AUTH HELPERS ==========
+def generate_token(email: str):
+    raw = f"{email}{secrets.token_hex(16)}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+def verify_token(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="No token provided")
+    token = authorization.replace("Bearer ", "")
+    if len(token) != 64:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    return token
+
+# ========== 6. PUBLIC ENDPOINTS ==========    
+@app.get("/", summary="Welcome message")
+def root():
+    return {"message": "Timer Session API is ready. Use /docs for testing."}
+
 @app.post("/auth/register", status_code=201)
 def register(user: UserCreate):
     if get_user_by_email(user.email):
@@ -99,14 +151,21 @@ def login(user: UserLogin):
     db_user = get_user_by_email(user.email)
     if not db_user or db_user['password'] != user.password:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    return {"message": "Login successful", "email": user.email}
 
-@app.get("/", summary="Welcome message")
-def root():
-    return {"message": "Timer Session API is ready. Use /docs for testing."}
+    token = generate_token(user.email)
+    save_token(user.email, token)
+    return {"message": "Login successful", "email": user.email, "token": token}
+
+# ========== 7. PROTECTED ENDPOINTS ==========
+@app.get("/auth/me")
+def get_current_user(token: str = Depends(verify_token)):
+    email = get_email_from_token(token)
+    if not email:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    return {"email": email}
 
 @app.get("/sessions", summary="Get all sessions")
-def get_sessions():
+def get_sessions(token: str = Depends(verify_token)):
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM sessions")
@@ -115,7 +174,7 @@ def get_sessions():
     return [dict(row) for row in rows]
 
 @app.post("/sessions", status_code=201, summary="Create new session")
-def create_session(session: SessionCreate):
+def create_session(session: SessionCreate, token: str = Depends(verify_token)):
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute(
@@ -128,7 +187,7 @@ def create_session(session: SessionCreate):
     return {"id": new_id, "date": session.date, "minutes": session.minutes, "hour": session.hour}
 
 @app.delete("/sessions/{session_id}", summary="Delete session")
-def delete_session(session_id: int):
+def delete_session(session_id: int, token: str = Depends(verify_token)):
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM sessions WHERE id = ?", (session_id,))

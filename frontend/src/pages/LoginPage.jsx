@@ -1,26 +1,7 @@
 import './LoginPage.css'
 import { useState } from 'react'
 import { TextField, Button, Box, Typography } from '@mui/material'
-
-function getAllUsers() {
-  return JSON.parse(localStorage.getItem('users') || '[]');
-}
-
-function saveUser(user) {
-  const users = getAllUsers();
-  users.push(user);
-  localStorage.setItem('users', JSON.stringify(users));
-}
-
-function findUser(email, password) {
-  const users = getAllUsers();
-  return users.find(u => u.email === email && u.password === password);
-}
-
-function findUserByEmail(email) {
-  const users = getAllUsers();
-  return users.find(u => u.email === email);
-}
+import { login, register } from '../services/api'
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -76,7 +57,7 @@ function LoginPage() {
     else setPasswordError('');
   }
 
-  function signUp() {
+  async function signUp() {
     setGeneralError('');
 
     const isEmailValid = validateEmail(email);
@@ -84,16 +65,18 @@ function LoginPage() {
 
     if (!isEmailValid || !isPasswordValid) return;
 
-    if (findUserByEmail(email)) {
-      setGeneralError('Email already exists. Please log in.');
-    } else {
-      saveUser({ email, password });
+    try {
+      const response = await register(email, password);
+      localStorage.setItem('authToken', response.token);
       localStorage.setItem('loggedInUser', email);
       window.location.href = '/';
+    } catch (error) {
+      setGeneralError(error.message);
     }
+
   }
 
-  function logIn() {
+  async function logIn() {
     setGeneralError('');
 
     const isEmailValid = validateEmail(email);
@@ -101,11 +84,13 @@ function LoginPage() {
 
     if (!isEmailValid || !isPasswordValid) return;
 
-    if (findUser(email, password)) {
+    try {
+      const response = await login(email, password);
+      localStorage.setItem('authToken', response.token);
       localStorage.setItem('loggedInUser', email);
       window.location.href = '/';
-    } else {
-      setGeneralError('Invalid email or password');
+    } catch (error) {
+      setGeneralError(error.message);
     }
   }
 
