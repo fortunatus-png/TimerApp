@@ -24,7 +24,7 @@ function getCellColor(mins) {
 function isMatchingSession(session, day, hour, month, year) {
   const date = new Date(session.date);
   return date.getDate() === day &&
-    date.getHours() === hour &&
+    session.hour === hour &&
     date.getMonth() === month &&
     date.getFullYear() === year;
 }
@@ -72,7 +72,7 @@ function HistoryPage() {
       <div className="heatRow">
         <span></span>
         {Array.from({ length: 24 }, (_, h) => (
-          <div key={h} className="heatHour">{h + 1}</div>
+          <div key={h} className="heatHour">{h}</div>
         ))}
       </div>
     );

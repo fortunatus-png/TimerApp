@@ -31,7 +31,7 @@ function SessionPage() {
             const sessionData = {
                 date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
                 minutes: minutes,
-                hour: new Date().getHours()
+                hour: new Date().getUTCHours()
             };
             createSession(sessionData)
                 .then(() => console.log('Session saved to backend'))
@@ -51,8 +51,8 @@ function SessionPage() {
         if (elapsedMinutes > 0) {
             const sessionData = {
                 date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
-                minutes: minutes,
-                hour: new Date().getHours()
+                minutes: elapsedMinutes,
+                hour: new Date().getUTCHours()
             };
             try {
                 await createSession(sessionData);
