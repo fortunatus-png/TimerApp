@@ -2,7 +2,7 @@ function handleApiError(error, defaultMessage) {
     console.error(defaultMessage, error);
 
     if (error.message === 'Failed to fetch') {
-        alert('⚠️ Backend is not running. Please run: cd backend && fastapi dev');
+        alert('⚠️ Backend is not running. Please run:\n  cd backend && source venv/bin/activate && fastapi dev');
     } else if (error.status === 401) {
         alert('⚠️ Session expired. Please log in again.');
         localStorage.removeItem('authToken');

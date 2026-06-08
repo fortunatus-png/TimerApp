@@ -13,7 +13,7 @@
 ```bash
 cd backend
 source venv/bin/activate        # (Linux/Mac) or venv\Scripts\activate (Windows)
-python -m uvicorn main:app --reload
+fastapi dev
 ```
 Backend runs on: **http://localhost:8000**
 
