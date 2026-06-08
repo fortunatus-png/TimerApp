@@ -180,7 +180,7 @@ curl -X GET http://localhost:8000/sessions \
 
 ---
 
-## 🎓 What You Built
+## 🎓 What is Built
 
 ✨ **Full-Stack Timer App with:**
 - User authentication (register/login)
@@ -189,8 +189,6 @@ curl -X GET http://localhost:8000/sessions \
 - Study session history with heatmap visualization
 - Data isolation (users see only their sessions)
 - Secure token-based API
-
-**Perfect for your portfolio!** 🚀
 
 ---
 
