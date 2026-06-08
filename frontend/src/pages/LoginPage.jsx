@@ -68,7 +68,6 @@ function LoginPage() {
     try {
       const response = await register(email, password);
       localStorage.setItem('authToken', response.token);
-      localStorage.setItem('loggedInUser', email);
       window.location.href = '/';
     } catch (error) {
       setGeneralError(error.message);
@@ -87,7 +86,6 @@ function LoginPage() {
     try {
       const response = await login(email, password);
       localStorage.setItem('authToken', response.token);
-      localStorage.setItem('loggedInUser', email);
       window.location.href = '/';
     } catch (error) {
       setGeneralError(error.message);
