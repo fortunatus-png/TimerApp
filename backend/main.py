@@ -8,6 +8,7 @@ import secrets
 import hashlib
 import bcrypt
 from datetime import datetime, timedelta
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 # ========== 2. DATABASE HELPERS ==========
 def get_db():
@@ -162,16 +163,22 @@ class UserLogin(BaseModel):
     password: str = Field(..., description="Your password")
     
 # ========== 5. AUTH HELPERS ==========
+security = HTTPBearer()
 def generate_token(email: str):
     raw = f"{email}{secrets.token_hex(16)}"
     return hashlib.sha256(raw.encode()).hexdigest()
 
-def verify_token(authorization: str = Header(None)):
-    if not authorization:
-        raise HTTPException(status_code=401, detail="No token provided")
-    token = authorization.replace("Bearer ", "")
+def verify_token(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    token = credentials.credentials
+
     if len(token) != 64:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token"
+        )
+
     return token
 
 # ========== 6. PUBLIC ENDPOINTS ==========    
