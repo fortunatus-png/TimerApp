@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "serve . -p 3000"
+    "start": "serve . -p 5173"
   },
   "repository": {
     "type": "git",
