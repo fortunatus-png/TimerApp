@@ -4,7 +4,8 @@ Feature: Historypage
   So that I can know how my study flow is
 
   Background:
-    Given the user is on the session page
+    Given the user is logged in
+    And the user is on the session page
 
   Scenario: Historypage loads correctly
     Then the heatmap is visible

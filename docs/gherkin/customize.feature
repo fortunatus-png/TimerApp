@@ -4,7 +4,8 @@ Feature: Customizepage
   So that I can personalize the app
 
   Background:
-    Given the user is on the customize page
+    Given the user is logged in
+    And the user is on the customize page
 
   Scenario: Customizepage loads correctly
     Then the color picker is visible

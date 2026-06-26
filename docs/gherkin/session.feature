@@ -4,7 +4,8 @@ Feature: Sessionpage
   So that I can focus during this session on my study
 
   Background:
-    Given the user is on the session page
+    Given the user is logged in
+    And the user is on the session page
 
   Scenario: Sessionpage loads correctly
     Then the countdown timer is visible

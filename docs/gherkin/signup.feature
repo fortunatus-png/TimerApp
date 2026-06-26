@@ -15,7 +15,7 @@ Feature: Signup
     When the user enters an invalid email format
     And enters a valid password
     And clicks the "SIGN UP" button
-    Then the user sees an error message "Enter a valid email"
+    Then the user sees an error message "Enter a valid email (e.g., name@domain.com)"
 
   Scenario: Failed signup with an empty email field
     When the user leaves the email field empty

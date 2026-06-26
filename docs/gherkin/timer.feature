@@ -4,7 +4,8 @@ Feature: Timerpage
   So that I can access countdown timer to study
 
   Background:
-    Given the user is on the timer page
+    Given the user is logged in
+    And the user is on the timer page
 
   Scenario: Timerpage loads correctly
     Then the range slider is visible
