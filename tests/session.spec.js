@@ -49,13 +49,20 @@ test.describe('Session', () => {
     await page.goto('/history');
     await expect(page).toHaveURL('/history');
   });
+  test('Start new session after completion', async ({ page }) => {
+    test.setTimeout(350000);
+    await expect(page.getByText('0:00')).toBeVisible({ timeout: 320000 });
+    await expect(page.getByRole('heading', { name: '🎉 Great job!' })).toBeVisible();
+    await expect(page.getByText('You studied for 5 minutes!')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Start new session' })).toBeVisible();
 
-  //to do
+    await page.getByRole('button', { name: 'Start new session' }).click();
+    await expect(page).toHaveURL('/timer');
+  });
+
   test('Session completes successfully', async ({ page }) => {
-    await page.clock.fastForward(5 * 60 * 1000);
-    console.log(
-      await page.locator('h1').textContent()
-    );
+    test.setTimeout(310000);
+    await expect(page.getByText('0:00')).toBeVisible({ timeout: 305000 });
     await expect(page.getByRole('heading', { name: '🎉 Great job!' })).toBeVisible();
     await expect(page.getByText('You studied for 5 minutes!')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Start new session' })).toBeVisible();
