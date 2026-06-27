@@ -21,13 +21,14 @@ Feature: Sessionpage
     Then the countdown timer resumes
 
   Scenario: Warning message when leaving the page during active session
-    When the user clicks the the menu
+    When the user clicks in the menu
     Then the user sees a warning message: "Your progress so far will be saved, but you won't be able to continue this session later."
     And the "CONTINUE" button is visible
     And the "LEAVE" button is visible
 
   Scenario: Continue session after warning
     Given the warning message is displayed
+    And the user clicked a menu item before the warning appeared
     When the user clicks the "CONTINUE" button
     Then the warning message disappears
     And the countdown timer continues
@@ -39,7 +40,7 @@ Feature: Sessionpage
     Then the user is redirected to the page they originally selected
     And the session is saved in the history
 
-  Scenario: Session saves after timer finishes
+  Scenario: Session completes successfully
     When the countdown timer reaches "0:00"
     Then the message "🎉 Great job! You studied for X minutes!" is visible
     And "START NEW SESSION" button is visible

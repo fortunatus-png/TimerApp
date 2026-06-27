@@ -111,13 +111,13 @@ function HistoryPage() {
 
       <div id="calendar-wrapper">
         <div id="month-navigation">
-          <IconButton onClick={getPreviousMonth} sx={{ color: '#2D2A29' }}>
+          <IconButton id="prevBtn" onClick={getPreviousMonth} sx={{ color: '#2D2A29' }}>
             <ChevronLeftIcon />
           </IconButton>
           <Typography variant="h5" component="h3" sx={{ fontWeight: 'bold', color: '#2D2A29' }}>
             {MONTH_NAMES[month]} {year}
           </Typography>
-          <IconButton onClick={getNextMonth} sx={{ color: '#2D2A29' }}>
+          <IconButton id="nextBtn" onClick={getNextMonth} sx={{ color: '#2D2A29' }}>
             <ChevronRightIcon />
           </IconButton>
         </div>

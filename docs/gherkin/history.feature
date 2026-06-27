@@ -10,7 +10,6 @@ Feature: Historypage
   Scenario: Historypage loads correctly
     Then the heatmap is visible
     And the current month with year is visible
-    And the study sessions with colors from pale green to dark green are visible
 
   Scenario: Navigeate through months
     When the user clicks "<" button
@@ -24,7 +23,6 @@ Feature: Historypage
     Then the user stays on the histordy page
     And the heatmap is still visible
     And the current month with year is still visible
-    And the study sessions with colors from pale green to dark green are still visible
 
   Scenario: Heatmap shows correct color for study time
     Given the user has completed a 25-minute session on a specific day
