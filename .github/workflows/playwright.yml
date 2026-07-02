@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, master, feat/playwright-tests ]
   pull_request:
-    branches: [ main, master, feat/playwright-tests ]
+    branches: [ main, master ]
 
 jobs:
   test:
@@ -24,7 +24,6 @@ jobs:
       with:
         node-version: lts/*
     
-    # Backend Setup
     - name: Install Python dependencies
       run: |
         cd backend
@@ -37,14 +36,10 @@ jobs:
         cd backend
         source venv/bin/activate
         fastapi dev > /tmp/backend.log 2>&1 &
-        echo $! > /tmp/backend.pid
-        sleep 3
+        sleep 4
     
-    # Frontend Setup
     - name: Install Node dependencies
-      run: |
-        cd frontend
-        npm install
+      run: cd frontend && npm install
     
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
@@ -53,90 +48,64 @@ jobs:
       run: |
         cd backend
         source venv/bin/activate
-        python << 'EOF'
+        python3 << 'EOF'
         import sqlite3
         import bcrypt
 
         conn = sqlite3.connect('sessions.db')
         cursor = conn.cursor()
 
-        # Create tables
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                email TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS sessions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                date TEXT NOT NULL,
-                minutes INTEGER NOT NULL,
-                hour INTEGER NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-            )
-        ''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            date TEXT NOT NULL,
+            minutes INTEGER NOT NULL,
+            hour INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)''')
 
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS tokens (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                token TEXT UNIQUE NOT NULL,
-                user_id INTEGER NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                expires_at TIMESTAMP NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-            )
-        ''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS tokens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            token TEXT UNIQUE NOT NULL,
+            user_id INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            expires_at TIMESTAMP NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)''')
 
-        # Create test users
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(b'stringst', salt).decode()
 
         try:
-          cursor.execute(
-              "INSERT INTO users (email, password) VALUES (?, ?)",
-              ('user@example.com', hashed)
-          )
-          conn.commit()
-          print("Test user created: user@example.com")
+            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", ('user@example.com', hashed))
+            conn.commit()
         except sqlite3.IntegrityError:
-          print("Test user already exists")
+            pass
 
         conn.close()
         EOF
             
-            - name: Wait for Backend to be ready
+            - name: Wait for Backend
               run: |
-                for i in {1..15}; do
-                  if curl -f http://localhost:8000 2>/dev/null; then
-                    echo "✓ Backend is ready"
-                    exit 0
-                  fi
-                  echo "⏳ Waiting for backend... ($i/15)"
+                for i in {1..20}; do
+                  curl -f http://localhost:8000 > /dev/null 2>&1 && echo "Backend ready" && exit 0
+                  echo "Attempt $i/20"
                   sleep 2
                 done
-                echo "✗ Backend failed to start"
-                cat /tmp/backend.log
+                echo "Backend failed"
                 exit 1
             
             - name: Run Playwright tests
               run: npx playwright test
             
             - name: Upload Playwright Report
-              uses: actions/upload-artifact@v4
               if: always()
+              uses: actions/upload-artifact@v4
               with:
                 name: playwright-report
                 path: playwright-report/
                 retention-days: 30
-            
-            - name: Stop Backend
-              if: always()
-              run: |
-                if [ -f /tmp/backend.pid ]; then
-                  kill $(cat /tmp/backend.pid) 2>/dev/null || true
-                fi
