@@ -100,7 +100,7 @@ jobs:
         exit 1
     
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright tests
     
     - name: Upload Playwright Report
       if: always()
