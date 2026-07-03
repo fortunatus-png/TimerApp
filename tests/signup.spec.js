@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test.describe.parallel('Signup', () => {
+test.describe('Signup', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/login');
