@@ -47,7 +47,7 @@ jobs:
     - name: Initialize Test Database
       run: |
         cd backend
-        source venv/bin/activate
+        source .venv/bin/activate
         python3 << 'EOF'
         import sqlite3
         import bcrypt
