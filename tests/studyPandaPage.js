@@ -18,14 +18,6 @@ export class StudyPandaPage {
         this.customPageBtn = page.getByRole('button', { name: 'Customize' });
     }
 
-    async gotoLoginPage() {
-        await this.page.goto('/login');
-    }
-
-    async gotoHomePage() {
-        await expect(this.page).toHaveURL('/');
-    }
-
     async signUp(email, password) {
         await this.emailField.fill(email);
         await this.passwordField.fill(password);
@@ -47,4 +39,27 @@ export class StudyPandaPage {
         await expect(this.panda).toBeVisible();
     }
 
+    async gotoLoginPage() {
+        await this.page.goto('/login');
+    }
+
+    async gotoHomePage() {
+        await expect(this.page).toHaveURL('/');
+    }
+
+    async gotoTimerPage() {
+        await expect(this.page).toHaveURL('/timer');
+    }
+
+    async gotoHistoryPage() {
+        await expect(this.page).toHaveURL('/history');
+    }
+
+    async gotoAccountPage() {
+        await expect(this.page).toHaveURL('/account');
+    }
+
+    async gotoCustomizePage() {
+        await expect(this.page).toHaveURL('/customization');
+    }
 }

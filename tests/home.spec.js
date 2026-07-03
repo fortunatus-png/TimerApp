@@ -6,43 +6,43 @@ test.describe('Home', () => {
   const validEmail = 'ye@example.com';
   const validPassword = 'stringst';
   /** @type {StudyPandaPage} */
-  let loginPage;
+  let homePage;
 
   test.beforeEach(async ({ page }) => {
-    loginPage = new StudyPandaPage(page);
-    await loginPage.gotoLoginPage();
-    await loginPage.logIn(validEmail, validPassword);
-    await loginPage.gotoHomePage();
+    homePage = new StudyPandaPage(page);
+    await homePage.gotoLoginPage();
+    await homePage.logIn(validEmail, validPassword);
+    await homePage.gotoHomePage();
   });
 
   test('Homepage loads correctly', async ({ page }) => {
-    await loginPage.logoMessageVisible();
-    await loginPage.pandaVisible();
+    await homePage.logoMessageVisible();
+    await homePage.pandaVisible();
   });
 
   test('Navigate to Timer page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Timer' }).click();
-    await expect(page).toHaveURL('/timer');
+    await homePage.timerPageBtn.click();
+    await homePage.gotoTimerPage();
   });
 
   test('Navigate to History page', async ({ page }) => {
-    await page.getByRole('button', { name: 'History' }).click();
-    await expect(page).toHaveURL('/history');
+    await homePage.historyPageBtn.click();
+    await homePage.gotoHistoryPage();
   });
 
   test('Navigate to Account page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Account' }).click();
-    await expect(page).toHaveURL('/account');
+    await homePage.accountPageBtn.click();
+    await homePage.gotoAccountPage();
   });
 
   test('Navigate to Customize page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Customize' }).click();
-    await expect(page).toHaveURL('/customization');
+    await homePage.customPageBtn.click();
+    await homePage.gotoCustomizePage();
   });
 
   test('Homepage stays on home page after reload', async ({ page }) => {
     await page.reload();
-    await expect(page).toHaveURL('/');
-    await expect(page.locator('.figure-svg')).toBeVisible();
+    await homePage.gotoHomePage();
+    await homePage.pandaVisible();
   });
 });
