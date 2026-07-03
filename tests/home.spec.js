@@ -1,20 +1,23 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { StudyPandaPage } from './studyPandaPage';
 
-test.describe.parallel('Home', () => {
+test.describe('Home', () => {
+  const validEmail = 'ye@example.com';
+  const validPassword = 'stringst';
+  /** @type {StudyPandaPage} */
+  let loginPage;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login');
-    await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
-    await expect(page).toHaveURL('/');
+    loginPage = new StudyPandaPage(page);
+    await loginPage.gotoLoginPage();
+    await loginPage.logIn(validEmail, validPassword);
+    await loginPage.gotoHomePage();
   });
 
   test('Homepage loads correctly', async ({ page }) => {
-    await expect(page.locator('.logo')).toBeVisible();
-    await expect(page.locator('.figure-svg')).toBeVisible();
-    await expect(page.locator('.homeMessage')).toBeVisible();
+    await loginPage.logoMessageVisible();
+    await loginPage.pandaVisible();
   });
 
   test('Navigate to Timer page', async ({ page }) => {
