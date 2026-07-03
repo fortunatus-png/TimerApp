@@ -47,7 +47,7 @@ jobs:
     - name: Initialize Test Database
       run: |
         cd backend
-        source .venv/bin/activate
+        source venv/bin/activate
         python3 << 'EOF'
         import sqlite3
         import bcrypt
@@ -88,24 +88,24 @@ jobs:
 
         conn.close()
         EOF
-            
-            - name: Wait for Backend
-              run: |
-                for i in {1..20}; do
-                  curl -f http://localhost:8000 > /dev/null 2>&1 && echo "Backend ready" && exit 0
-                  echo "Attempt $i/20"
-                  sleep 2
-                done
-                echo "Backend failed"
-                exit 1
-            
-            - name: Run Playwright tests
-              run: npx playwright test
-            
-            - name: Upload Playwright Report
-              if: always()
-              uses: actions/upload-artifact@v4
-              with:
-                name: playwright-report
-                path: playwright-report/
-                retention-days: 30
+    
+    - name: Wait for Backend
+      run: |
+        for i in {1..20}; do
+          curl -f http://localhost:8000 > /dev/null 2>&1 && echo "Backend ready" && exit 0
+          echo "Attempt $i/20"
+          sleep 2
+        done
+        echo "Backend failed"
+        exit 1
+    
+    - name: Run Playwright tests
+      run: npx playwright test
+    
+    - name: Upload Playwright Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
