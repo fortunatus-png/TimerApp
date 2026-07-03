@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test.describe('Session', () => {
+test.describe.parallel('Session', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.clock.install();
