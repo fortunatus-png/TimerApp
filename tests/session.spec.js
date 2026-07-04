@@ -19,7 +19,7 @@ test.describe('Session', () => {
   });
 
   test('Sessionpage loads correctly', async ({ page }) => {
-    await sessionPage.sessionElementsVisible();
+    await sessionPage.getSessionElements();
   });
 
   test('Pause the countdown timer', async ({ page }) => {

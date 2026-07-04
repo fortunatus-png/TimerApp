@@ -17,7 +17,7 @@ test.describe('Timer', () => {
   });
 
   test('Timerpage loads correctly', async ({ page }) => {
-    await logTimerPage.timerElementsVisible();
+    await logTimerPage.getTimerElements();
   });
 
   test('Set up the time with range slider', async ({ page }) => {
@@ -27,7 +27,7 @@ test.describe('Timer', () => {
 
   test('Start the timer with the minimum time', async ({ page }) => {
     await logTimerPage.startBtn.click();
-    await logTimerPage.sessionElementsVisible();
+    await logTimerPage.getSessionElements();
     await logTimerPage.expectSessionPage();
   });
 
@@ -42,6 +42,6 @@ test.describe('Timer', () => {
   test('Timerpage stays on timer page after reload', async ({ page }) => {
     await page.reload();
     await logTimerPage.expectTimerPage();
-    await logTimerPage.timerElementsVisible();
+    await logTimerPage.getTimerElements();
   });
 });

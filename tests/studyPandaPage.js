@@ -36,6 +36,13 @@ export class StudyPandaPage {
         this.congratHead = page.getByRole('heading', { name: '🎉 Great job!' });
         this.studiedTime = page.getByText('You studied for 5 minutes!');
         this.newStartBtn = page.getByRole('button', { name: 'Start new session' });
+
+        this.heatmap = page.locator('#heatmap-wrapper');
+        this.prevMonthBtn = page.locator('#prevBtn');
+        this.nextMonthBtn = page.locator('#nextBtn');
+        this.monthNav = page.locator('#month-navigation');
+        this.monthTitle = page.locator('#month-navigation h3');
+        this.cells = page.locator('.heatCell');
     }
 
     async signUp(email, password) {
@@ -50,29 +57,57 @@ export class StudyPandaPage {
         await this.loginBtn.click();
     }
 
-    async homeElementsVisible() {
+    async getHomeElements() {
         await expect(this.logo).toBeVisible();
         await expect(this.homeMessage).toBeVisible();
         await expect(this.panda).toBeVisible();
     }
 
-    async timerElementsVisible() {
+    async getTimerElements() {
         await expect(this.slider).toBeVisible();
         await expect(this.startBtn).toBeVisible();
         await expect(this.panda).toBeVisible();
         await expect(this.initialTime).toBeVisible();
     }
 
-    async sessionElementsVisible() {
+    async getSessionElements() {
         await expect(this.initialTimeHead).toBeVisible();
         await expect(this.pandaStudying).toBeVisible();
     }
 
-    async sessionCompletedElemVisible() {
+    async getSessionCompletedElements() {
         await expect(this.timeout).toBeVisible({ timeout: 305000 });
         await expect(this.congratHead).toBeVisible();
         await expect(this.studiedTime).toBeVisible();
         await expect(this.newStartBtn).toBeVisible();
+    }
+
+    async getCurrentMonth() {
+        return await this.monthTitle.textContent();
+    }
+
+    async expectMonthChanged(originalMonth) {
+        const newMonth = await this.getCurrentMonth();
+        expect(newMonth).not.toBe(originalMonth);
+    }
+
+    async getShortStudySession() {
+        await this.startBtn.click();
+        await this.page.waitForTimeout(63000);
+        await this.historyPageBtn.click();
+        await this.leaveBtn.click();
+    }
+
+    async getCellForToday() {
+        const today = new Date().getDate();
+        const currentHour = new Date().getHours();
+        const adjustedHour = (currentHour - 2 + 24) % 24;
+        const cellIndex = (today - 1) * 24 + adjustedHour;
+        return this.cells.nth(cellIndex);
+    }
+
+    async getCellColor(cell) {
+        return await cell.evaluate(el => getComputedStyle(el).backgroundColor);
     }
 
     async gotoLoginPage() {
@@ -81,6 +116,10 @@ export class StudyPandaPage {
 
     async gotoHistoryPage() {
         await this.page.goto('/history');
+    }
+
+    async gotoTimerPage() {
+        await this.page.goto('/timer');
     }
 
     async expectHomePage() {
