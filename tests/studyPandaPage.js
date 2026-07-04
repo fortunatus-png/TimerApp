@@ -43,6 +43,12 @@ export class StudyPandaPage {
         this.monthNav = page.locator('#month-navigation');
         this.monthTitle = page.locator('#month-navigation h3');
         this.cells = page.locator('.heatCell');
+
+        this.bgdColor = page.locator('#background-color-wish');
+        this.resetBtn = page.getByRole('button', { name: 'Reset Data' });
+
+        this.colorPicker = page.locator('input[type="color"]');
+        this.container = page.locator('#background-color-wish');
     }
 
     async signUp(email, password) {
@@ -108,6 +114,33 @@ export class StudyPandaPage {
 
     async getCellColor(cell) {
         return await cell.evaluate(el => getComputedStyle(el).backgroundColor);
+    }
+
+    async getCustomizeElements() {
+        await expect(this.bgdColor).toBeVisible();
+        await expect(this.resetBtn).toBeVisible();
+    }
+
+    async selectColor(hexColor) {
+        await this.colorPicker.fill(hexColor);
+    }
+
+    async getBackgroundColor() {
+        return await this.page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    }
+
+    async expectBackgroundColor(expectedColor) {
+        const bg = await this.getBackgroundColor();
+        expect(bg).toBe(expectedColor);
+    }
+
+    async expectBackgroundColorNot(expectedColor) {
+        const bg = await this.getBackgroundColor();
+        expect(bg).not.toBe(expectedColor);
+    }
+
+    async expectColorPickerValue(expectedValue) {
+        await expect(this.colorPicker).toHaveValue(expectedValue);
     }
 
     async gotoLoginPage() {
