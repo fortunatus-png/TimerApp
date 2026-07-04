@@ -25,6 +25,17 @@ export class StudyPandaPage {
         this.initialTimeHead = page.getByRole('heading', { name: '5' });
         this.twentyfive = page.getByText('25 Minutes');
         this.hundredeighty = page.getByRole('heading', { name: '180' });
+
+        this.pauseBtn = page.getByRole('button', { name: '⏸' });
+        this.playBtn = page.getByRole('button', { name: '▶' });
+        this.continueBtn = page.getByRole('button', { name: 'Continue' });
+        this.leaveBtn = page.getByRole('button', { name: 'Leave' });
+        this.warningMessage = page.getByText('Your progress so far will be saved, but you won\'t be able to continue this session later.');
+
+        this.timeout = page.getByText('0:00');
+        this.congratHead = page.getByRole('heading', { name: '🎉 Great job!' });
+        this.studiedTime = page.getByText('You studied for 5 minutes!');
+        this.newStartBtn = page.getByRole('button', { name: 'Start new session' });
     }
 
     async signUp(email, password) {
@@ -57,31 +68,42 @@ export class StudyPandaPage {
         await expect(this.pandaStudying).toBeVisible();
     }
 
+    async sessionCompletedElemVisible() {
+        await expect(this.timeout).toBeVisible({ timeout: 305000 });
+        await expect(this.congratHead).toBeVisible();
+        await expect(this.studiedTime).toBeVisible();
+        await expect(this.newStartBtn).toBeVisible();
+    }
+
     async gotoLoginPage() {
         await this.page.goto('/login');
     }
 
-    async gotoHomePage() {
+    async gotoHistoryPage() {
+        await this.page.goto('/history');
+    }
+
+    async expectHomePage() {
         await expect(this.page).toHaveURL('/');
     }
 
-    async gotoTimerPage() {
+    async expectTimerPage() {
         await expect(this.page).toHaveURL('/timer');
     }
 
-    async gotoSessionPage() {
+    async expectSessionPage() {
         await expect(this.page).toHaveURL('/session');
     }
 
-    async gotoHistoryPage() {
+    async expectHistoryPage() {
         await expect(this.page).toHaveURL('/history');
     }
 
-    async gotoAccountPage() {
+    async expectAccountPage() {
         await expect(this.page).toHaveURL('/account');
     }
 
-    async gotoCustomizePage() {
+    async expectCustomizePage() {
         await expect(this.page).toHaveURL('/customization');
     }
 }

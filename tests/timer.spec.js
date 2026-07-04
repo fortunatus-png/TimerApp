@@ -13,7 +13,7 @@ test.describe('Timer', () => {
     await logTimerPage.gotoLoginPage();
     await logTimerPage.logIn(validEmail, validPassword);
     await logTimerPage.timerPageBtn.click();
-    await logTimerPage.gotoTimerPage();
+    await logTimerPage.expectTimerPage();
   });
 
   test('Timerpage loads correctly', async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe('Timer', () => {
   test('Start the timer with the minimum time', async ({ page }) => {
     await logTimerPage.startBtn.click();
     await logTimerPage.sessionElementsVisible();
-    await logTimerPage.gotoSessionPage();
+    await logTimerPage.expectSessionPage();
   });
 
   test('Start the timer with the maximum time', async ({ page }) => {
@@ -36,12 +36,12 @@ test.describe('Timer', () => {
     await logTimerPage.startBtn.click();
     await expect(logTimerPage.hundredeighty).toBeVisible();
     await expect(logTimerPage.pandaStudying).toBeVisible();
-    await logTimerPage.gotoSessionPage();
+    await logTimerPage.expectSessionPage();
   });
 
   test('Timerpage stays on timer page after reload', async ({ page }) => {
     await page.reload();
-    await logTimerPage.gotoTimerPage();
+    await logTimerPage.expectTimerPage();
     await logTimerPage.timerElementsVisible();
   });
 });

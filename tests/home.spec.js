@@ -12,7 +12,7 @@ test.describe('Home', () => {
     homePage = new StudyPandaPage(page);
     await homePage.gotoLoginPage();
     await homePage.logIn(validEmail, validPassword);
-    await homePage.gotoHomePage();
+    await homePage.expectHomePage();
   });
 
   test('Homepage loads correctly', async ({ page }) => {
@@ -21,27 +21,27 @@ test.describe('Home', () => {
 
   test('Navigate to Timer page', async ({ page }) => {
     await homePage.timerPageBtn.click();
-    await homePage.gotoTimerPage();
+    await homePage.expectTimerPage();
   });
 
   test('Navigate to History page', async ({ page }) => {
     await homePage.historyPageBtn.click();
-    await homePage.gotoHistoryPage();
+    await homePage.expectHistoryPage();
   });
 
   test('Navigate to Account page', async ({ page }) => {
     await homePage.accountPageBtn.click();
-    await homePage.gotoAccountPage();
+    await homePage.expectAccountPage();
   });
 
   test('Navigate to Customize page', async ({ page }) => {
     await homePage.customPageBtn.click();
-    await homePage.gotoCustomizePage();
+    await homePage.expectCustomizePage();
   });
 
   test('Homepage stays on home page after reload', async ({ page }) => {
     await page.reload();
-    await homePage.gotoHomePage();
+    await homePage.expectHomePage();
     await homePage.homeElementsVisible();
   });
 });
