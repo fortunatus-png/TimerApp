@@ -49,6 +49,9 @@ export class StudyPandaPage {
 
         this.colorPicker = page.locator('input[type="color"]');
         this.container = page.locator('#background-color-wish');
+
+        this.logOut = page.getByRole('button', { name: 'Log Out' });
+        this.emailAddress = page.locator('#email');
     }
 
     async signUp(email, password) {
@@ -157,6 +160,10 @@ export class StudyPandaPage {
 
     async expectHomePage() {
         await expect(this.page).toHaveURL('/');
+    }
+
+    async expectLoginPage() {
+        await expect(this.page).toHaveURL('/login');
     }
 
     async expectTimerPage() {
