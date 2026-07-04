@@ -16,6 +16,15 @@ export class StudyPandaPage {
         this.historyPageBtn = page.getByRole('button', { name: 'History' });
         this.accountPageBtn = page.getByRole('button', { name: 'Account' });
         this.customPageBtn = page.getByRole('button', { name: 'Customize' });
+
+        this.slider = page.getByRole('slider');
+        this.startBtn = page.getByRole('button', { name: 'Start' });
+        this.panda = page.locator('.figure-svg');
+        this.pandaStudying = page.getByRole('img');
+        this.initialTime = page.getByText('5 Minutes');
+        this.initialTimeHead = page.getByRole('heading', { name: '5' });
+        this.twentyfive = page.getByText('25 Minutes');
+        this.hundredeighty = page.getByRole('heading', { name: '180' });
     }
 
     async signUp(email, password) {
@@ -30,13 +39,22 @@ export class StudyPandaPage {
         await this.loginBtn.click();
     }
 
-    async logoMessageVisible() {
+    async homeElementsVisible() {
         await expect(this.logo).toBeVisible();
         await expect(this.homeMessage).toBeVisible();
+        await expect(this.panda).toBeVisible();
     }
 
-    async pandaVisible() {
+    async timerElementsVisible() {
+        await expect(this.slider).toBeVisible();
+        await expect(this.startBtn).toBeVisible();
         await expect(this.panda).toBeVisible();
+        await expect(this.initialTime).toBeVisible();
+    }
+
+    async sessionElementsVisible() {
+        await expect(this.initialTimeHead).toBeVisible();
+        await expect(this.pandaStudying).toBeVisible();
     }
 
     async gotoLoginPage() {
@@ -49,6 +67,10 @@ export class StudyPandaPage {
 
     async gotoTimerPage() {
         await expect(this.page).toHaveURL('/timer');
+    }
+
+    async gotoSessionPage() {
+        await expect(this.page).toHaveURL('/session');
     }
 
     async gotoHistoryPage() {

@@ -16,8 +16,7 @@ test.describe('Home', () => {
   });
 
   test('Homepage loads correctly', async ({ page }) => {
-    await homePage.logoMessageVisible();
-    await homePage.pandaVisible();
+    await homePage.homeElementsVisible();
   });
 
   test('Navigate to Timer page', async ({ page }) => {
@@ -43,6 +42,6 @@ test.describe('Home', () => {
   test('Homepage stays on home page after reload', async ({ page }) => {
     await page.reload();
     await homePage.gotoHomePage();
-    await homePage.pandaVisible();
+    await homePage.homeElementsVisible();
   });
 });

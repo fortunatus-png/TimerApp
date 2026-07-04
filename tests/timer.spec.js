@@ -1,51 +1,47 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { StudyPandaPage } from './studyPandaPage';
 
 test.describe('Timer', () => {
+  const validEmail = 'ye@example.com';
+  const validPassword = 'stringst';
+  /** @type {StudyPandaPage} */
+  let logTimerPage;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login');
-    await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
-    await page.getByRole('button', { name: 'Timer' }).click();
-    await expect(page).toHaveURL('/timer');
+    logTimerPage = new StudyPandaPage(page);
+    await logTimerPage.gotoLoginPage();
+    await logTimerPage.logIn(validEmail, validPassword);
+    await logTimerPage.timerPageBtn.click();
+    await logTimerPage.gotoTimerPage();
   });
 
   test('Timerpage loads correctly', async ({ page }) => {
-    await expect(page.getByRole('slider')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Start' })).toBeVisible();
-    await expect(page.locator('.figure-svg')).toBeVisible();
-    await expect(page.getByText('5 Minutes')).toBeVisible();
+    await logTimerPage.timerElementsVisible();
   });
 
   test('Set up the time with range slider', async ({ page }) => {
-    await page.getByRole('slider').fill('25');
-    await expect(page.getByText('25 Minutes')).toBeVisible();
+    await logTimerPage.slider.fill('25');
+    await expect(logTimerPage.twentyfive).toBeVisible();
   });
 
   test('Start the timer with the minimum time', async ({ page }) => {
-    await page.getByRole('slider').fill('5');
-    await page.getByRole('button', { name: 'Start' }).click();
-    await expect(page.getByRole('heading', { name: '5' })).toBeVisible();
-    await expect(page.getByRole('img')).toBeVisible();
-    await expect(page).toHaveURL('/session');
+    await logTimerPage.startBtn.click();
+    await logTimerPage.sessionElementsVisible();
+    await logTimerPage.gotoSessionPage();
   });
 
   test('Start the timer with the maximum time', async ({ page }) => {
-    await page.getByRole('slider').fill('180');
-    await page.getByRole('button', { name: 'Start' }).click();
-    await expect(page.getByRole('heading', { name: '180' })).toBeVisible();
-    await expect(page.getByRole('img')).toBeVisible();
-    await expect(page).toHaveURL('/session');
+    await logTimerPage.slider.fill('180');
+    await logTimerPage.startBtn.click();
+    await expect(logTimerPage.hundredeighty).toBeVisible();
+    await expect(logTimerPage.pandaStudying).toBeVisible();
+    await logTimerPage.gotoSessionPage();
   });
 
   test('Timerpage stays on timer page after reload', async ({ page }) => {
     await page.reload();
-    await expect(page).toHaveURL('/timer');
-    await expect(page.getByRole('slider')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Start' })).toBeVisible();
-    await expect(page.locator('.figure-svg')).toBeVisible();
-    await expect(page.getByText('5 Minutes')).toBeVisible();
+    await logTimerPage.gotoTimerPage();
+    await logTimerPage.timerElementsVisible();
   });
 });
