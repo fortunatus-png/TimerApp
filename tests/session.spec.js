@@ -56,12 +56,12 @@ test.describe('Session', () => {
 
   // test('Session completes successfully', async ({ page }) => {
   //   test.setTimeout(310000);
-  //   await sessionPage.sessionCompletedElemVisible();
+  //   await sessionPage.getSessionCompletedElements();
   // });
 
   // test('Start new session after completion', async ({ page }) => {
   //   test.setTimeout(350000);
-  //   await sessionPage.sessionCompletedElemVisible();
+  //   await sessionPage.getSessionCompletedElements();
   //   await sessionPage.newStartBtn.click();
   //   await sessionPage.expectTimerPage;
   // });

@@ -13,7 +13,7 @@ test.describe('History', () => {
     await historyPage.gotoLoginPage();
     await historyPage.logIn(validEmail, validPassword);
     await historyPage.historyPageBtn.click();
-    await historyPage.expectHistoryPage;
+    await historyPage.expectHistoryPage();
   });
 
   test('Historypage loads correctly', async ({ page }) => {

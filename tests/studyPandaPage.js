@@ -19,7 +19,6 @@ export class StudyPandaPage {
 
         this.slider = page.getByRole('slider');
         this.startBtn = page.getByRole('button', { name: 'Start' });
-        this.panda = page.locator('.figure-svg');
         this.pandaStudying = page.getByRole('img');
         this.initialTime = page.getByText('5 Minutes');
         this.initialTimeHead = page.getByRole('heading', { name: '5' });

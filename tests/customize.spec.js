@@ -23,7 +23,7 @@ test.describe.parallel('Customize', () => {
   test('Choose a color for the background', async ({ page }) => {
     const oldBg = await customizePage.getBackgroundColor();
     await customizePage.selectColor('#ff0000');
-    await customizePage.expectBackgroundColor();
+    await customizePage.expectBackgroundColor('rgb(255, 0, 0)');
     await customizePage.expectBackgroundColorNot(oldBg);
   });
 
