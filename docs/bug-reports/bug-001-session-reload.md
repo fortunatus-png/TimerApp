@@ -1,6 +1,6 @@
 # Session page -> Timer restarts from beginning after page reload
 
-**Severity:** High
+**Severity:** High  
 **Priority:** High
 
 **Description:**
@@ -14,12 +14,12 @@ When the user reloads the session page during an active timer, the timer resets 
 5. Observe the timer
 
 ## Expected Behavior
-The timer should continue from 4:50 (where it was before reload)
+The timer should continue from 4:50 (where it was before reload).
 
 ## Actual Behavior
-The timer resets to 5:00 (original duration)
+The timer resets to 5:00 (original duration).
 
 ## Environment
 - Browser: Firefox (latest)
-- OS: Ubuntu
+- OS: Ubuntu 24.04
 
