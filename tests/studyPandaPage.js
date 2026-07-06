@@ -60,10 +60,12 @@ export class StudyPandaPage {
     }
 
     async logIn(email, password) {
+        await this.emailField.waitFor({ state: 'visible', timeout: 10000 });
         await this.emailField.fill(email);
         await this.passwordField.fill(password);
         await this.loginBtn.click();
     }
+
 
     async getHomeElements() {
         await expect(this.logo).toBeVisible();
