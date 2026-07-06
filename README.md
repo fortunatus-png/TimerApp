@@ -22,7 +22,7 @@ Full-stack study timer app with React frontend and FastAPI backend.
 ```bash
 cd backend
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate   # (Linux/Mac) or venv\Scripts\activate (Windows)
 pip install -r requirements.txt
 ```
 
@@ -40,7 +40,7 @@ Open two terminal windows:
 **Terminal 1 - Backend:**
 ```bash
 cd backend
-source venv/bin/activate
+source venv/bin/activate   # (Linux/Mac) or venv\Scripts\activate (Windows)
 fastapi dev
 ```
 
