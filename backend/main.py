@@ -29,7 +29,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def init_db():
     conn = get_db()
     
-    # Sessions table - now with user_id
+    # Sessions table
     conn.execute('''
         CREATE TABLE IF NOT EXISTS sessions(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,7 +50,7 @@ def init_db():
         )
     ''')
     
-    # Tokens table - now with expiration
+    # Tokens table
     conn.execute('''
         CREATE TABLE IF NOT EXISTS tokens (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
