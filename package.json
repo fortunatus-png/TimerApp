@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "serve . -p 5173"
+    "start": "cd frontend && npm run dev -- --host 127.0.0.1 --port 5173"
   },
   "repository": {
     "type": "git",
