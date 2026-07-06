@@ -194,7 +194,6 @@ curl -X GET http://localhost:8000/sessions \
 
 ## 💡 Future Enhancements (Optional)
 
-- [ ] Logout functionality
 - [ ] Change password
 - [ ] Delete sessions
 - [ ] Edit session details
@@ -203,6 +202,4 @@ curl -X GET http://localhost:8000/sessions \
 - [ ] Dark mode
 - [ ] Share statistics
 
----
 
-**Happy studying! 📚✨**
