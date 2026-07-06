@@ -11,7 +11,6 @@ test.describe.parallel('Customize', () => {
   test.beforeEach(async ({ page }) => {
     customizePage = new StudyPandaPage(page);
     await customizePage.gotoLoginPage();
-    await page.waitForLoadState('networkidle');
     await customizePage.logIn(validEmail, validPassword);
     await customizePage.customPageBtn.click();
     await customizePage.expectCustomizePage();

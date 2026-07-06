@@ -12,7 +12,6 @@ test.describe('Session', () => {
     await page.clock.install();
     sessionPage = new StudyPandaPage(page);
     await sessionPage.gotoLoginPage();
-    await page.waitForLoadState('networkidle');
     await sessionPage.logIn(validEmail, validPassword);
     await sessionPage.timerPageBtn.click();
     await sessionPage.startBtn.click();

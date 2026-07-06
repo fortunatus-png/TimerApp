@@ -11,7 +11,6 @@ test.describe('Account', () => {
   test.beforeEach(async ({ page }) => {
     accountPage = new StudyPandaPage(page);
     await accountPage.gotoLoginPage();
-    await page.waitForLoadState('networkidle');
     await accountPage.logIn(validEmail, validPassword);
     await accountPage.accountPageBtn.click();
     await accountPage.expectAccountPage();
