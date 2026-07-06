@@ -7,8 +7,10 @@ Full-stack study timer app with React frontend and FastAPI backend.
 - `/frontend` - React + Vite + Material UI
 - `/backend` - FastAPI + Python + SQLite
 - `/tests` - Playwright E2E tests with Gherkin-style BDD
+- `/docs/gherkin` - Gherkin feature files for BDD scenarios
+- `/docs/bug-reports` - Documented bug reports from QA testing
 
-## Setup and Run
+## Setup (First Time Only)
 
 ### Prerequisites
 - Node.js (v18+)
@@ -19,21 +21,17 @@ Full-stack study timer app with React frontend and FastAPI backend.
 
 ```bash
 cd backend
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
-fastapi dev
 ```
-
-The backend will start on `http://localhost:8000`
 
 ### Frontend Setup
 
 ```bash
 cd frontend
 npm install
-npm run dev
 ```
-
-The frontend will start on `http://localhost:5173`
 
 ### Running Both Locally
 
@@ -42,14 +40,15 @@ Open two terminal windows:
 **Terminal 1 - Backend:**
 ```bash
 cd backend
-pip install -r requirements.txt
+source venv/bin/activate
 fastapi dev
 ```
+
+Then visit `http://localhost:8000` in your browser.
 
 **Terminal 2 - Frontend:**
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 
@@ -67,7 +66,25 @@ This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-
 - `tests/home.spec.js` - Home page navigation tests
 - `tests/timer.spec.js` - Timer functionality tests
 - `tests/session.spec.js` - Active session and pause/play tests
+- `tests/account.spec.js` - Account page and logout tests
+- `tests/customize.spec.js` - Customization and color picker tests
+- `tests/history.spec.js` - History heatmap and month navigation tests
 - `tests/studyPandaPage.js` - Page Object Model for reusable test utilities
+
+### Gherkin Feature Files
+- `docs/gherkin/login.feature` - Login scenarios
+- `docs/gherkin/signup.feature` - Signup scenarios
+- `docs/gherkin/home.feature` - Home page scenarios
+- `docs/gherkin/timer.feature` - Timer scenarios
+- `docs/gherkin/session.feature` - Active session scenarios
+- `docs/gherkin/history.feature` - History page scenarios
+- `docs/gherkin/customize.feature` - Customization scenarios
+- `docs/gherkin/account.feature` - Account page scenarios
+
+### Bug Reports
+- `docs/bug-reports/bug-001-timer-reload.md` - Timer resets on page reload
+- `docs/bug-reports/bug-002-color-picker.md` - Color picker stays visible after navigation
+- `docs/bug-reports/bug-003-countdown-hover.md` - Countdown text hover effect
 
 ### Running Tests Locally
 
@@ -108,10 +125,13 @@ The test suite covers:
 - ✅ Form validation and error handling
 - ✅ History heatmap functionality
 - ✅ Customization features
+- ✅ Account page and logout
+- ✅ Bug documentation (3 real bugs found)
 
 ### CI/CD Testing
 
-Tests run automatically on every push via GitHub Actions (see `.github/workflows/playwright.yml`).
+Tests run automatically on every push via GitHub Actions (see `.github/workflows/playwright.yml`).  
+The status badge at the top shows the current test status.
 
 ---
 
@@ -145,6 +165,9 @@ Tests run automatically on every push via GitHub Actions (see `.github/workflows
 - localStorage for data persistence
 - CSS Flexbox & Grid
 - SVG animations in React
+- Playwright E2E testing with BDD approach
+- Page Object Model pattern for test maintainability
+- Writing professional bug reports
 
 ## What I Learned for the First Time
 
@@ -154,6 +177,7 @@ Tests run automatically on every push via GitHub Actions (see `.github/workflows
 - Creating animated SVG characters (blinking, moving eyes)
 - Playwright E2E testing with BDD approach
 - Page Object Model pattern for test maintainability
+- Writing professional bug reports (severity, priority, steps)
 
 ## Future Ideas
 
@@ -162,7 +186,6 @@ Tests run automatically on every push via GitHub Actions (see `.github/workflows
 - Spend stars on customization options (themes, accessories)
 - Avatar builder (glasses, clothes, backgrounds)
 - Repeat session button
-- Real backend integration with FastAPI + SQLite
 - User profiles and study streaks
 - Enhanced test coverage with Gherkin feature files
 
