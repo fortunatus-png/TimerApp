@@ -12,8 +12,6 @@ test.describe('Session', () => {
     await page.clock.install();
     sessionPage = new StudyPandaPage(page);
     await sessionPage.gotoLoginPage();
-    // Wait for the page to be fully loaded
-    await page.waitForLoadState('networkidle');
     await sessionPage.logIn(validEmail, validPassword);
     await sessionPage.timerPageBtn.click();
     await sessionPage.startBtn.click();

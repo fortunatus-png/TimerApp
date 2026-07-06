@@ -11,8 +11,6 @@ test.describe('History', () => {
   test.beforeEach(async ({ page }) => {
     historyPage = new StudyPandaPage(page);
     await historyPage.gotoLoginPage();
-    // Wait for the page to be fully loaded
-    await page.waitForLoadState('networkidle');
     await historyPage.logIn(validEmail, validPassword);
     await historyPage.historyPageBtn.click();
     await historyPage.expectHistoryPage();
