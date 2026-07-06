@@ -109,7 +109,7 @@ function SessionPage() {
 
                 {seconds === 0 && (
                     <div className='congratsMessage'>
-                        <h2>🎉 Great job!</h2>
+                        <h2 id="heading">🎉 Great job!</h2>
                         <p>You studied for {minutes} minutes!</p>
                         <Button
                             variant="contained"

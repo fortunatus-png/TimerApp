@@ -6,7 +6,7 @@ import Figure from '../components/Figure'
 import { Slider, Button, Typography, Box, Paper } from '@mui/material'
 
 function TimerPage() {
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState(5);
   const navigate = useNavigate();
 
   function startSession() {

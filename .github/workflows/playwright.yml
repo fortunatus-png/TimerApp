@@ -1,0 +1,114 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, master, work-from-fix-commit ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    
+    - name: Install Python dependencies
+      run: |
+        cd backend
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+    
+    - name: Start Backend
+      run: |
+        cd backend
+        source venv/bin/activate
+        fastapi dev > /tmp/backend.log 2>&1 &
+        sleep 4
+    
+    - name: Install Node dependencies
+      run: cd frontend && npm install
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Initialize Test Database
+      run: |
+        cd backend
+        source venv/bin/activate
+        python3 << 'EOF'
+        import sqlite3
+        import bcrypt
+
+        conn = sqlite3.connect('sessions.db')
+        cursor = conn.cursor()
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            date TEXT NOT NULL,
+            minutes INTEGER NOT NULL,
+            hour INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)''')
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS tokens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            token TEXT UNIQUE NOT NULL,
+            user_id INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            expires_at TIMESTAMP NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)''')
+
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(b'stringst', salt).decode()
+
+        try:
+            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", ('user@example.com', hashed))
+            conn.commit()
+        except sqlite3.IntegrityError:
+            pass
+
+        conn.close()
+        EOF
+    
+    - name: Wait for Backend
+      run: |
+        for i in {1..20}; do
+          curl -f http://localhost:8000 > /dev/null 2>&1 && echo "Backend ready" && exit 0
+          echo "Attempt $i/20"
+          sleep 2
+        done
+        echo "Backend failed"
+        exit 1
+    
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Playwright tests
+      run: npx playwright test
+    
+    - name: Upload Playwright Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

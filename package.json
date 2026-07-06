@@ -1,0 +1,30 @@
+{
+  "name": "studyapp",
+  "version": "1.0.0",
+  "description": "Full-stack study timer app with React frontend and FastAPI backend.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "serve . -p 5173"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fortunatus-png/TimerApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/fortunatus-png/TimerApp/issues"
+  },
+  "homepage": "https://github.com/fortunatus-png/TimerApp#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.0",
+    "playwright": "^1.61.1",
+    "serve": "^14.2.6"
+  }
+}

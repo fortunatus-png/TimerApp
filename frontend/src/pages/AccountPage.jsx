@@ -52,7 +52,7 @@ function AccountPage() {
       <div id="accountWrapper">
         <div id="accountContainer">
           <Box className="inputTags" sx={{ mb: 3 }}>
-            <Typography sx={{ color: '#2D2A29', fontWeight: 'bold' }}>
+            <Typography id="email" sx={{ color: '#2D2A29', fontWeight: 'bold' }}>
               Email: {email}
             </Typography>
           </Box>
