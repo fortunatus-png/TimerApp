@@ -81,7 +81,7 @@ jobs:
         hashed = bcrypt.hashpw(b'stringst', salt).decode()
 
         try:
-            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", ('user@example.com', hashed))
+            cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", ('ye@example.com', hashed))
             conn.commit()
         except sqlite3.IntegrityError:
             pass

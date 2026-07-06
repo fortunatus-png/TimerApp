@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { StudyPandaPage } from './studyPandaPage';
 
 test.describe('Signup', () => {
-  const validEmail = 'ye@example.com';
+  const validEmail = 'new-user@example.com';
   const invalidEmail = 'yeexample.com';
   const emptyEmail = '';
   const validPassword = 'stringst';
