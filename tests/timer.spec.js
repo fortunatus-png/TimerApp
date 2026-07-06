@@ -11,6 +11,8 @@ test.describe('Timer', () => {
   test.beforeEach(async ({ page }) => {
     logTimerPage = new StudyPandaPage(page);
     await logTimerPage.gotoLoginPage();
+    // Wait for the page to be fully loaded
+    await page.waitForLoadState('networkidle');
     await logTimerPage.logIn(validEmail, validPassword);
     await logTimerPage.timerPageBtn.click();
     await logTimerPage.expectTimerPage();

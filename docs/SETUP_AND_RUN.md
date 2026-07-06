@@ -69,7 +69,6 @@ npm install
 
 ### 1. Register a New Account
 - Go to http://localhost:5173/login
-- Click "Sign Up"
 - Enter email & password (min 8 chars)
 - Click "Sign Up"
 
@@ -194,7 +193,6 @@ curl -X GET http://localhost:8000/sessions \
 
 ## 💡 Future Enhancements (Optional)
 
-- [ ] Logout functionality
 - [ ] Change password
 - [ ] Delete sessions
 - [ ] Edit session details
@@ -202,7 +200,3 @@ curl -X GET http://localhost:8000/sessions \
 - [ ] Mobile-friendly design
 - [ ] Dark mode
 - [ ] Share statistics
-
----
-
-**Happy studying! 📚✨**
