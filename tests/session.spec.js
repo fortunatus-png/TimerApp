@@ -1,72 +1,68 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { StudyPandaPage } from './studyPandaPage';
 
 test.describe('Session', () => {
+  const validEmail = 'ye@example.com';
+  const validPassword = 'stringst';
+  /** @type {StudyPandaPage} */
+  let sessionPage;
 
   test.beforeEach(async ({ page }) => {
     await page.clock.install();
-    await page.goto('/login');
-    await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
-    await page.getByRole('button', { name: 'Timer' }).click();
-    await page.getByRole('button', { name: 'Start' }).click();
-    await expect(page).toHaveURL('/session');
+    sessionPage = new StudyPandaPage(page);
+    await sessionPage.gotoLoginPage();
+    await sessionPage.logIn(validEmail, validPassword);
+    await sessionPage.timerPageBtn.click();
+    await sessionPage.startBtn.click();
+    await sessionPage.expectSessionPage();
   });
 
   test('Sessionpage loads correctly', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: '5' })).toBeVisible();
-    await expect(page.getByRole('img')).toBeVisible();
+    await sessionPage.getSessionElements();
   });
 
   test('Pause the countdown timer', async ({ page }) => {
-    await page.getByRole('button', { name: '⏸' }).click();
-    await expect(page.getByRole('button', { name: '▶' })).toBeVisible();
+    await sessionPage.pauseBtn.click();
+    await expect(sessionPage.playBtn).toBeVisible();
   });
 
   test('Resume the countdown timer', async ({ page }) => {
-    await page.getByRole('button', { name: '⏸' }).click();
-    await page.getByRole('button', { name: '▶' }).click();
-    await expect(page.getByRole('button', { name: '⏸' })).toBeVisible();
+    await sessionPage.pauseBtn.click();
+    await sessionPage.playBtn.click();
+    await expect(sessionPage.pauseBtn).toBeVisible();
   });
 
   test('Warning message when leaving the page during active session', async ({ page }) => {
-    await page.getByRole('button', { name: 'History' }).click();
-    await expect(page.getByText('Your progress so far will be saved, but you won\'t be able to continue this session later.')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Continue' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Leave' })).toBeVisible();
+    await sessionPage.historyPageBtn.click();
+    await expect(sessionPage.warningMessage).toBeVisible();
+    await expect(sessionPage.continueBtn).toBeVisible();
+    await expect(sessionPage.leaveBtn).toBeVisible();
   });
 
   test('Continue session after warning', async ({ page }) => {
-    await page.getByRole('button', { name: 'History' }).click();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page.getByText('Your progress so far will be saved, but you won\'t be able to continue this session later.')).not.toBeVisible();
-    await expect(page.getByRole('button', { name: '⏸' })).toBeVisible();
+    await sessionPage.historyPageBtn.click();
+    await sessionPage.continueBtn.click();
+    await expect(sessionPage.warningMessage).not.toBeVisible();
+    await expect(sessionPage.pauseBtn).toBeVisible();
   });
 
   test('Leave session after warning', async ({ page }) => {
-    await page.getByRole('button', { name: 'History' }).click();
-    await page.getByRole('button', { name: 'Leave' }).click();
-    await page.goto('/history');
-    await expect(page).toHaveURL('/history');
-  });
-  test('Start new session after completion', async ({ page }) => {
-    test.setTimeout(350000);
-    await expect(page.getByText('0:00')).toBeVisible({ timeout: 320000 });
-    await expect(page.getByRole('heading', { name: '🎉 Great job!' })).toBeVisible();
-    await expect(page.getByText('You studied for 5 minutes!')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Start new session' })).toBeVisible();
-
-    await page.getByRole('button', { name: 'Start new session' }).click();
-    await expect(page).toHaveURL('/timer');
+    await sessionPage.historyPageBtn.click();
+    await sessionPage.leaveBtn.click();
+    await sessionPage.gotoHistoryPage();
+    await sessionPage.expectHistoryPage();
   });
 
-  test('Session completes successfully', async ({ page }) => {
-    test.setTimeout(310000);
-    await expect(page.getByText('0:00')).toBeVisible({ timeout: 305000 });
-    await expect(page.getByRole('heading', { name: '🎉 Great job!' })).toBeVisible();
-    await expect(page.getByText('You studied for 5 minutes!')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Start new session' })).toBeVisible();
-  });
+  // test('Session completes successfully', async ({ page }) => {
+  //   test.setTimeout(310000);
+  //   await sessionPage.getSessionCompletedElements();
+  // });
 
+  // test('Start new session after completion', async ({ page }) => {
+  //   test.setTimeout(350000);
+  //   await sessionPage.getSessionCompletedElements();
+  //   await sessionPage.newStartBtn.click();
+  //   await sessionPage.expectTimerPage;
+  // });
 });

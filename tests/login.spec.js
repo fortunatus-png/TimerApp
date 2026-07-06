@@ -1,44 +1,44 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { StudyPandaPage } from './studyPandaPage';
 
-test.describe('Login', () => {
+test.describe.parallel('Login', () => {
+  const validEmail = 'ye@example.com';
+  const wrongEmail = 'miau@example.com';
+  const emptyEmail = '';
+  const validPassword = 'stringst';
+  const wrongPassword = 'stringss';
+  const emptyPassword = '';
+  /** @type {StudyPandaPage} */
+  let loginPage;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login');
+    loginPage = new StudyPandaPage(page);
+    await loginPage.gotoLoginPage();
   });
 
   test('Successful login with valid credentials', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Email' }).fill('ye@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
+    await loginPage.logIn(validEmail, validPassword);
     await expect(page).toHaveURL('/');
   });
 
   test('Failed login with wrong email', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Email' }).fill('miau@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
+    await loginPage.logIn(wrongEmail, validPassword);
     await expect(page.getByText('Invalid credentials')).toBeVisible();
   });
 
   test('Failed login with an empty email field', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Email' }).fill('');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
+    await loginPage.logIn(emptyEmail, validPassword);
     await expect(page.getByText('Email is required')).toBeVisible();
   });
 
   test('Failed login with wrong password', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringstt');
-    await page.getByRole('button', { name: 'Log in' }).click();
+    await loginPage.logIn(validEmail, wrongPassword);
     await expect(page.getByText('Invalid credentials')).toBeVisible();
   });
 
   test('Failed login with an empty password field', async ({ page }) => {
-    await page.getByRole('textbox', { name: 'Email' }).fill('yeye@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('');
-    await page.getByRole('button', { name: 'Log in' }).click();
+    await loginPage.logIn(validEmail, emptyPassword);
     await expect(page.getByText('Password is required')).toBeVisible();
   });
 });

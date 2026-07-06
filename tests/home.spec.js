@@ -1,45 +1,47 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { StudyPandaPage } from './studyPandaPage';
 
 test.describe('Home', () => {
+  const validEmail = 'ye@example.com';
+  const validPassword = 'stringst';
+  /** @type {StudyPandaPage} */
+  let homePage;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login');
-    await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('stringst');
-    await page.getByRole('button', { name: 'Log in' }).click();
-    await expect(page).toHaveURL('/');
+    homePage = new StudyPandaPage(page);
+    await homePage.gotoLoginPage();
+    await homePage.logIn(validEmail, validPassword);
+    await homePage.expectHomePage();
   });
 
   test('Homepage loads correctly', async ({ page }) => {
-    await expect(page.locator('.logo')).toBeVisible();
-    await expect(page.locator('.figure-svg')).toBeVisible();
-    await expect(page.locator('.homeMessage')).toBeVisible();
+    await homePage.getHomeElements();
   });
 
   test('Navigate to Timer page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Timer' }).click();
-    await expect(page).toHaveURL('/timer');
+    await homePage.timerPageBtn.click();
+    await homePage.expectTimerPage();
   });
 
   test('Navigate to History page', async ({ page }) => {
-    await page.getByRole('button', { name: 'History' }).click();
-    await expect(page).toHaveURL('/history');
+    await homePage.historyPageBtn.click();
+    await homePage.expectHistoryPage();
   });
 
   test('Navigate to Account page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Account' }).click();
-    await expect(page).toHaveURL('/account');
+    await homePage.accountPageBtn.click();
+    await homePage.expectAccountPage();
   });
 
   test('Navigate to Customize page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Customize' }).click();
-    await expect(page).toHaveURL('/customization');
+    await homePage.customPageBtn.click();
+    await homePage.expectCustomizePage();
   });
 
   test('Homepage stays on home page after reload', async ({ page }) => {
     await page.reload();
-    await expect(page).toHaveURL('/');
-    await expect(page.locator('.figure-svg')).toBeVisible();
+    await homePage.expectHomePage();
+    await homePage.getHomeElements();
   });
 });
