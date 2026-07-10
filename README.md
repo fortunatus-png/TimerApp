@@ -12,6 +12,27 @@ Full-stack study timer app with React frontend and FastAPI backend.
 
 ## Setup (First Time Only)
 
+## Run Backend + Frontend + Database (Docker)
+
+Start everything with one command from the project root:
+
+```bash
+docker compose up --build
+```
+
+Services:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API docs: http://localhost:8000/docs
+
+Stop all services:
+
+```bash
+docker compose down
+```
+
+The SQLite database is persisted in a Docker volume (`db_data`).
+
 ### Prerequisites
 - Node.js (v18+)
 - Python (v3.10+)

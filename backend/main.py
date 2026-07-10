@@ -7,12 +7,15 @@ import sqlite3
 import secrets
 import hashlib
 import bcrypt
+import os
 from datetime import datetime, timedelta
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 # ========== 2. DATABASE HELPERS ==========
+DB_PATH = os.getenv("DB_PATH", "sessions.db")
+
 def get_db():
-    conn = sqlite3.connect('sessions.db')
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
