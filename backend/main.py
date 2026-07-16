@@ -70,6 +70,15 @@ def init_db():
     
 init_db()
 
+DEFAULT_TEST_USER_EMAIL = os.getenv("DEFAULT_TEST_USER_EMAIL", "ye@example.com")
+DEFAULT_TEST_USER_PASSWORD = os.getenv("DEFAULT_TEST_USER_PASSWORD", "stringst")
+
+def seed_default_test_user():
+    if get_user_by_email(DEFAULT_TEST_USER_EMAIL):
+        return
+
+    create_user(DEFAULT_TEST_USER_EMAIL, DEFAULT_TEST_USER_PASSWORD)
+
 def save_token(user_id: int, token: str, expires_in_hours: int = 24):
     """Save a token with expiration time."""
     conn = get_db()
@@ -127,6 +136,8 @@ def create_user(email: str, password: str):
     user_id = cursor.lastrowid
     conn.close()
     return user_id
+
+seed_default_test_user()
 
 # ========== 3. FASTAPI APP SETUP ==========
 app = FastAPI(

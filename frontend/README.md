@@ -4,6 +4,8 @@ A study timer app built with React. Track your learning sessions, visualize prog
 
 Built as a hands-on project to refresh and expand React & frontend skills.
 
+For the full-stack Docker workflow, see the root [README](../README.md).
+
 ## Screenshots
 
 ### Login
@@ -68,9 +70,15 @@ Built as a hands-on project to refresh and expand React & frontend skills.
 
 First, clone the repository: [TimerApp](https://github.com/fortunatus-png/TimerApp.git)
 
-Then run:
+To run the frontend locally without Docker:
 
 ```bash
 cd TimerApp
 npm install
 npm run dev
+```
+
+This starts the Vite dev server for the frontend only. For the backend and database, use the root README.
+
+If you want the full application with Docker, start from the root [README](../README.md).
+
