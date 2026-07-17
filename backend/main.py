@@ -7,12 +7,15 @@ import sqlite3
 import secrets
 import hashlib
 import bcrypt
+import os
 from datetime import datetime, timedelta
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 # ========== 2. DATABASE HELPERS ==========
+DB_PATH = os.getenv("DB_PATH", "sessions.db")
+
 def get_db():
-    conn = sqlite3.connect('sessions.db')
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -66,6 +69,15 @@ def init_db():
     conn.close()
     
 init_db()
+
+DEFAULT_TEST_USER_EMAIL = os.getenv("DEFAULT_TEST_USER_EMAIL", "ye@example.com")
+DEFAULT_TEST_USER_PASSWORD = os.getenv("DEFAULT_TEST_USER_PASSWORD", "stringst")
+
+def seed_default_test_user():
+    if get_user_by_email(DEFAULT_TEST_USER_EMAIL):
+        return
+
+    create_user(DEFAULT_TEST_USER_EMAIL, DEFAULT_TEST_USER_PASSWORD)
 
 def save_token(user_id: int, token: str, expires_in_hours: int = 24):
     """Save a token with expiration time."""
@@ -124,6 +136,8 @@ def create_user(email: str, password: str):
     user_id = cursor.lastrowid
     conn.close()
     return user_id
+
+seed_default_test_user()
 
 # ========== 3. FASTAPI APP SETUP ==========
 app = FastAPI(

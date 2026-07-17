@@ -10,7 +10,34 @@ Full-stack study timer app with React frontend and FastAPI backend.
 - `/docs/gherkin` - Gherkin feature files for BDD scenarios
 - `/docs/bug-reports` - Documented bug reports from QA testing
 
-## Setup (First Time Only)
+## Setup and Run
+
+The recommended workflow is to run the full stack in Docker from the project root:
+
+```bash
+docker compose up -d --build
+```
+
+Services:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API docs: http://localhost:8000/docs
+
+Run the end-to-end tests against the running stack:
+
+```bash
+npx playwright test --reporter=line
+```
+
+Stop all services when you are done:
+
+```bash
+docker compose down
+```
+
+The SQLite database is persisted in a Docker volume (`db_data`).
+
+For local development without Docker, see the separate backend and frontend setup sections below.
 
 ### Prerequisites
 - Node.js (v18+)
@@ -96,8 +123,10 @@ npx playwright install
 
 Run all tests:
 ```bash
-npx playwright test
+npx playwright test --reporter=line
 ```
+
+The test suite runs serially in this project because the app uses a shared SQLite-backed Docker stack.
 
 Run tests in headed mode (see browser):
 ```bash
