@@ -234,9 +234,3 @@ Then follow the [Setup and Run](#setup-and-run) section above.
 ## Screenshots
 
 Screenshots are available in the [frontend README](./frontend/README.md).
-
----
-
-## Author
-
-Built as a hands-on project to refresh and expand React, FastAPI, and testing skills.
