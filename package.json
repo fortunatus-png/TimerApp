@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "cd frontend && npm run dev -- --host 127.0.0.1 --port 5173"
+    "start": "cd frontend && npm run dev -- --host 127.0.0.1 --port 5173",
+    "cy:run": "start-server-and-test start http://localhost:5173 'cypress run'"
   },
   "repository": {
     "type": "git",
