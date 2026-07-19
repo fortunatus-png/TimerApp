@@ -9,7 +9,7 @@ describe("Signup", () => {
         cy.get('[type="email"]').type("user1@example.com");
         cy.get('[type="password"]').type("stringst");
         cy.get('[type="button"]').contains("Sign Up").click();
-        cy.url().should('include', '/')
+        cy.location('pathname').should('eq', '/');
     });
 
     it("Failed signup with invalid email format", () => {

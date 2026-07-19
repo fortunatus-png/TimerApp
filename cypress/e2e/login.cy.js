@@ -9,7 +9,7 @@ describe("Login", () => {
         cy.get('[type="email"]').type("user@example.com");
         cy.get('[type="password"]').type("stringst");
         cy.get('[type="button"]').contains("Log In").click();
-        cy.url().should('include', '/')
+        cy.location('pathname').should('eq', '/');
     });
 
     it("Failed login with wrong email", () => {

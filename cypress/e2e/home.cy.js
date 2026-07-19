@@ -6,7 +6,7 @@ describe("Home", () => {
         cy.get('[type="email"]').type("user@example.com");
         cy.get('[type="password"]').type("stringst");
         cy.get('[type="button"]').contains("Log In").click();
-        cy.url().should('include', '/')
+        cy.location('pathname').should('eq', '/');
     });
 
     it("Homepage loads correctly", () => {
@@ -17,26 +17,27 @@ describe("Home", () => {
 
     it("Navigate to Timer page", () => {
         cy.contains('button', 'Timer').click();
-        cy.url().should('include', '/timer')
+        cy.location('pathname').should('eq', '/timer');
     });
 
     it("Navigate to History page", () => {
         cy.contains('button', 'History').click();
-        cy.url().should('include', '/history')
+        cy.location('pathname').should('eq', '/history');
     });
 
     it("Navigate to Account page", () => {
         cy.contains('button', 'Account').click();
-        cy.url().should('include', '/account')
+        cy.location('pathname').should('eq', '/account');
     });
 
     it("Navigate to Customize page", () => {
         cy.contains('button', 'Customize').click();
-        cy.url().should('include', '/customization')
+        cy.location('pathname').should('eq', '/customization');
     });
 
     it("Homepage stays on home page after reload", () => {
         cy.reload();
+        cy.location('pathname').should('eq', '/');
         cy.contains('Study Panda').should('be.visible');
         cy.get('.homeMessage').should('be.visible');
         cy.get('.figure-svg').should('be.visible');
