@@ -2,7 +2,7 @@
 
 describe("Home", () => {
     beforeEach("On home page", () => {
-        cy.visit("http://localhost:5173/login");
+        cy.visit("/login");
         cy.get('[type="email"]').type("user@example.com");
         cy.get('[type="password"]').type("stringst");
         cy.get('[type="button"]').contains("Log In").click();
