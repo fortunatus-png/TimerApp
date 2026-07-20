@@ -34,6 +34,7 @@ function TimerPage() {
         </Box>
 
         <Slider
+          id="slider"
           value={minutes}
           min={5} max={180} step={5}
           onChange={(e, val) => setMinutes(val)}
