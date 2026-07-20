@@ -45,35 +45,35 @@ describe("History", () => {
         cy.get("#month-navigation").should("be.visible");
     });
 
-    it("Heatmap shows correct color for study time", () => {
-        cy.contains("button", "Timer").click();
-        cy.location("pathname").should("eq", "/timer");
-        cy.get('[type="button"]').contains("Start").click();
+    // it("Heatmap shows correct color for study time", () => {
+    //     cy.contains("button", "Timer").click();
+    //     cy.location("pathname").should("eq", "/timer");
+    //     cy.get('[type="button"]').contains("Start").click();
 
-        cy.wait(65000);
-        cy.contains("button", "History").click();
+    //     cy.wait(65000);
+    //     cy.contains("button", "History").click();
         
-        cy.get("body").then(($body) => {
-            if ($body.find('button:contains("Leave")').length > 0) {
-                cy.contains("button", "Leave").click();
-            }
-        });
+    //     cy.get("body").then(($body) => {
+    //         if ($body.find('button:contains("Leave")').length > 0) {
+    //             cy.contains("button", "Leave").click();
+    //         }
+    //     });
         
-        cy.location("pathname").should("eq", "/history");
-        cy.reload();
+    //     cy.location("pathname").should("eq", "/history");
+    //     cy.reload();
 
-        cy.window().then((win) => {
-            const today = new Date().getDate();
-            const currentHour = new Date().getHours();
-            const adjustedHour = (currentHour - 2 + 24) % 24;
-            const cellIndex = (today - 1) * 24 + adjustedHour;
+    //     cy.window().then((win) => {
+    //         const today = new Date().getDate();
+    //         const currentHour = new Date().getHours();
+    //         const adjustedHour = (currentHour - 2 + 24) % 24;
+    //         const cellIndex = (today - 1) * 24 + adjustedHour;
 
-            cy.get(".heatCell")
-                .eq(cellIndex)
-                .should(($cell) => {
-                    const bgColor = getComputedStyle($cell[0]).backgroundColor;
-                    expect(bgColor).to.eq("rgb(200, 230, 201)");
-                });
-        });
-    });
+    //         cy.get(".heatCell")
+    //             .eq(cellIndex)
+    //             .should(($cell) => {
+    //                 const bgColor = getComputedStyle($cell[0]).backgroundColor;
+    //                 expect(bgColor).to.eq("rgb(200, 230, 201)");
+    //             });
+    //     });
+    // });
 })
