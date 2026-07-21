@@ -1,40 +1,34 @@
 /// <reference types="cypress" />
+import LoginPage from '../support/pageObjects/LoginPage'
 
 describe("Login", () => {
+    const loginPage = new LoginPage();
     beforeEach("Visit login page", () => {
-        cy.visit("/login");
+        loginPage.visitLoginPage();
     });
 
     it("Successful login with valid credentials", () => {
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.location('pathname').should('eq', '/');
+        loginPage.login('user@example.com', 'stringst');
+        loginPage.assertLoginSuccessful();
     });
 
     it("Failed login with wrong email", () => {
-        cy.get('[type="email"]').type("hos2t@example.com");
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('Invalid credentials').should('be.visible');
+        loginPage.login('hos2t@example.com', 'stringst');
+        loginPage.assertErrorMessage('Invalid credentials');
     });
 
     it("Failed login with an empty email field", () => {
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('Email is required').should('be.visible');
+        loginPage.loginWithPassword('stringst');
+        loginPage.assertErrorMessage('Email is required');
     });
 
     it("Failed login with wrong password", () => {
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="password"]').type("stringsttt");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('Invalid credentials').should('be.visible');
+        loginPage.login('user@example.com', 'wrongpassword');
+        loginPage.assertErrorMessage('Invalid credentials');
     });
 
     it("Failed login with an empty password field", () => {
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('Password is required').should('be.visible');
+        loginPage.loginWithEmail('user@example.com');
+        loginPage.assertErrorMessage('Password is required');
     });
 })

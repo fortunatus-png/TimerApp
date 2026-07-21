@@ -1,45 +1,36 @@
 /// <reference types="cypress" />
+import HomePage from '../support/pageObjects/HomePage'
 
 describe("Home", () => {
+    const homePage = new HomePage();
     beforeEach("On home page", () => {
-        cy.visit("/login");
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.location('pathname').should('eq', '/');
+        homePage.visitLoginPage();
+        homePage.login('user@example.com', 'stringst');
+        homePage.assertLoginSuccessful();
     });
 
     it("Homepage loads correctly", () => {
-        cy.contains('Study Panda').should('be.visible');
-        cy.get('.homeMessage').should('be.visible');
-        cy.get('.figure-svg').should('be.visible');
+        homePage.getHomeElements();
     });
 
     it("Navigate to Timer page", () => {
-        cy.contains('button', 'Timer').click();
-        cy.location('pathname').should('eq', '/timer');
+        homePage.assertTimerPageSuccessful();
     });
 
     it("Navigate to History page", () => {
-        cy.contains('button', 'History').click();
-        cy.location('pathname').should('eq', '/history');
+        homePage.assertHistoryPageSuccessful();
     });
 
     it("Navigate to Account page", () => {
-        cy.contains('button', 'Account').click();
-        cy.location('pathname').should('eq', '/account');
+        homePage.assertAccountPageSuccessful();
     });
 
     it("Navigate to Customize page", () => {
-        cy.contains('button', 'Customize').click();
-        cy.location('pathname').should('eq', '/customization');
+        homePage.assertCustomizePageSuccessful();
     });
 
     it("Homepage stays on home page after reload", () => {
         cy.reload();
-        cy.location('pathname').should('eq', '/');
-        cy.contains('Study Panda').should('be.visible');
-        cy.get('.homeMessage').should('be.visible');
-        cy.get('.figure-svg').should('be.visible');
+        homePage.getHomeElements();
     });
 })
