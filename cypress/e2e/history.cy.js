@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 import HistoryPage from '../support/pageObjects/HistoryPage'
+import { AUTH } from '../support/testData'
 
 describe("History", () => {
     const historyPage = new HistoryPage();
     beforeEach("Visit history page", () => {
         historyPage.visitLoginPage();
-        historyPage.login('user@example.com', 'stringst');
+        historyPage.login(AUTH.email, AUTH.password);
         historyPage.assertHistoryPageSuccessful();
     });
 

@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 import SessionPage from '../support/pageObjects/SessionPage'
+import { AUTH } from '../support/testData'
 
 describe("Session", () => {
     const sessionPage = new SessionPage();
     beforeEach("Visit session page", () => {
         sessionPage.visitLoginPage();
-        sessionPage.login('user@example.com', 'stringst');
+        sessionPage.login(AUTH.email, AUTH.password);
         sessionPage.assertSessionSuccessful();
     });
 

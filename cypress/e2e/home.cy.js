@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 import HomePage from '../support/pageObjects/HomePage'
+import { AUTH } from '../support/testData'
 
 describe("Home", () => {
     const homePage = new HomePage();
     beforeEach("On home page", () => {
         homePage.visitLoginPage();
-        homePage.login('user@example.com', 'stringst');
+        homePage.login(AUTH.email, AUTH.password);
         homePage.assertLoginSuccessful();
     });
 

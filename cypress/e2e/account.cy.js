@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 import AccountPage from '../support/pageObjects/AccountPage'
+import { AUTH } from '../support/testData'
 
 describe("Account", () => {
     const accountPage = new AccountPage();
     beforeEach("Visit account page", () => {
         accountPage.visitLoginPage();
-        accountPage.login('user@example.com', 'stringst');
+        accountPage.login(AUTH.email, AUTH.password);
         accountPage.assertAccountPageSuccessful();
     });
 

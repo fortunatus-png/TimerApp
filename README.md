@@ -7,6 +7,7 @@ Full-stack study timer app with React frontend and FastAPI backend.
 - `/frontend` - React + Vite + Material UI
 - `/backend` - FastAPI + Python + SQLite
 - `/tests` - Playwright E2E tests with Gherkin-style BDD
+- `/cypress` - Secondary Cypress E2E suite (POM practice)
 - `/docs/gherkin` - Gherkin feature files for BDD scenarios
 - `/docs/bug-reports` - Documented bug reports from QA testing
 
@@ -87,6 +88,11 @@ Then visit `http://localhost:5173` in your browser.
 
 This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-end testing.
 
+### Test Strategy (Portfolio Focus)
+- Primary E2E framework: **Playwright**
+- Secondary E2E framework: **Cypress** (kept as a lightweight POM showcase)
+- CI quality gate is based on Playwright results
+
 ### Test Files
 - `tests/login.spec.js` - Login and authentication flows
 - `tests/signup.spec.js` - User registration tests
@@ -124,6 +130,11 @@ npx playwright install
 Run all tests:
 ```bash
 npx playwright test --reporter=line
+```
+
+Run Cypress suite (optional):
+```bash
+npm run cy:run
 ```
 
 The test suite runs serially in this project because the app uses a shared SQLite-backed Docker stack.

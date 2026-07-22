@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 import TimerPage from '../support/pageObjects/TimerPage'
+import { AUTH } from '../support/testData'
 
 describe("Timer", () => {
     const timerPage = new TimerPage();
     beforeEach("Visit timer page", () => {
         timerPage.visitLoginPage();
-        timerPage.login('user@example.com', 'stringst');
+        timerPage.login(AUTH.email, AUTH.password);
         timerPage.assertTimerPageSuccessful();
     });
 

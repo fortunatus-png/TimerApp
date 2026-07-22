@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
 import CustomizePage from '../support/pageObjects/CustomizePage'
+import { AUTH } from '../support/testData'
 
 describe("Customize", () => {
     const customizePage = new CustomizePage();
     beforeEach("Visit customize page", () => {
         customizePage.visitLoginPage();
-        customizePage.login('user@example.com', 'stringst');
+        customizePage.login(AUTH.email, AUTH.password);
         customizePage.assertCustomizePageSuccessful();
     });
 
@@ -34,7 +35,7 @@ describe("Customize", () => {
             customizePage.assertExpectColor(newBg);
         });
 
-        cy.get("button").contains("Reset Data").click();
+        customizePage.getResetDataButton().click();
         cy.document().then((doc) => {
             const resetBg = getComputedStyle(doc.body).backgroundColor;
             expect(resetBg).not.to.eq("rgb(255, 0, 0)");
