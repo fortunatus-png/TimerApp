@@ -1,32 +1,30 @@
 /// <reference types="cypress" />
+import HistoryPage from '../support/pageObjects/HistoryPage'
 
 describe("History", () => {
+    const historyPage = new HistoryPage();
     beforeEach("Visit history page", () => {
-        cy.visit("/login");
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('button', 'History').click();
-        cy.location('pathname').should('eq', '/history');
+        historyPage.visitLoginPage();
+        historyPage.login('user@example.com', 'stringst');
+        historyPage.assertHistoryPageSuccessful();
     });
 
     it("Historypage loads correctly", () => {
-        cy.get('#heatmap-wrapper').should('be.visible');
-        cy.get('#month-navigation').should('be.visible');
+        historyPage.assertHistoryPageElements();
     });
 
     it("Navigeate through months", () => {
-        cy.get('#month-navigation h3').then(($el) => {
+        historyPage.getMonthTitle().then(($el) => {
             const currentMonth = $el.text();
-            cy.get('#prevBtn').click();
+            historyPage.getPrevButton().click();
 
-            cy.get('#month-navigation h3').should(($newEl) => {
+            historyPage.getMonthTitle().should(($newEl) => {
                 expect($newEl.text()).not.to.eq(currentMonth);
             });
 
-            cy.get('#nextBtn').click();
-            cy.get('#nextBtn').click();
-            cy.get('#month-navigation h3').should(($newEl) => {
+            historyPage.getNextButton().click();
+            historyPage.getNextButton().click();
+            historyPage.getMonthTitle().should(($newEl) => {
                 expect($newEl.text()).not.to.eq(currentMonth);
             });
         });
@@ -34,32 +32,23 @@ describe("History", () => {
 
     it("Historypage stays on history page after reload", () => {
         cy.reload();
-        cy.get('#heatmap-wrapper').should('be.visible');
-        cy.get('#month-navigation').should('be.visible');
-    });
-
-    it("Historypage stays on history page after reload", () => {
-        cy.reload();
-        cy.location("pathname").should("eq", "/history");
-        cy.get("#heatmap-wrapper").should("be.visible");
-        cy.get("#month-navigation").should("be.visible");
+        historyPage.assertHistoryPageElements();
     });
 
     // it("Heatmap shows correct color for study time", () => {
-    //     cy.contains("button", "Timer").click();
-    //     cy.location("pathname").should("eq", "/timer");
-    //     cy.get('[type="button"]').contains("Start").click();
+    //     historyPage.assertTimerPageSuccessful();
+    //     historyPage.getStartButton().click();
 
     //     cy.wait(65000);
-    //     cy.contains("button", "History").click();
-        
+    //     historyPage.getHistoryButton().click();
+
     //     cy.get("body").then(($body) => {
     //         if ($body.find('button:contains("Leave")').length > 0) {
-    //             cy.contains("button", "Leave").click();
+    //             historyPage.getLeaveButton().click();
     //         }
     //     });
-        
-    //     cy.location("pathname").should("eq", "/history");
+
+    //     historyPage.assertHistorySuccessful();
     //     cy.reload();
 
     //     cy.window().then((win) => {
@@ -68,7 +57,7 @@ describe("History", () => {
     //         const adjustedHour = (currentHour - 2 + 24) % 24;
     //         const cellIndex = (today - 1) * 24 + adjustedHour;
 
-    //         cy.get(".heatCell")
+    //         historyPage.getHeatCell()
     //             .eq(cellIndex)
     //             .should(($cell) => {
     //                 const bgColor = getComputedStyle($cell[0]).backgroundColor;
