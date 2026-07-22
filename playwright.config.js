@@ -14,7 +14,6 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  //timeout: 60000,
   /* Run tests serially because the app shares one SQLite-backed Docker stack */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

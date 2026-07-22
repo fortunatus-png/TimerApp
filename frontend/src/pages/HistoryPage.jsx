@@ -14,11 +14,11 @@ function getDaysInMonth(month, year) {
 }
 
 function getCellColor(mins) {
-  if (mins === 0) return '#F8EBCE';
-  if (mins < 20) return '#c8e6c9';
-  if (mins < 40) return '#a8d5a2';
-  if (mins < 60) return '#4caf50';
-  return '#1b5e20';
+  if (mins === 0) return 'rgb(248, 235, 206)';  // #F8EBCE
+  if (mins < 20) return 'rgb(200, 230, 201)';  // #c8e6c9
+  if (mins < 40) return 'rgb(168, 213, 162)';  // #a8d5a2
+  if (mins < 60) return 'rgb(76, 175, 80)';    // #4caf50
+  return 'rgb(27, 94, 32)';                     // #1b5e20
 }
 
 function isMatchingSession(session, day, hour, month, year) {
