@@ -61,10 +61,6 @@ class HistoryPage {
         this.getLoginButton().click();
     }
 
-    assertLoginSuccessful() {
-        cy.location('pathname').should('eq', '/');
-    }
-
     assertHistorySuccessful() {
         cy.location('pathname').should('eq', '/history');
     }

@@ -1,18 +1,16 @@
 /// <reference types="cypress" />
+import CustomizePage from '../support/pageObjects/CustomizePage'
 
 describe("Customize", () => {
+    const customizePage = new CustomizePage();
     beforeEach("Visit customize page", () => {
-        cy.visit("/login");
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('button', 'Customize').click();
-        cy.location('pathname').should('eq', '/customization');
+        customizePage.visitLoginPage();
+        customizePage.login('user@example.com', 'stringst');
+        customizePage.assertCustomizePageSuccessful();
     });
 
     it("Customizepage loads correctly", () => {
-        cy.get('#background-color-wish').should('be.visible');
-        cy.contains('button', 'Reset Data').should('be.visible');
+        customizePage.assertCustomizePageElements();
     });
 
     it("Choose a color for the background", () => {
@@ -21,19 +19,19 @@ describe("Customize", () => {
             oldBg = getComputedStyle(doc.body).backgroundColor;
         });
 
-        cy.get('input[type="color"]').invoke("val", "rgb(255, 0, 0)").trigger("change");
+        customizePage.getColor().invoke("val", "rgb(255, 0, 0)").trigger("change");
         cy.document().then((doc) => {
             const newBg = getComputedStyle(doc.body).backgroundColor;
-            expect(newBg).to.eq("rgb(255, 0, 0)");
+            customizePage.assertExpectColor(newBg);
             expect(newBg).not.to.eq(oldBg);
         });
     });
 
     it("Reset background to default color", () => {
-        cy.get('input[type="color"]').invoke("val", "rgb(255, 0, 0)").trigger("change");
+        customizePage.getColor().invoke("val", "rgb(255, 0, 0)").trigger("change");
         cy.document().then((doc) => {
             const newBg = getComputedStyle(doc.body).backgroundColor;
-            expect(newBg).to.eq("rgb(255, 0, 0)");
+            customizePage.assertExpectColor(newBg);
         });
 
         cy.get("button").contains("Reset Data").click();
@@ -44,22 +42,21 @@ describe("Customize", () => {
     });
 
     it("Chosen color persists after reload", () => {
-        cy.get('input[type="color"]').invoke("val", "rgb(255, 0, 0)").trigger("change");
+        customizePage.getColor().invoke("val", "rgb(255, 0, 0)").trigger("change");
         cy.document().then((doc) => {
             const newBg = getComputedStyle(doc.body).backgroundColor;
-            expect(newBg).to.eq("rgb(255, 0, 0)");
+            customizePage.assertExpectColor(newBg);
         });
 
         cy.reload();
         cy.document().should((doc) => {
             const newBg = getComputedStyle(doc.body).backgroundColor;
-            expect(newBg).to.eq("rgb(255, 0, 0)");
+            customizePage.assertExpectColor(newBg);
         });
     });
 
     it("Customizepage stays on customize page after reload", () => {
         cy.reload();
-        cy.get('#background-color-wish').should('be.visible');
-        cy.contains('button', 'Reset Data').should('be.visible');
+        customizePage.assertCustomizePageElements();
     });
 })
