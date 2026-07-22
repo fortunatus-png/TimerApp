@@ -1,28 +1,25 @@
 /// <reference types="cypress" />
+import AccountPage from '../support/pageObjects/AccountPage'
 
 describe("Account", () => {
+    const accountPage = new AccountPage();
     beforeEach("Visit account page", () => {
-        cy.visit("/login");
-        cy.get('[type="email"]').type("user@example.com");
-        cy.get('[type="password"]').type("stringst");
-        cy.get('[type="button"]').contains("Log In").click();
-        cy.contains('button', 'Account').click();
-        cy.location('pathname').should('eq', '/account');
+        accountPage.visitLoginPage();
+        accountPage.login('user@example.com', 'stringst');
+        accountPage.assertAccountPageSuccessful();
     });
 
     it("Accountpage loads correctly", () => {
-        cy.contains('button', 'Log Out').should('be.visible');
-        cy.get('#email').should('be.visible');
+        accountPage.assertAccountPageElements();
     });
 
     it("Log out is possible", () => {
-        cy.contains('button', 'Log Out').click();
-        cy.location('pathname').should('eq', '/login');
+        accountPage.getLogoutButton().click();
+        accountPage.assertLoginPageSuccessful();
     });
 
     it("Accountpage stays on account page after reload", () => {
         cy.reload();
-        cy.contains('button', 'Log Out').should('be.visible');
-        cy.get('#email').should('be.visible');
+        accountPage.assertAccountPageElements();
     });
 })
