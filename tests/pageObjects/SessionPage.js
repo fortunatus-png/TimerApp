@@ -9,13 +9,8 @@ export class SessionPage {
 
         this.timerPageButton = page.getByRole('button', { name: 'Timer' });
         this.historyPageButton = page.getByRole('button', { name: 'History' });
-        this.slider = page.getByRole('slider');
         this.startButton = page.getByRole('button', { name: 'Start' });
-        this.panda = page.locator('.figure-svg');
         this.studyPanda = page.getByRole('img');
-        this.initialTime = page.getByText('5 Minutes');
-        this.minutes25 = page.getByText('25 Minutes');
-        this.minutes180 = page.getByRole('heading', { name: '180' });
         this.initialTimerHeader = page.getByRole('heading', { name: '5' });
 
         this.pauseButton = page.getByRole('button', { name: '⏸' });
@@ -55,13 +50,6 @@ export class SessionPage {
 
     async assertHistoryPageSuccessful() {
         await expect(this.page).toHaveURL('/history');
-    }
-
-    async assertTimerPageLoaded() {
-        await expect(this.slider).toBeVisible();
-        await expect(this.startButton).toBeVisible();
-        await expect(this.panda).toBeVisible();
-        await expect(this.initialTime).toBeVisible();
     }
 
     async assertSessionPageLoaded() {
