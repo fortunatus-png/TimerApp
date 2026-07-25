@@ -1,51 +1,38 @@
-class AccountPage {
-    visitLoginPage() {
-        cy.visit('/login');
+import { expect } from '@playwright/test';
+
+export class AccountPage {
+    constructor(page) {
+        this.page = page;
+        this.emailField = page.getByRole('textbox', { name: 'Email' });
+        this.passwordField = page.getByRole('textbox', { name: 'Password' });
+        this.loginBtn = page.getByRole('button', { name: 'Log in' });
+
+        this.logoutButton = page.getByRole('button', { name: 'Log Out' });
+        this.emailAddress = page.locator('#email');
+        this.accountPageButton = page.getByRole('button', { name: 'Account' });
     }
 
-    getEmailInput() {
-        return cy.get('[type="email"]');
+    async logIn(email, password) {
+        await this.emailField.fill(email);
+        await this.passwordField.fill(password);
+        await this.loginBtn.click();
     }
 
-    getPasswordInput() {
-        return cy.get('[type="password"]');
+    async visitLoginPage() {
+        await this.page.goto('/login');
     }
 
-    getLoginButton() {
-        return cy.contains('button', 'Log In');
+    async assertAccountPageSuccessful() {
+        await this.accountPageButton.click();
+        await expect(this.page).toHaveURL('/account');
     }
 
-    getAccountButton() {
-        return cy.contains('button', 'Account');
+    async assertLoginPageSuccessful() {
+        await expect(this.page).toHaveURL('/login');
     }
 
-    getLogoutButton() {
-        return cy.contains('button', 'Log Out');
-    }
-
-    getEmail() {
-        return cy.get('#email');
-    }
-
-    login(email, password) {
-        this.getEmailInput().type(email);
-        this.getPasswordInput().type(password);
-        this.getLoginButton().click();
-    }
-
-    assertAccountPageSuccessful() {
-        this.getAccountButton().click();
-        cy.location('pathname').should('eq', '/account');
-    }
-
-    assertLoginPageSuccessful() {
-        cy.location('pathname').should('eq', '/login');
-    }
-
-    assertAccountPageElements() {
-        this.getLogoutButton().should("be.visible");
-        this.getEmail().should("be.visible");
+    async assertAccountPageLoaded() {
+        await expect(this.logoutButton).toBeVisible();
+        await expect(this.emailAddress).toBeVisible();
     }
 }
-
-export default AccountPage;

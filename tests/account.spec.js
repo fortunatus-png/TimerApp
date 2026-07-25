@@ -1,34 +1,31 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { StudyPandaPage } from './studyPandaPage';
+import { AccountPage } from './pageObjects/AccountPage';
 
 test.describe('Account', () => {
   const validEmail = 'ye@example.com';
   const validPassword = 'stringst';
-  /** @type {StudyPandaPage} */
+  /** @type {AccountPage} */
   let accountPage;
 
   test.beforeEach(async ({ page }) => {
-    accountPage = new StudyPandaPage(page);
-    await accountPage.gotoLoginPage();
+    accountPage = new AccountPage(page);
+    await accountPage.visitLoginPage();
     await accountPage.logIn(validEmail, validPassword);
-    await accountPage.accountPageBtn.click();
-    await accountPage.expectAccountPage();
+    await accountPage.assertAccountPageSuccessful();
   });
 
   test('Accountpage loads correctly', async ({ page }) => {
-    await expect(accountPage.logOut).toBeVisible();
-    await expect(accountPage.emailAddress).toBeVisible();
+    await accountPage.assertAccountPageLoaded();
   });
 
   test('Log out is possible', async ({ page }) => {
-    await accountPage.logOut.click();
-    await accountPage.expectLoginPage();
+    await accountPage.logoutButton.click();
+    await accountPage.assertLoginPageSuccessful();
   });
 
   test('Accountpage stays on account page after reload', async ({ page }) => {
     await page.reload();
-    await expect(accountPage.logOut).toBeVisible();
-    await expect(accountPage.emailAddress).toBeVisible();
+    await accountPage.assertAccountPageLoaded();
   });
 });
