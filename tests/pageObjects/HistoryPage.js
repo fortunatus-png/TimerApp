@@ -1,84 +1,73 @@
-class HistoryPage {
-    visitLoginPage() {
-        cy.visit('/login');
+import { expect } from '@playwright/test';
+
+export class HistoryPage {
+    constructor(page) {
+        this.page = page;
+        this.emailField = page.getByRole('textbox', { name: 'Email' });
+        this.passwordField = page.getByRole('textbox', { name: 'Password' });
+        this.loginBtn = page.getByRole('button', { name: 'Log in' });
+
+        this.historyPageButton = page.getByRole('button', { name: 'History' });
+        this.startButton = page.getByRole('button', { name: 'Start' });
+        this.leaveButton = page.getByRole('button', { name: 'Leave' });
+
+        this.heatmap = page.locator('#heatmap-wrapper');
+        this.prevMonthBtn = page.locator('#prevBtn');
+        this.nextMonthBtn = page.locator('#nextBtn');
+        this.monthNav = page.locator('#month-navigation');
+        this.monthTitle = page.locator('#month-navigation h3');
+        this.cells = page.locator('.heatCell');
     }
 
-    getEmailInput() {
-        return cy.get('[type="email"]');
+    async logIn(email, password) {
+        await this.emailField.fill(email);
+        await this.passwordField.fill(password);
+        await this.loginBtn.click();
     }
 
-    getPasswordInput() {
-        return cy.get('[type="password"]');
+    async visitLoginPage() {
+        await this.page.goto('/login');
     }
 
-    getLoginButton() {
-        return cy.contains('button', 'Log In');
+    async visitTimerPage() {
+        await this.page.goto('/timer');
     }
 
-    getMonthTitle() {
-        return cy.get('#month-navigation h3');
+    async assertHistoryPageSuccessful() {
+        await this.historyPageButton.click();
+        await expect(this.page).toHaveURL('/history');
     }
 
-    getHistoryButton() {
-        return cy.contains('button', 'History');
+    async assertHistoryPageLoaded() {
+        await expect(this.heatmap).toBeVisible();
+        await expect(this.monthNav).toBeVisible();
     }
 
-    getTimerButton() {
-        return cy.contains('button', 'Timer');
+    async getCurrentMonth() {
+        return await this.monthTitle.textContent();
     }
 
-    getStartButton() {
-        return cy.contains('button', 'Start');
+    async assertMonthChanged(originalMonth) {
+        const newMonth = await this.getCurrentMonth();
+        expect(newMonth).not.toBe(originalMonth);
     }
 
-    getLeaveButton() {
-        return cy.contains('button', 'Leave');
+    async getShortStudySession() {
+        await this.startButton.click();
+        await this.page.waitForTimeout(63000);
+        await this.historyPageButton.click();
+        await this.leaveButton.click();
     }
 
-    getPrevButton() {
-        return cy.get('#prevBtn');
+    async getCellForToday() {
+        const today = new Date().getDate();
+        const currentHour = new Date().getHours();
+        const adjustedHour = (currentHour - 2 + 24) % 24;
+        const cellIndex = (today - 1) * 24 + adjustedHour;
+        return this.cells.nth(cellIndex);
     }
 
-    getNextButton() {
-        return cy.get('#nextBtn');
-    }
-
-    getHeatmap() {
-        return cy.get('#heatmap-wrapper');
-    }
-
-    getMonthNavigation() {
-        return cy.get('#month-navigation');
-    }
-
-    getHeatCell() {
-        return cy.get('.heatCell');
-    }
-
-    login(email, password) {
-        this.getEmailInput().type(email);
-        this.getPasswordInput().type(password);
-        this.getLoginButton().click();
-    }
-
-    assertHistorySuccessful() {
-        cy.location('pathname').should('eq', '/history');
-    }
-
-    assertHistoryPageSuccessful() {
-        this.getHistoryButton().click();
-        cy.location('pathname').should('eq', '/history');
-    }
-
-    assertTimerPageSuccessful() {
-        this.getTimerButton().click();
-        cy.location('pathname').should('eq', '/timer');
-    }
-
-    assertHistoryPageElements() {
-        this.getHeatmap().should("be.visible");
-        this.getMonthNavigation().should("be.visible");
+    async getCellColor(cell) {
+        return await cell.evaluate(el => getComputedStyle(el).backgroundColor);
     }
 }
-
-export default HistoryPage;

@@ -1,40 +1,38 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { StudyPandaPage } from './studyPandaPage';
+import { HistoryPage } from './pageObjects/HistoryPage';
 
 test.describe('History', () => {
   const validEmail = 'ye@example.com';
   const validPassword = 'stringst';
-  /** @type {StudyPandaPage} */
+  /** @type {HistoryPage} */
   let historyPage;
 
   test.beforeEach(async ({ page }) => {
-    historyPage = new StudyPandaPage(page);
-    await historyPage.gotoLoginPage();
+    historyPage = new HistoryPage(page);
+    await historyPage.visitLoginPage();
     await historyPage.logIn(validEmail, validPassword);
-    await historyPage.historyPageBtn.click();
-    await historyPage.expectHistoryPage();
+    await historyPage.assertHistoryPageSuccessful();
   });
 
-  test('Historypage loads correctly', async ({ page }) => {
-    await expect(historyPage.heatmap).toBeVisible();
-    await expect(historyPage.monthNav).toBeVisible();
+  test('Historypage loads correctly', async () => {
+    await historyPage.assertHistoryPageLoaded();
   });
 
-  test('Navigeate through months', async ({ page }) => {
+  test('Navigeate through months', async () => {
     const originalMonth = await historyPage.getCurrentMonth();
     await historyPage.prevMonthBtn.click();
-    await historyPage.expectMonthChanged(originalMonth);
+    await historyPage.assertMonthChanged(originalMonth);
 
     await historyPage.nextMonthBtn.click();
     await historyPage.nextMonthBtn.click();
-    await historyPage.expectMonthChanged(originalMonth);
+    await historyPage.assertMonthChanged(originalMonth);
 
   });
 
   // test('Heatmap shows correct color for study time', async ({ page }) => {
   //   test.setTimeout(75000);
-  //   await historyPage.gotoTimerPage();
+  //   await historyPage.visitTimerPage();
   //   await historyPage.getShortStudySession();
 
   //   await page.reload();
@@ -47,7 +45,6 @@ test.describe('History', () => {
 
   test('Historypage stays on history page after reload', async ({ page }) => {
     await page.reload();
-    await expect(historyPage.heatmap).toBeVisible();
-    await expect(historyPage.monthNav).toBeVisible();
+    await historyPage.assertHistoryPageLoaded();
   });
 });
