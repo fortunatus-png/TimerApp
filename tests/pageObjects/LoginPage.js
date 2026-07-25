@@ -1,43 +1,28 @@
-class LoginPage {
-    visitLoginPage() {
-        cy.visit('/login');
+import { expect } from '@playwright/test';
+
+export class LoginPage {
+    constructor(page) {
+        this.page = page;
+        this.emailField = page.getByRole('textbox', { name: 'Email' });
+        this.passwordField = page.getByRole('textbox', { name: 'Password' });
+        this.loginBtn = page.getByRole('button', { name: 'Log in' });
     }
 
-    getEmailInput() {
-        return cy.get('[type="email"]');
+    async logIn(email, password) {
+        await this.emailField.fill(email);
+        await this.passwordField.fill(password);
+        await this.loginBtn.click();
     }
 
-    getPasswordInput() {
-        return cy.get('[type="password"]');
+    async visitLoginPage() {
+        await this.page.goto('/login');
     }
 
-    getLoginButton() {
-        return cy.contains('button', 'Log In');
+    async assertLoginPageSuccessful() {
+        await expect(this.page).toHaveURL('/');
     }
 
-    login(email, password) {
-        this.getEmailInput().type(email);
-        this.getPasswordInput().type(password);
-        this.getLoginButton().click();
-    }
-
-    loginWithEmail(email) {
-        this.getEmailInput().type(email);
-        this.getLoginButton().click();
-    }
-
-    loginWithPassword(password) {
-        this.getPasswordInput().type(password);
-        this.getLoginButton().click();
-    }
-
-    assertLoginSuccessful() {
-        cy.location('pathname').should('eq', '/');
-    }
-
-    assertErrorMessage(message) {
-        cy.contains(message).should('be.visible');
+    async assertErrorMessage(message) {
+        await expect(this.page.getByText(message)).toBeVisible();
     }
 }
-
-export default LoginPage;
