@@ -1,68 +1,67 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { StudyPandaPage } from './studyPandaPage';
+import { SessionPage } from './pageObjects/SessionPage';
 
 test.describe('Session', () => {
   const validEmail = 'ye@example.com';
   const validPassword = 'stringst';
-  /** @type {StudyPandaPage} */
+  /** @type {SessionPage} */
   let sessionPage;
 
   test.beforeEach(async ({ page }) => {
     await page.clock.install();
-    sessionPage = new StudyPandaPage(page);
-    await sessionPage.gotoLoginPage();
+    sessionPage = new SessionPage(page);
+    await sessionPage.visitLoginPage();
     await sessionPage.logIn(validEmail, validPassword);
-    await sessionPage.timerPageBtn.click();
-    await sessionPage.startBtn.click();
-    await sessionPage.expectSessionPage();
+    await sessionPage.assertSessionPageSuccessful();
   });
 
-  test('Sessionpage loads correctly', async ({ page }) => {
-    await sessionPage.getSessionElements();
+  test('Sessionpage loads correctly', async () => {
+    await sessionPage.assertSessionPageLoaded();
   });
 
-  test('Pause the countdown timer', async ({ page }) => {
-    await sessionPage.pauseBtn.click();
-    await expect(sessionPage.playBtn).toBeVisible();
+  test('Pause the countdown timer', async () => {
+    await sessionPage.pauseButton.click();
+    await expect(sessionPage.playButton).toBeVisible();
   });
 
-  test('Resume the countdown timer', async ({ page }) => {
-    await sessionPage.pauseBtn.click();
-    await sessionPage.playBtn.click();
-    await expect(sessionPage.pauseBtn).toBeVisible();
+  test('Resume the countdown timer', async () => {
+    await sessionPage.pauseButton.click();
+    await sessionPage.playButton.click();
+    await expect(sessionPage.pauseButton).toBeVisible();
   });
 
-  test('Warning message when leaving the page during active session', async ({ page }) => {
-    await sessionPage.historyPageBtn.click();
+  test('Warning message when leaving the page during active session', async () => {
+    await sessionPage.historyPageButton.click();
     await expect(sessionPage.warningMessage).toBeVisible();
-    await expect(sessionPage.continueBtn).toBeVisible();
-    await expect(sessionPage.leaveBtn).toBeVisible();
+    await expect(sessionPage.continueButton).toBeVisible();
+    await expect(sessionPage.leaveButton).toBeVisible();
   });
 
-  test('Continue session after warning', async ({ page }) => {
-    await sessionPage.historyPageBtn.click();
-    await sessionPage.continueBtn.click();
+  test('Continue session after warning', async () => {
+    await sessionPage.historyPageButton.click();
+    await sessionPage.continueButton.click();
     await expect(sessionPage.warningMessage).not.toBeVisible();
-    await expect(sessionPage.pauseBtn).toBeVisible();
+    await expect(sessionPage.pauseButton).toBeVisible();
   });
 
-  test('Leave session after warning', async ({ page }) => {
-    await sessionPage.historyPageBtn.click();
-    await sessionPage.leaveBtn.click();
-    await sessionPage.gotoHistoryPage();
-    await sessionPage.expectHistoryPage();
+  test('Leave session after warning', async () => {
+    await sessionPage.historyPageButton.click();
+    await sessionPage.leaveButton.click();
+    await sessionPage.visitHistoryPage();
+    await sessionPage.assertHistoryPageSuccessful();
   });
 
-  // test('Session completes successfully', async ({ page }) => {
+  // Skipped: These tests take 5+ minutes to complete.
+  // test('Session completes successfully', async () => {
   //   test.setTimeout(310000);
-  //   await sessionPage.getSessionCompletedElements();
+  //   await sessionPage.assertSessionPageCompletedLoaded();
   // });
 
-  // test('Start new session after completion', async ({ page }) => {
+  // test('Start new session after completion', async () => {
   //   test.setTimeout(350000);
-  //   await sessionPage.getSessionCompletedElements();
-  //   await sessionPage.newStartBtn.click();
-  //   await sessionPage.expectTimerPage;
+  //   await sessionPage.assertSessionPageCompletedLoaded();
+  //   await sessionPage.newSessionStartButton.click();
+  //   await sessionPage.assertTimerPageSuccessful;
   // });
 });

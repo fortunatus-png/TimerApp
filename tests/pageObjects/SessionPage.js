@@ -1,113 +1,78 @@
-class SessionPage {
-    visitLoginPage() {
-        cy.visit('/login');
+import { expect } from '@playwright/test';
+
+export class SessionPage {
+    constructor(page) {
+        this.page = page;
+        this.emailField = page.getByRole('textbox', { name: 'Email' });
+        this.passwordField = page.getByRole('textbox', { name: 'Password' });
+        this.loginBtn = page.getByRole('button', { name: 'Log in' });
+
+        this.timerPageButton = page.getByRole('button', { name: 'Timer' });
+        this.historyPageButton = page.getByRole('button', { name: 'History' });
+        this.slider = page.getByRole('slider');
+        this.startButton = page.getByRole('button', { name: 'Start' });
+        this.panda = page.locator('.figure-svg');
+        this.studyPanda = page.getByRole('img');
+        this.initialTime = page.getByText('5 Minutes');
+        this.minutes25 = page.getByText('25 Minutes');
+        this.minutes180 = page.getByRole('heading', { name: '180' });
+        this.initialTimerHeader = page.getByRole('heading', { name: '5' });
+
+        this.pauseButton = page.getByRole('button', { name: '⏸' });
+        this.playButton = page.getByRole('button', { name: '▶' });
+        this.continueButton = page.getByRole('button', { name: 'Continue' });
+        this.leaveButton = page.getByRole('button', { name: 'Leave' });
+        this.timeout = page.getByText('0:00');
+        this.congratHeader = page.getByRole('heading', { name: '🎉 Great job!' });
+        this.studiedTime = page.getByText('You studied for 5 minutes!');
+        this.newSessionStartButton = page.getByRole('button', { name: 'Start new session' });
+        this.warningMessage = page.getByText('Your progress so far will be saved, but you won\'t be able to continue this session later.');
     }
 
-    getEmailInput() {
-        return cy.get('[type="email"]');
+    async logIn(email, password) {
+        await this.emailField.fill(email);
+        await this.passwordField.fill(password);
+        await this.loginBtn.click();
     }
 
-    getPasswordInput() {
-        return cy.get('[type="password"]');
+    async visitLoginPage() {
+        await this.page.goto('/login');
     }
 
-    getLoginButton() {
-        return cy.contains('button', 'Log In');
+    async visitHistoryPage() {
+        await this.page.goto('/history');
     }
 
-    getTimerButton() {
-        return cy.contains('button', 'Timer');
+    async assertTimerPageSuccessful() {
+        await expect(this.page).toHaveURL('/timer');
     }
 
-    getStartButton() {
-        return cy.contains('button', 'Start');
+    async assertSessionPageSuccessful() {
+        await this.timerPageButton.click();
+        await this.startButton.click();
+        await expect(this.page).toHaveURL('/session');
     }
 
-    getPauseButton() {
-        return cy.contains('button', '⏸');
+    async assertHistoryPageSuccessful() {
+        await expect(this.page).toHaveURL('/history');
     }
 
-    getPlayButton() {
-        return cy.contains('button', '▶');
+    async assertTimerPageLoaded() {
+        await expect(this.slider).toBeVisible();
+        await expect(this.startButton).toBeVisible();
+        await expect(this.panda).toBeVisible();
+        await expect(this.initialTime).toBeVisible();
     }
 
-    getHistoryButton() {
-        return cy.contains('button', 'History');
+    async assertSessionPageLoaded() {
+        await expect(this.initialTimerHeader).toBeVisible();
+        await expect(this.studyPanda).toBeVisible();
     }
 
-    getContinueButton() {
-        return cy.contains('button', 'Continue');
-    }
-
-    getLeaveButton() {
-        return cy.contains('button', 'Leave');
-    }
-
-    getNewSessionButton() {
-        return cy.contains('button', 'Start new session');
-    }
-
-    getSVGFigure() {
-        return cy.get('.figure-svg');
-    }
-
-    getHeader() {
-        return cy.get('h1');
-    }
-
-    getFirstMessage() {
-        return cy.contains("🎉 Great job!");
-    }
-
-    getSecondMessage() {
-        return cy.contains("You studied for 5 minutes!");
-    }
-
-
-    getWarningMessage() {
-        return cy.contains('Your progress so far will be saved, but you won\'t be able to continue this session later.');
-    }
-
-    getSessionPageElements() {
-        this.getHeader().contains('5');
-        this.getSVGFigure().should('be.visible');
-    }
-
-    getTimerPaused() {
-        this.getPauseButton().click();
-        this.getPlayButton().should('be.visible');
-    }
-
-    login(email, password) {
-        this.getEmailInput().type(email);
-        this.getPasswordInput().type(password);
-        this.getLoginButton().click();
-    }
-
-    assertLoginSuccessful() {
-        cy.location('pathname').should('eq', '/');
-    }
-
-    assertHistoryPageSuccessful() {
-        cy.location('pathname').should('eq', '/history');
-    }
-
-    assertSessionSuccessful() {
-        this.getTimerButton().click();
-        this.getStartButton().click();
-        cy.location('pathname').should('eq', '/session');
-    }
-
-    assertTimerPageSuccessful() {
-        this.getNewSessionButton().click();
-        cy.location('pathname').should('eq', '/timer');
-    }
-
-    assertSessionCompleteMessage() {
-        this.getFirstMessage().should("be.visible");
-        this.getSecondMessage().should("be.visible");
-        this.getNewSessionButton().should("be.visible");
+    async assertSessionPageCompletedLoaded() {
+        await expect(this.timeout).toBeVisible({ timeout: 305000 });
+        await expect(this.congratHeader).toBeVisible();
+        await expect(this.studiedTime).toBeVisible();
+        await expect(this.newSessionStartButton).toBeVisible();
     }
 }
-
-export default SessionPage;

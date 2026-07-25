@@ -7,7 +7,7 @@ export class TimerPage {
         this.passwordField = page.getByRole('textbox', { name: 'Password' });
         this.loginBtn = page.getByRole('button', { name: 'Log in' });
 
-        this.timerPageBtn = page.getByRole('button', { name: 'Timer' });
+        this.timerPageButton = page.getByRole('button', { name: 'Timer' });
         this.slider = page.getByRole('slider');
         this.startButton = page.getByRole('button', { name: 'Start' });
         this.panda = page.locator('.figure-svg');
@@ -29,7 +29,7 @@ export class TimerPage {
     }
 
     async assertTimerPageSuccessful() {
-        await this.timerPageBtn.click();
+        await this.timerPageButton.click();
         await expect(this.page).toHaveURL('/timer');
     }
 
