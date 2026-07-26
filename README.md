@@ -90,6 +90,7 @@ Then visit `http://localhost:5173` in your browser.
 This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-end testing.
 
 ### Test Strategy (Portfolio Focus)
+
 - Primary E2E framework: **Playwright**
 - Secondary E2E framework: **Cypress** (kept as a lightweight POM showcase)
 - CI quality gate is based on Playwright results
