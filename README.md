@@ -7,6 +7,7 @@ Full-stack study timer app with React frontend and FastAPI backend.
 - `/frontend` - React + Vite + Material UI
 - `/backend` - FastAPI + Python + SQLite
 - `/tests` - Playwright E2E tests with Gherkin-style BDD
+- `/tests/pageObjects` - Playwright Page Objects per feature area
 - `/cypress` - Secondary Cypress E2E suite (POM practice)
 - `/docs/gherkin` - Gherkin feature files for BDD scenarios
 - `/docs/bug-reports` - Documented bug reports from QA testing
@@ -102,7 +103,8 @@ This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-
 - `tests/account.spec.js` - Account page and logout tests
 - `tests/customize.spec.js` - Customization and color picker tests
 - `tests/history.spec.js` - History heatmap and month navigation tests
-- `tests/studyPandaPage.js` - Page Object Model for reusable test utilities
+- `tests/testData.js` - Centralized test data and environment-based overrides
+- `tests/pageObjects/*.js` - Page Object Model classes used by Playwright specs
 
 ### Gherkin Feature Files
 - `docs/gherkin/login.feature` - Login scenarios
@@ -115,9 +117,9 @@ This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-
 - `docs/gherkin/account.feature` - Account page scenarios
 
 ### Bug Reports
-- `docs/bug-reports/bug-001-timer-reload.md` - Timer resets on page reload
-- `docs/bug-reports/bug-002-color-picker.md` - Color picker stays visible after navigation
-- `docs/bug-reports/bug-003-countdown-hover.md` - Countdown text hover effect
+- `docs/bug-reports/bug-001-session-reload.md` - Session state/reload behavior issue
+- `docs/bug-reports/bug-002-customize.md` - Customization flow issue
+- `docs/bug-reports/bug-003-timer.md` - Timer behavior issue
 
 ### Running Tests Locally
 
@@ -170,8 +172,33 @@ The test suite covers:
 
 ### CI/CD Testing
 
-Tests run automatically on every push via GitHub Actions (see `.github/workflows/playwright.yml`).  
-The status badge at the top shows the current test status.
+Tests run automatically in GitHub Actions for:
+- Pushes to `main`/`master`
+- Pull requests targeting `main`/`master`
+
+There is also a manual workflow trigger for an optional non-blocking Cypress run. The main CI quality gate is Playwright (see `.github/workflows/playwright.yml`).
+
+---
+
+## Architecture Overview
+
+### Frontend Flow
+- React Router handles page navigation and route protection.
+- After login, the auth token is stored in `localStorage` and protected routes require it.
+- Timer settings are selected on the timer page, then passed into the session page.
+- The session page saves completed (or partial) study time through backend API calls.
+- History renders a monthly day/hour heatmap from saved sessions.
+
+### Backend Flow
+- FastAPI exposes auth and session endpoints.
+- Passwords are hashed with `bcrypt`.
+- Login creates a token that is stored in SQLite with an expiration timestamp.
+- Protected endpoints validate bearer tokens and return only the current user's data.
+
+### Why This Is Useful for QA / Testing Roles
+- Clear end-to-end user flows (auth -> timer -> session -> history).
+- Real API integration instead of mocked-only frontend tests.
+- Deterministic CI setup with seeded test user and repeatable E2E execution.
 
 ---
 
