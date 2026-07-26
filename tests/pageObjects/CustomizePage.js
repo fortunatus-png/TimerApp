@@ -1,55 +1,53 @@
-class CustomizePage {
-    visitLoginPage() {
-        cy.visit('/login');
+import { expect } from '@playwright/test';
+
+export class CustomizePage {
+    constructor(page) {
+        this.page = page;
+        this.emailField = page.getByRole('textbox', { name: 'Email' });
+        this.passwordField = page.getByRole('textbox', { name: 'Password' });
+        this.loginBtn = page.getByRole('button', { name: 'Log in' });
+
+        this.customPageButton = page.getByRole('button', { name: 'Customize' });
+        this.bgdColor = page.locator('#background-color-wish');
+        this.resetButton = page.getByRole('button', { name: 'Reset Data' });
+        this.colorPicker = page.locator('input[type="color"]');
     }
 
-    getEmailInput() {
-        return cy.get('[type="email"]');
+    async visitLoginPage() {
+        await this.page.goto('/login');
     }
 
-    getPasswordInput() {
-        return cy.get('[type="password"]');
+    async logIn(email, password) {
+        await this.emailField.fill(email);
+        await this.passwordField.fill(password);
+        await this.loginBtn.click();
     }
 
-    getLoginButton() {
-        return cy.contains('button', 'Log In');
+    async selectColor(hexColor) {
+        await this.colorPicker.fill(hexColor);
     }
 
-    getResetDataButton() {
-        return cy.contains('button', 'Reset Data');
+    async getBackgroundColor() {
+        return await this.page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     }
 
-    getCustomizeButton() {
-        return cy.contains('button', 'Customize');
+    async expectBackgroundColor(expectedColor) {
+        const bg = await this.getBackgroundColor();
+        await expect(bg).toBe(expectedColor);
     }
 
-    getBackgroundColor() {
-        return cy.get('#background-color-wish');
+    async expectBackgroundColorNot(expectedColor) {
+        const bg = await this.getBackgroundColor();
+        await expect(bg).not.toBe(expectedColor);
     }
 
-    getColor() {
-        return cy.get('input[type="color"]');
+    async assertCustomizePageSuccessful() {
+        await this.customPageButton.click();
+        await expect(this.page).toHaveURL('/customization');
     }
 
-    login(email, password) {
-        this.getEmailInput().type(email);
-        this.getPasswordInput().type(password);
-        this.getLoginButton().click();
-    }
-
-    assertCustomizePageSuccessful() {
-        this.getCustomizeButton().click();
-        cy.location('pathname').should('eq', '/customization');
-    }
-
-    assertCustomizePageElements() {
-        this.getBackgroundColor().should("be.visible");
-        this.getResetDataButton().should("be.visible");
-    }
-
-    assertExpectColor(newBg) {
-        expect(newBg).to.eq("rgb(255, 0, 0)");
+    async assertCustomizePageLoaded() {
+        await expect(this.bgdColor).toBeVisible();
+        await expect(this.resetButton).toBeVisible();
     }
 }
-
-export default CustomizePage;

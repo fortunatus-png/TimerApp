@@ -1,26 +1,25 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { StudyPandaPage } from './studyPandaPage';
+import { CustomizePage } from './pageObjects/CustomizePage';
 
 test.describe.parallel('Customize', () => {
   const validEmail = 'ye@example.com';
   const validPassword = 'stringst';
-  /** @type {StudyPandaPage} */
+  /** @type {CustomizePage} */
   let customizePage;
 
   test.beforeEach(async ({ page }) => {
-    customizePage = new StudyPandaPage(page);
-    await customizePage.gotoLoginPage();
+    customizePage = new CustomizePage(page);
+    await customizePage.visitLoginPage();
     await customizePage.logIn(validEmail, validPassword);
-    await customizePage.customPageBtn.click();
-    await customizePage.expectCustomizePage();
+    await customizePage.assertCustomizePageSuccessful();
   });
 
-  test('Customizepage loads correctly', async ({ page }) => {
-    await customizePage.getCustomizeElements();
+  test('Customizepage loads correctly', async () => {
+    await customizePage.assertCustomizePageLoaded();
   });
 
-  test('Choose a color for the background', async ({ page }) => {
+  test('Choose a color for the background', async () => {
     const oldBg = await customizePage.getBackgroundColor();
     await customizePage.selectColor('#ff0000');
     await customizePage.expectBackgroundColor('rgb(255, 0, 0)');
@@ -36,21 +35,21 @@ test.describe.parallel('Customize', () => {
     await page.reload();
 
     const newBg = await customizePage.getBackgroundColor();
-    expect(newBg).toBe('rgb(255, 0, 0)');
-    expect(newBg).not.toBe(oldBg);
+    await expect(newBg).toBe('rgb(255, 0, 0)');
+    await expect(newBg).not.toBe(oldBg);
   });
 
-  test('Reset background to default color', async ({ page }) => {
+  test('Reset background to default color', async () => {
     await customizePage.selectColor('#ff0000');
     await customizePage.expectBackgroundColor('rgb(255, 0, 0)');
 
-    await customizePage.resetBtn.click();
+    await customizePage.resetButton.click();
     const resetBg = await customizePage.getBackgroundColor();
-    expect(resetBg).not.toBe('rgb(255, 0, 0)');
+    await expect(resetBg).not.toBe('rgb(255, 0, 0)');
   });
 
   test('Customizepage stays on customize page after reload', async ({ page }) => {
     await page.reload();
-    await customizePage.getCustomizeElements();
+    await customizePage.assertCustomizePageLoaded();
   });
 });
