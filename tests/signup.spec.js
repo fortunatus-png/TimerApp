@@ -1,49 +1,44 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { StudyPandaPage } from './studyPandaPage';
+import { SignupPage } from './pageObjects/SignupPage';
+import { SIGNUP, uniqueEmail } from './testData';
 
 test.describe('Signup', () => {
-  const validEmail = `new-user-${Date.now()}@example.com`;
-  const invalidEmail = 'yeexample.com';
-  const emptyEmail = '';
-  const validPassword = 'stringst';
-  const shortPassword = 'string';
-  const emptyPassword = '';
-  /** @type {StudyPandaPage} */
+  /** @type {SignupPage} */
   let signupPage;
 
   test.beforeEach(async ({ page }) => {
-    signupPage = new StudyPandaPage(page);
-    await signupPage.gotoLoginPage();
+    signupPage = new SignupPage(page);
+    await signupPage.visitLoginPage();
   });
 
-  test('Successful signup with valid credentials', async ({ page }) => {
-    await signupPage.signUp(validEmail, validPassword);
-    await expect(page).toHaveURL('/');
+  test('Successful signup with valid credentials', async () => {
+    await signupPage.signUp(uniqueEmail(), SIGNUP.validPassword);
+    await signupPage.assertSignupSuccessful();
   });
 
-  test('Failed signup with invalid email format', async ({ page }) => {
-    await signupPage.signUp(invalidEmail, validPassword);
-    await expect(page.getByText('Enter a valid email (e.g., name@domain.com)')).toBeVisible();
+  test('Failed signup with invalid email format', async () => {
+    await signupPage.signUp(SIGNUP.invalidEmail, SIGNUP.validPassword);
+    await signupPage.assertErrorMessage('Enter a valid email (e.g., name@domain.com)');
   });
 
-  test('Failed signup with an empty email field', async ({ page }) => {
-    await signupPage.signUp(emptyEmail, validPassword);
-    await expect(page.getByText('Email is required')).toBeVisible();
+  test('Failed signup with an empty email field', async () => {
+    await signupPage.signUp(SIGNUP.empty, SIGNUP.validPassword);
+    await signupPage.assertErrorMessage('Email is required');
   });
 
-  test('Failed signup with email that already exists', async ({ page }) => {
-    await signupPage.signUp(validEmail, validPassword);
-    await expect(page.getByText('Email already exists')).toBeVisible();
+  test('Failed signup with email that already exists', async () => {
+    await signupPage.signUp(SIGNUP.existingEmail, SIGNUP.validPassword);
+    await signupPage.assertErrorMessage('Email already exists');
   });
 
-  test('Failed signup with password too short', async ({ page }) => {
-    await signupPage.signUp(validEmail, shortPassword);
-    await expect(page.getByText('Password must be at least 8 characters')).toBeVisible();
+  test('Failed signup with password too short', async () => {
+    await signupPage.signUp(uniqueEmail('shortpw'), SIGNUP.shortPassword);
+    await signupPage.assertErrorMessage('Password must be at least 8 characters');
   });
 
-  test('Failed signup with an empty password field', async ({ page }) => {
-    await signupPage.signUp(validEmail, emptyPassword);
-    await expect(page.getByText('Password is required')).toBeVisible();
+  test('Failed signup with an empty password field', async () => {
+    await signupPage.signUp(uniqueEmail('emptypw'), SIGNUP.empty);
+    await signupPage.assertErrorMessage('Password is required');
   });
 });
