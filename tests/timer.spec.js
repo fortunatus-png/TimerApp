@@ -1,17 +1,16 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { TimerPage } from './pageObjects/TimerPage';
+import { AUTH } from './testData';
 
 test.describe('Timer', () => {
-  const validEmail = 'ye@example.com';
-  const validPassword = 'stringst';
   /** @type {TimerPage} */
   let timerPage;
 
   test.beforeEach(async ({ page }) => {
     timerPage = new TimerPage(page);
     await timerPage.visitLoginPage();
-    await timerPage.logIn(validEmail, validPassword);
+    await timerPage.logIn(AUTH.email, AUTH.password);
     await timerPage.assertTimerPageSuccessful();
   });
 

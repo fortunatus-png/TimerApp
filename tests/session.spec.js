@@ -1,10 +1,9 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { SessionPage } from './pageObjects/SessionPage';
+import { AUTH } from './testData';
 
 test.describe('Session', () => {
-  const validEmail = 'ye@example.com';
-  const validPassword = 'stringst';
   /** @type {SessionPage} */
   let sessionPage;
 
@@ -12,7 +11,7 @@ test.describe('Session', () => {
     await page.clock.install();
     sessionPage = new SessionPage(page);
     await sessionPage.visitLoginPage();
-    await sessionPage.logIn(validEmail, validPassword);
+    await sessionPage.logIn(AUTH.email, AUTH.password);
     await sessionPage.assertSessionPageSuccessful();
   });
 
@@ -48,7 +47,6 @@ test.describe('Session', () => {
   test('Leave session after warning', async () => {
     await sessionPage.historyPageButton.click();
     await sessionPage.leaveButton.click();
-    await sessionPage.visitHistoryPage();
     await sessionPage.assertHistoryPageSuccessful();
   });
 

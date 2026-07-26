@@ -1,17 +1,16 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { CustomizePage } from './pageObjects/CustomizePage';
+import { AUTH } from './testData';
 
-test.describe.parallel('Customize', () => {
-  const validEmail = 'ye@example.com';
-  const validPassword = 'stringst';
+test.describe('Customize', () => {
   /** @type {CustomizePage} */
   let customizePage;
 
   test.beforeEach(async ({ page }) => {
     customizePage = new CustomizePage(page);
     await customizePage.visitLoginPage();
-    await customizePage.logIn(validEmail, validPassword);
+    await customizePage.logIn(AUTH.email, AUTH.password);
     await customizePage.assertCustomizePageSuccessful();
   });
 

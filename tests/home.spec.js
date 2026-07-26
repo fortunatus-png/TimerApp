@@ -1,17 +1,16 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { HomePage } from './pageObjects/HomePage';
+import { AUTH } from './testData';
 
 test.describe('Home', () => {
-  const validEmail = 'ye@example.com';
-  const validPassword = 'stringst';
   /** @type {HomePage} */
   let homePage;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     await homePage.visitLoginPage();
-    await homePage.logIn(validEmail, validPassword);
+    await homePage.logIn(AUTH.email, AUTH.password);
     await homePage.assertHomePageSuccessful();
   });
 

@@ -1,13 +1,9 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pageObjects/LoginPage';
+import { AUTH, LOGIN } from './testData';
 
-test.describe.parallel('Login', () => {
-  const validEmail = 'ye@example.com';
-  const wrongEmail = 'miau@example.com';
-  const emptyCredential = '';
-  const validPassword = 'stringst';
-  const wrongPassword = 'stringss';
+test.describe('Login', () => {
   /** @type {LoginPage} */
   let loginPage;
 
@@ -16,28 +12,28 @@ test.describe.parallel('Login', () => {
     await loginPage.visitLoginPage();
   });
 
-  test('Successful login with valid credentials', async ({ page }) => {
-    await loginPage.logIn(validEmail, validPassword);
+  test('Successful login with valid credentials', async () => {
+    await loginPage.logIn(AUTH.email, AUTH.password);
     await loginPage.assertLoginPageSuccessful();
   });
 
   test('Failed login with wrong email', async () => {
-    await loginPage.logIn(wrongEmail, validPassword);
+    await loginPage.logIn(LOGIN.wrongEmail, AUTH.password);
     await loginPage.assertErrorMessage('Invalid credentials');
   });
 
   test('Failed login with an empty email field', async () => {
-    await loginPage.logIn(emptyCredential, validPassword);
+    await loginPage.logIn(LOGIN.empty, AUTH.password);
     await loginPage.assertErrorMessage('Email is required');
   });
 
   test('Failed login with wrong password', async () => {
-    await loginPage.logIn(validEmail, wrongPassword);
+    await loginPage.logIn(AUTH.email, LOGIN.wrongPassword);
     await loginPage.assertErrorMessage('Invalid credentials');
   });
 
   test('Failed login with an empty password field', async () => {
-    await loginPage.logIn(validEmail, emptyCredential);
+    await loginPage.logIn(AUTH.email, LOGIN.empty);
     await loginPage.assertErrorMessage('Password is required');
   });
 });
