@@ -1,4 +1,4 @@
-# Tuma Timer 22.04-27.04.2026
+# Study Panda 22.04-27.04.2026
 This plan shows the `intended approach` before starting coding.
 
 ## Overview
