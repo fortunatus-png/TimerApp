@@ -19,7 +19,7 @@ test.describe('Session API', () => {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        });
+        });f
         expect(response.status()).toBe(200);
         const data = await response.json();
         expect(Array.isArray(data)).toBeTruthy();
