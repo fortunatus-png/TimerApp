@@ -2,6 +2,13 @@ import { test, expect } from '@playwright/test';
 import { AUTH, LOGIN } from '../testData';
 
 test.describe('Login API', () => {
+    test('GET / welcome message', async ({ request }) => {
+        const response = await request.get('http://localhost:8000');
+        expect(response.status()).toBe(200);
+        const body = await response.json();
+        expect(body.message).toBe('Timer Session API is ready. Use /docs for testing.');
+    });
+
     test('Successful login', async ({ request }) => {
         const response = await request.post('http://localhost:8000/auth/login', {
             data: {

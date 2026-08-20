@@ -20,6 +20,20 @@ test.describe('Session API', () => {
         expect(Array.isArray(data)).toBeTruthy();
     });
 
+    test('GET /sessions returns 401 with invalid token', async ({ request }) => {
+        const invalidToken = '0123456789012345678901234567890123456789012345678901234567890123';
+
+        const response = await request.get('http://localhost:8000/sessions', {
+            headers: { 'Authorization': `Bearer ${invalidToken}` }
+        });
+        expect(response.status()).toBe(401);
+    });
+
+    test('GET /sessions returns 401 without token', async ({ request }) => {
+        const response = await request.get('http://localhost:8000/sessions');
+        expect(response.status()).toBe(401);
+    });
+
     test('POST /sessions creates a new session', async ({ request }) => {
         const token = await getAuthToken(request);
 
@@ -43,10 +57,17 @@ test.describe('Session API', () => {
         expect(response.status()).toBe(422);
     });
 
+    test('POST /sessions returns 401 without token', async ({ request }) => {
+        const response = await request.post('http://localhost:8000/sessions', {
+            data: { date: '2026-08-05', minutes: 25, hour: 14 }
+        });
+        expect(response.status()).toBe(401);
+    });
+
     test('DELETE /sessions with invalid ID returns 404', async ({ request }) => {
         const token = await getAuthToken(request);
 
-        const response = await request.delete('http://localhost:8000/sessions/9999', {
+        const response = await request.delete('http://localhost:8000/sessions/99999', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         expect(response.status()).toBe(404);
@@ -66,5 +87,14 @@ test.describe('Session API', () => {
         expect(deleteResponse.status()).toBe(200);
         const data = await deleteResponse.json();
         expect(data.message).toBe('Session deleted');
+    });
+
+    test('DELETE /sessions returns 401 with invalid token', async ({ request }) => {
+        const invalidToken = '0123456789012345678901234567890123456789012345678901234567890123';
+
+        const response = await request.delete('http://localhost:8000/sessions/99999', {
+            headers: { 'Authorization': `Bearer ${invalidToken}` }
+        });
+        expect(response.status()).toBe(401);
     });
 });
