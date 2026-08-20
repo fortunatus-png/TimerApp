@@ -7,6 +7,7 @@ Full-stack study timer app with React frontend and FastAPI backend.
 - `/frontend` - React + Vite + Material UI
 - `/backend` - FastAPI + Python + SQLite
 - `/tests` - Playwright E2E tests with Gherkin-style BDD
+- `/tests/api` - Playwright API tests for authentication and sessions
 - `/tests/pageObjects` - Playwright Page Objects per feature area
 - `/cypress` - Secondary Cypress E2E suite (POM practice)
 - `/docs/gherkin` - Gherkin feature files for BDD scenarios
@@ -29,6 +30,12 @@ Run the end-to-end tests against the running stack:
 
 ```bash
 npx playwright test --reporter=line
+```
+
+Run only the API tests against the running backend:
+
+```bash
+npx playwright test tests/api --reporter=line
 ```
 
 Stop all services when you are done:
@@ -96,6 +103,10 @@ This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-
 - CI quality gate is based on Playwright results
 
 ### Test Files
+- `tests/api/signup.spec.js` - Registration endpoint tests and input validation
+- `tests/api/login.spec.js` - Login endpoint tests and authentication errors
+- `tests/api/auth.spec.js` - Current-user endpoint and bearer-token validation
+- `tests/api/sessions.spec.js` - Session creation, listing, deletion, and authorization
 - `tests/login.spec.js` - Login and authentication flows
 - `tests/signup.spec.js` - User registration tests
 - `tests/home.spec.js` - Home page navigation tests
@@ -150,6 +161,20 @@ npx playwright test --headed
 Run specific test file:
 ```bash
 npx playwright test tests/login.spec.js
+```
+
+Run a specific API test file:
+```bash
+npx playwright test tests/api/login.spec.js
+```
+
+API tests require the backend to be available at `http://localhost:8000`.
+When running locally, start it in a separate terminal before running the tests:
+
+```bash
+cd backend
+source venv/bin/activate   # (Linux/Mac) or venv\Scripts\activate (Windows)
+fastapi dev
 ```
 
 Run tests in debug mode:
