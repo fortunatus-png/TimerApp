@@ -22,8 +22,7 @@ test('User can register, login and access profile', async ({ request }) => {
     expect(loginData.email).toBe(email);
     expect(loginData.token).toMatch(/^[a-f0-9]{64}$/);
 
-    const data = await loginResponse.json();
-    const token = data.token;
+    const token = loginData.token;
     const authResponse = await request.get('http://localhost:8000/auth/me', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
