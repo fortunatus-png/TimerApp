@@ -3,7 +3,7 @@ import { SIGNUP, uniqueEmail } from '../testData';
 
 test.describe('Registration API', () => {
     test('Successful registration', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/register', {
+        const response = await request.post('/auth/register', {
             data: {
                 email: uniqueEmail(),
                 password: SIGNUP.validPassword
@@ -16,7 +16,7 @@ test.describe('Registration API', () => {
     });
 
     test('Registration with existing email returns 400', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/register', {
+        const response = await request.post('/auth/register', {
             data: {
                 email: SIGNUP.existingEmail,
                 password: SIGNUP.validPassword
@@ -28,7 +28,7 @@ test.describe('Registration API', () => {
     });
 
     test('Registration with invalid email format returns 422', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/register', {
+        const response = await request.post('/auth/register', {
             data: {
                 email: SIGNUP.invalidEmail,
                 password: SIGNUP.validPassword
@@ -38,7 +38,7 @@ test.describe('Registration API', () => {
     });
 
     test('Registration with short password returns 422', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/register', {
+        const response = await request.post('/auth/register', {
             data: {
                 email: uniqueEmail('shortpw'),
                 password: SIGNUP.shortPassword

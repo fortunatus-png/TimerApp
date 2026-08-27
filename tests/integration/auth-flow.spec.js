@@ -5,7 +5,7 @@ test('User can register, login and access profile', async ({ request }) => {
     const email = uniqueEmail();
     const password = SIGNUP.validPassword;
 
-    const registerResponse = await request.post('http://localhost:8000/auth/register', {
+    const registerResponse = await request.post('/auth/register', {
         data: { email: email, password: password }
     });
     expect(registerResponse.status()).toBe(201);
@@ -13,7 +13,7 @@ test('User can register, login and access profile', async ({ request }) => {
     expect(registerData).toHaveProperty('id');
     expect(registerData.email).toBe(email);
 
-    const loginResponse = await request.post('http://localhost:8000/auth/login', {
+    const loginResponse = await request.post('/auth/login', {
         data: { email: email, password: password }
     });
     expect(loginResponse.status()).toBe(200);
@@ -23,7 +23,7 @@ test('User can register, login and access profile', async ({ request }) => {
     expect(loginData.token).toMatch(/^[a-f0-9]{64}$/);
 
     const token = loginData.token;
-    const authResponse = await request.get('http://localhost:8000/auth/me', {
+    const authResponse = await request.get('/auth/me', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     expect(authResponse.status()).toBe(200);

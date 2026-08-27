@@ -37,7 +37,16 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: ['tests/api/**', 'tests/integration/**'],
       use: { ...devices['Desktop Chrome'] },
+    },
+
+    {
+      name: 'api',
+      testMatch: ['tests/api/**', 'tests/integration/**'],
+      use: {
+        baseURL: 'http://localhost:8000',
+      },
     },
 
     //{
