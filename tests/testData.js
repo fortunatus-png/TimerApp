@@ -18,5 +18,5 @@ export const SIGNUP = {
 };
 
 export function uniqueEmail(prefix = 'new-user') {
-  return `${prefix}-${Date.now()}@example.com`;
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.com`;
 }
