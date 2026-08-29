@@ -45,8 +45,7 @@ test('User B cannot access sessions of User A', async ({ request }) => {
     expect(getSessionsB.status()).toBe(200);
     const sessionsB = await getSessionsB.json();
 
-    const sessionIds = sessionsB.map(s => s.id);
-    expect(sessionIds).not.toContain(idUserA);
+    expect(sessionsB.map(s => s.id)).not.toContain(idUserA);
 
     const deleteSession = await request.delete(`/sessions/${idUserA}`, {
         headers: { 'Authorization': `Bearer ${tokenUserB}` }
