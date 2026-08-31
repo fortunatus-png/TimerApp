@@ -37,6 +37,26 @@ test.describe('Registration API', () => {
         expect(response.status()).toBe(422);
     });
 
+    test('Registration with empty email field returns 422', async ({ request }) => {
+        const response = await request.post('/auth/register', {
+            data: {
+                email: SIGNUP.empty,
+                password: SIGNUP.validPassword
+            }
+        });
+        expect(response.status()).toBe(422);
+    });
+
+    test('Registration with empty password returns 422', async ({ request }) => {
+        const response = await request.post('/auth/register', {
+            data: {
+                email: uniqueEmail(),
+                password: SIGNUP.empty
+            }
+        });
+        expect(response.status()).toBe(422);
+    });
+
     test('Registration with short password returns 422', async ({ request }) => {
         const response = await request.post('/auth/register', {
             data: {

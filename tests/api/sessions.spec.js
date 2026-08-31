@@ -49,6 +49,46 @@ test.describe('Session API', () => {
         expect(response.status()).toBe(422);
     });
 
+    test('POST /sessions with -1 hour returns 422', async ({ request, authToken }) => {
+        const token = authToken;
+
+        const response = await request.post('/sessions', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: { date: '2026-08-19', minutes: 25, hour: -1 }
+        });
+        expect(response.status()).toBe(422);
+    });
+
+    test('POST /sessions with 24 hour returns 422', async ({ request, authToken }) => {
+        const token = authToken;
+
+        const response = await request.post('/sessions', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: { date: '2026-08-19', minutes: 25, hour: 24 }
+        });
+        expect(response.status()).toBe(422);
+    });
+
+    test('POST /sessions with invalid date returns 422', async ({ request, authToken }) => {
+        const token = authToken;
+
+        const response = await request.post('/sessions', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: { date: 'not-a-date', minutes: 25, hour: 15 }
+        });
+        expect(response.status()).toBe(422);
+    });
+
+    test('POST /sessions without data returns 422', async ({ request, authToken }) => {
+        const token = authToken;
+
+        const response = await request.post('/sessions', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: {}
+        });
+        expect(response.status()).toBe(422);
+    });
+
     test('POST /sessions returns 401 without token', async ({ request }) => {
         const response = await request.post('/sessions', {
             data: { date: '2026-08-05', minutes: 25, hour: 14 }
