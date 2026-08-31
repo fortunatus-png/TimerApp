@@ -8,6 +8,7 @@ Full-stack study timer app with React frontend and FastAPI backend.
 - `/backend` - FastAPI + Python + SQLite
 - `/tests` - Playwright E2E tests with Gherkin-style BDD
 - `/tests/api` - Playwright API tests for authentication and sessions
+- `/tests/integration` - Playwright integration tests for cross-endpoint flows and access control
 - `/tests/pageObjects` - Playwright Page Objects per feature area
 - `/cypress` - Secondary Cypress E2E suite (POM practice)
 - `/docs/gherkin` - Gherkin feature files for BDD scenarios
@@ -107,6 +108,10 @@ This project uses **Playwright** with **BDD-style Gherkin** approach for end-to-
 - `tests/api/login.spec.js` - Login endpoint tests and authentication errors
 - `tests/api/auth.spec.js` - Current-user endpoint and bearer-token validation
 - `tests/api/sessions.spec.js` - Session creation, listing, deletion, and authorization
+- `tests/integration/auth-flow.spec.js` - Registration, login, and authenticated profile access
+- `tests/integration/session-flow.spec.js` - Create, retrieve, and delete a study session
+- `tests/integration/data-isolation.spec.js` - Verifies users cannot view or delete another user's sessions
+- `tests/integration/auth-security.spec.js` - Verifies an invalid token is rejected by every protected endpoint
 - `tests/login.spec.js` - Login and authentication flows
 - `tests/signup.spec.js` - User registration tests
 - `tests/home.spec.js` - Home page navigation tests
@@ -149,6 +154,11 @@ npx playwright test --reporter=line
 Run Cypress suite (optional):
 ```bash
 npm run cy:run
+```
+
+Run API and integration tests only:
+```bash
+npx playwright test --project=api --reporter=line
 ```
 
 The test suite runs serially in this project because the app uses a shared SQLite-backed Docker stack.
@@ -195,6 +205,8 @@ The test suite covers:
 - ✅ Customization features
 - ✅ Account page and logout
 - ✅ Bug documentation (3 real bugs found)
+- ✅ API endpoint validation and error handling
+- ✅ Integration flows and authorization/data-isolation checks
 
 ### CI/CD Testing
 
