@@ -3,14 +3,14 @@ import { AUTH, LOGIN } from '../testData';
 
 test.describe('Login API', () => {
     test('GET / welcome message', async ({ request }) => {
-        const response = await request.get('http://localhost:8000');
+        const response = await request.get('/');
         expect(response.status()).toBe(200);
         const body = await response.json();
         expect(body.message).toBe('Timer Session API is ready. Use /docs for testing.');
     });
 
     test('Successful login', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/login', {
+        const response = await request.post('/auth/login', {
             data: {
                 email: AUTH.email,
                 password: AUTH.password
@@ -22,7 +22,7 @@ test.describe('Login API', () => {
     });
 
     test('Login with wrong email returns 401', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/login', {
+        const response = await request.post('/auth/login', {
             data: {
                 email: LOGIN.wrongEmail,
                 password: AUTH.password
@@ -34,7 +34,7 @@ test.describe('Login API', () => {
     });
 
     test('Login with empty email field returns 422', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/login', {
+        const response = await request.post('/auth/login', {
             data: {
                 email: LOGIN.empty,
                 password: AUTH.password
@@ -44,7 +44,7 @@ test.describe('Login API', () => {
     });
 
     test('Login with empty password returns 401', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/login', {
+        const response = await request.post('/auth/login', {
             data: {
                 email: AUTH.email,
                 password: LOGIN.empty
@@ -54,7 +54,7 @@ test.describe('Login API', () => {
     });
 
     test('Login with wrong password returns 401', async ({ request }) => {
-        const response = await request.post('http://localhost:8000/auth/login', {
+        const response = await request.post('/auth/login', {
             data: {
                 email: AUTH.email,
                 password: LOGIN.wrongPassword
