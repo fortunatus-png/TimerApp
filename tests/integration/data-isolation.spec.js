@@ -27,6 +27,13 @@ test('User B cannot access sessions of User A', async ({ request }) => {
     const sessionDataUserA = await sessionUserA.json();
     const idUserA = sessionDataUserA.id;
 
+    const getSessionsA = await request.get('/sessions', {
+        headers: { 'Authorization': `Bearer ${tokenUserA}` }
+    });
+    expect(getSessionsA.status()).toBe(200);
+    const sessionsA = await getSessionsA.json();
+    expect(sessionsA.map(s => s.id)).toContain(idUserA);
+
     const registerUserB = await request.post('/auth/register', {
         data: { email: emailUserB, password: passwordUserB }
     });
@@ -47,8 +54,13 @@ test('User B cannot access sessions of User A', async ({ request }) => {
 
     expect(sessionsB.map(s => s.id)).not.toContain(idUserA);
 
-    const deleteSession = await request.delete(`/sessions/${idUserA}`, {
+    const deleteSessionB = await request.delete(`/sessions/${idUserA}`, {
         headers: { 'Authorization': `Bearer ${tokenUserB}` }
     });
-    expect(deleteSession.status()).toBe(404);
+    expect(deleteSessionB.status()).toBe(404);
+
+    const deleteSessionA = await request.delete(`/sessions/${idUserA}`, {
+        headers: { 'Authorization': `Bearer ${tokenUserA}` }
+    });
+    expect(deleteSessionA.status()).toBe(200);
 });
