@@ -8,7 +8,7 @@ import secrets
 import hashlib
 import bcrypt
 import os
-from datetime import datetime, timedelta
+from datetime import date as DateType, datetime, timedelta
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 # ========== 2. DATABASE HELPERS ==========
@@ -161,7 +161,7 @@ app.add_middleware(
 
 # ========== 4. PYDANTIC MODELS ==========
 class SessionCreate(BaseModel):
-    date: str = Field(..., example="2026-05-28")
+    date: DateType = Field(..., example="2026-05-28")
     minutes: int = Field(..., ge=0, example=25)
     hour: int = Field(..., ge=0, le=23, example=14)
 
